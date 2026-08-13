@@ -569,6 +569,90 @@
     gap:22px;
   }
 
+  /* TIER BOARD */
+  .tier-board{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+  .tier-board-row{
+    display:grid;
+    grid-template-columns:56px 1fr;
+    gap:14px;
+    padding:14px 0;
+    border-top:1px solid rgba(238,221,149,0.12);
+    align-items:flex-start;
+  }
+  .tier-board-row:first-child{ border-top:none; }
+  .tier-board-badge{
+    width:48px;
+    height:40px;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-style:italic;
+    font-size:20px;
+    color:var(--ink);
+    border:1px solid rgba(18,20,28,0.15);
+  }
+  .tier-board-badge.tier-S{ background:var(--gold); border-color:var(--gold); }
+  .tier-board-badge.tier-A{ background:var(--teal); color:var(--paper); border-color:var(--teal); }
+  .tier-board-badge.tier-B{ background:var(--rose); color:var(--paper); border-color:var(--rose); }
+  .tier-board-badge.tier-C{ background:rgba(238,221,149,0.12); color:var(--text-dim); border-color:rgba(238,221,149,0.2); }
+  .tier-board-badge.tier-D{ background:var(--ink-2); color:var(--paper); border-color:var(--ink-2); }
+  .tier-board-covers{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .tier-board-item{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    width:64px;
+    cursor:pointer;
+  }
+  .tier-board-cover{
+    width:64px;
+    height:64px;
+    border-radius:6px;
+    object-fit:cover;
+    display:block;
+    background:var(--paper-2);
+  }
+  .tier-board-cover-fallback{
+    width:64px;
+    height:64px;
+    border-radius:6px;
+    background:var(--paper-2);
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-style:italic;
+    font-size:20px;
+  }
+  .tier-board-item-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px;
+    line-height:1.3;
+    color:var(--text-dim);
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .tier-board-empty-row{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--text-dim);
+    padding:6px 0;
+  }
+
   /* CARD - ticket stub style */
   .card{
     position:relative;
@@ -683,6 +767,7 @@
   .tier-badge.tier-A{ background:var(--teal); color:var(--paper); border-color:var(--teal); }
   .tier-badge.tier-B{ background:var(--rose); color:var(--paper); border-color:var(--rose); }
   .tier-badge.tier-C{ background:rgba(18,20,28,0.1); color: rgba(18,20,28,0.55); }
+  .tier-badge.tier-D{ background:var(--ink-2); color:var(--paper); border-color:var(--ink-2); }
   .tier-badge.tier-none{ background:none; color: rgba(18,20,28,0.3); border-style:dashed; font-style:normal; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.5px; }
 
   .why{
@@ -807,6 +892,7 @@
   .tier-picker button.selected.tier-A{ background:var(--teal); border-color:var(--teal); color:var(--paper); }
   .tier-picker button.selected.tier-B{ background:var(--rose); border-color:var(--rose); color:var(--paper); }
   .tier-picker button.selected.tier-C{ background: rgba(18,20,28,0.7); border-color: rgba(18,20,28,0.7); color:var(--paper); }
+  .tier-picker button.selected.tier-D{ background:var(--ink-2); border-color:var(--ink-2); color:var(--paper); }
 
   .modal-actions{
     display:flex;
@@ -1512,13 +1598,14 @@
     <select id="filterMood"><option value="">All moods/tags</option></select>
     <select id="sortBy">
       <option value="pinned">Pinned first</option>
-      <option value="rating-desc">Tier (S to C)</option>
-      <option value="rating-asc">Tier (C to S)</option>
+      <option value="rating-desc">Tier (S to D)</option>
+      <option value="rating-asc">Tier (D to S)</option>
       <option value="year-desc">Year (newest)</option>
       <option value="year-asc">Year (oldest)</option>
       <option value="title">Title (A–Z)</option>
     </select>
     <button class="add-btn secondary" id="toggleArchive">View archive</button>
+    <button class="add-btn secondary" id="toggleTierBoard">🏆 Tier board</button>
     <button class="add-btn secondary" id="toggleWishlist">✍ Songs I Wish I Wrote</button>
     <button class="add-btn secondary" id="openCluster">+ Link Cluster</button>
     <button class="add-btn secondary" id="viewClustersBtn">View Clusters</button>
@@ -1553,6 +1640,11 @@
     <h2>No tracks yet</h2>
     <p>Add the first song to start your catalogue.</p>
   </div>
+  <div class="tier-board" id="tierBoard" style="display:none;"></div>
+  <div class="empty" id="tierBoardEmptyState" style="display:none;">
+    <h2>No tracks yet</h2>
+    <p>Add the first song to start your catalogue.</p>
+  </div>
 </div>
 
 <!-- FRIEND CATALOGUE PAGE (routed via #/u/username) -->
@@ -1572,11 +1664,13 @@
       <p class="friend-bio" id="friendBio"></p>
     </div>
     <div class="friend-banner-actions">
+      <button type="button" id="friendTierBoardBtn">🏆 Tier board</button>
       <button type="button" id="friendAddBtn">+ Add friend</button>
     </div>
   </div>
 
   <div class="grid" id="friendGrid"></div>
+  <div class="tier-board" id="friendTierBoard" style="display:none;"></div>
   <div class="empty" id="friendEmptyState" style="display:none;">
     <h2>No tracks yet</h2>
     <p>This catalogue is empty so far.</p>
@@ -2043,6 +2137,7 @@ let editingWishId = null;
 let currentTier = null;
 let showArchived = false;
 let viewingWishlist = false;
+let viewingTierBoard = false;
 let multiMode = 'cluster'; // 'cluster' or 'album'
 let currentMultiTier = null;
 let clusterFilterId = null;
@@ -2051,8 +2146,8 @@ let currentCoverArt = null;
 let currentMultiCoverArt = null;
 let currentWishCoverArt = null;
 let currentPersonPhoto = null;
-const TIERS = ['S','A','B','C'];
-const TIER_RANK = { S:4, A:3, B:2, C:1 };
+const TIERS = ['S','A','B','C','D'];
+const TIER_RANK = { S:5, A:4, B:3, C:2, D:1 };
 function tierRank(t){ return TIER_RANK[t] || 0; }
 
 function load(){
@@ -2197,6 +2292,16 @@ function loadTheme(){
 }
 function saveTheme(theme){
   localStorage.setItem(THEME_KEY, JSON.stringify(theme));
+  persistRemoteTheme(theme);
+}
+let remoteThemeDebounceTimer = null;
+function persistRemoteTheme(theme){
+  // only push to the server once the person is signed in and has a profile row to attach it to
+  if(!currentUserId || !myProfile) return;
+  clearTimeout(remoteThemeDebounceTimer);
+  remoteThemeDebounceTimer = setTimeout(()=>{
+    upsertMyProfile({ theme });
+  }, 600);
 }
 function currentThemeFromInputs(){
   const theme = {};
@@ -2447,6 +2552,72 @@ function renderTierBadge(tier){
   return `<span class="tier-badge tier-${tier}">${tier}</span>`;
 }
 
+/* ---- tier board: S-D rows of cover art, deduped, no unrated row ---- */
+function dedupeSongsForBoard(list){
+  const seen = new Set();
+  const out = [];
+  list.forEach(s=>{
+    const key = `${(s.title||'').trim().toLowerCase()}|${(s.artists||[]).join(',').trim().toLowerCase()}|${(s.album||'').trim().toLowerCase()}`;
+    if(seen.has(key)) return;
+    seen.add(key);
+    out.push(s);
+  });
+  return out;
+}
+function tierBoardItemHtml(s, editable){
+  const initial = (s.title||'?').charAt(0).toUpperCase();
+  const cover = s.coverArt
+    ? `<img class="tier-board-cover" src="${s.coverArt}" loading="lazy" decoding="async" alt="">`
+    : `<div class="tier-board-cover-fallback">${escapeHtml(initial)}</div>`;
+  return `
+    <div class="tier-board-item" ${editable ? `data-id="${s.id}"` : ''} title="${escapeAttr(s.title||'Untitled')} · ${escapeAttr(formatArtists(s.artists))}">
+      ${cover}
+      <span class="tier-board-item-label">${escapeHtml(s.title||'Untitled')}</span>
+    </div>
+  `;
+}
+function buildTierBoardHtml(list, editable){
+  const active = dedupeSongsForBoard((list||[]).filter(s=>!s.archived));
+  const byTier = { S:[], A:[], B:[], C:[], D:[] };
+  active.forEach(s=>{ if(byTier[s.tier]) byTier[s.tier].push(s); });
+  return TIERS.map(t=>{
+    const items = byTier[t];
+    const body = items.length
+      ? `<div class="tier-board-covers">${items.map(s=>tierBoardItemHtml(s, editable)).join('')}</div>`
+      : `<div class="tier-board-empty-row">Nothing in ${t} tier yet</div>`;
+    return `
+      <div class="tier-board-row">
+        <div class="tier-board-badge tier-${t}">${t}</div>
+        ${body}
+      </div>
+    `;
+  }).join('');
+}
+function renderTierBoard(){
+  const el = document.getElementById('tierBoard');
+  const empty = document.getElementById('tierBoardEmptyState');
+  const active = songs.filter(s=>!s.archived);
+  if(active.length === 0){
+    el.innerHTML = '';
+    el.style.display = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  el.style.display = '';
+  el.innerHTML = buildTierBoardHtml(songs, true);
+}
+function renderFriendTierBoard(list){
+  const el = document.getElementById('friendTierBoard');
+  el.innerHTML = buildTierBoardHtml(list, false);
+}
+document.getElementById('tierBoard').addEventListener('click', e=>{
+  const item = e.target.closest('[data-id]');
+  if(!item) return;
+  const song = songs.find(s=>s.id===item.dataset.id);
+  if(song) openModal(song);
+});
+
 function renderLastAdded(){
   const panel = document.getElementById('lastAdded');
   const body = document.getElementById('lastAddedBody');
@@ -2530,7 +2701,23 @@ function renderNextGridBatch(){
 }
 
 function render(){
-  if(viewingWishlist){ renderWishlistGrid(); return; }
+  if(viewingWishlist){
+    document.getElementById('tierBoard').style.display = 'none';
+    document.getElementById('tierBoardEmptyState').style.display = 'none';
+    renderWishlistGrid();
+    return;
+  }
+  if(viewingTierBoard){
+    document.getElementById('grid').style.display = 'none';
+    document.getElementById('gridSentinel').style.display = 'none';
+    document.getElementById('emptyState').style.display = 'none';
+    renderLastAdded();
+    renderTierBoard();
+    return;
+  }
+  document.getElementById('tierBoard').style.display = 'none';
+  document.getElementById('tierBoardEmptyState').style.display = 'none';
+  document.getElementById('grid').style.display = '';
   renderLastAdded();
   const grid = document.getElementById('grid');
   const empty = document.getElementById('emptyState');
@@ -2967,12 +3154,15 @@ document.getElementById('grid').addEventListener('click', e=>{
 function updateViewUI(){
   const archBtn = document.getElementById('toggleArchive');
   const wishBtn = document.getElementById('toggleWishlist');
+  const tierBtn = document.getElementById('toggleTierBoard');
   archBtn.textContent = showArchived ? '← Back to catalogue' : 'View archive';
   archBtn.classList.toggle('active', showArchived);
   wishBtn.textContent = viewingWishlist ? '← Back to catalogue' : '✍ Songs I Wish I Wrote';
   wishBtn.classList.toggle('active', viewingWishlist);
+  tierBtn.textContent = viewingTierBoard ? '← Back to catalogue' : '🏆 Tier board';
+  tierBtn.classList.toggle('active', viewingTierBoard);
 
-  const otherMode = showArchived || viewingWishlist;
+  const otherMode = showArchived || viewingWishlist || viewingTierBoard;
   document.getElementById('openAdd').style.display = otherMode ? 'none' : '';
   document.getElementById('openCluster').style.display = otherMode ? 'none' : '';
   document.getElementById('viewClustersBtn').style.display = otherMode ? 'none' : '';
@@ -2981,21 +3171,31 @@ function updateViewUI(){
   document.getElementById('resetCatalogueBtn').style.display = (otherMode || guestMode) ? 'none' : '';
   document.getElementById('openWish').style.display = viewingWishlist ? '' : 'none';
   document.getElementById('peopleSection').style.display = viewingWishlist ? 'none' : '';
-  document.getElementById('filterGenre').style.display = viewingWishlist ? 'none' : '';
-  document.getElementById('filterMood').style.display = viewingWishlist ? 'none' : '';
-  document.getElementById('sortBy').style.display = viewingWishlist ? 'none' : '';
-  archBtn.style.display = viewingWishlist ? 'none' : '';
-  wishBtn.style.display = showArchived ? 'none' : '';
+  document.getElementById('filterGenre').style.display = (viewingWishlist || viewingTierBoard) ? 'none' : '';
+  document.getElementById('filterMood').style.display = (viewingWishlist || viewingTierBoard) ? 'none' : '';
+  document.getElementById('sortBy').style.display = (viewingWishlist || viewingTierBoard) ? 'none' : '';
+  document.getElementById('search').style.display = viewingTierBoard ? 'none' : '';
+  archBtn.style.display = (viewingWishlist || viewingTierBoard) ? 'none' : '';
+  wishBtn.style.display = (showArchived || viewingTierBoard) ? 'none' : '';
+  tierBtn.style.display = (showArchived || viewingWishlist) ? 'none' : '';
   clusterFilterId = null;
   remindsFilterId = null;
 }
 document.getElementById('toggleArchive').addEventListener('click', ()=>{
   showArchived = !showArchived;
+  if(showArchived){ viewingWishlist = false; viewingTierBoard = false; }
   updateViewUI();
   render();
 });
 document.getElementById('toggleWishlist').addEventListener('click', ()=>{
   viewingWishlist = !viewingWishlist;
+  if(viewingWishlist){ showArchived = false; viewingTierBoard = false; }
+  updateViewUI();
+  render();
+});
+document.getElementById('toggleTierBoard').addEventListener('click', ()=>{
+  viewingTierBoard = !viewingTierBoard;
+  if(viewingTierBoard){ showArchived = false; viewingWishlist = false; }
   updateViewUI();
   render();
 });
@@ -3476,6 +3676,7 @@ function goToFriendCatalogue(username){
 function closeFriendCatalogue(){
   document.getElementById('friendWrap').style.display = 'none';
   document.getElementById('appWrap').style.display = '';
+  applyTheme(loadTheme());
 }
 document.getElementById('friendBackBtn').addEventListener('click', ()=>{
   history.pushState('', document.title, location.pathname + location.search);
@@ -3485,7 +3686,7 @@ document.getElementById('friendBackBtn').addEventListener('click', ()=>{
 async function fetchProfileByUsername(username){
   const { data, error } = await sb
     .from('profiles')
-    .select('user_id, username, bio, photo')
+    .select('user_id, username, bio, photo, theme')
     .ilike('username', username)
     .maybeSingle();
   if(error){ console.error('Error loading that profile:', error); return null; }
@@ -3531,6 +3732,32 @@ function renderFriendGrid(list){
     </div>
   `).join('');
 }
+let viewingFriendTierBoard = false;
+let currentFriendSongs = [];
+function renderFriendTierBoard(list){
+  document.getElementById('friendTierBoard').innerHTML = buildTierBoardHtml(list, false);
+}
+function updateFriendViewUI(){
+  const grid = document.getElementById('friendGrid');
+  const board = document.getElementById('friendTierBoard');
+  const btn = document.getElementById('friendTierBoardBtn');
+  btn.textContent = viewingFriendTierBoard ? '← Back to grid' : '🏆 Tier board';
+  btn.classList.toggle('active', viewingFriendTierBoard);
+  if(viewingFriendTierBoard){
+    grid.style.display = 'none';
+    board.style.display = '';
+    document.getElementById('friendEmptyState').style.display = 'none';
+    renderFriendTierBoard(currentFriendSongs);
+  } else {
+    board.style.display = 'none';
+    grid.style.display = '';
+    renderFriendGrid(currentFriendSongs);
+  }
+}
+document.getElementById('friendTierBoardBtn').addEventListener('click', ()=>{
+  viewingFriendTierBoard = !viewingFriendTierBoard;
+  updateFriendViewUI();
+});
 function updateFriendBanner(p){
   document.getElementById('friendName').textContent = '@' + p.username;
   const bioEl = document.getElementById('friendBio');
@@ -3572,6 +3799,10 @@ async function openFriendCatalogue(username){
   document.getElementById('friendName').textContent = '@' + username;
   document.getElementById('friendBio').textContent = '';
   document.getElementById('friendAddBtn').style.display = 'none';
+  document.getElementById('friendTierBoardBtn').style.display = 'none';
+  viewingFriendTierBoard = false;
+  document.getElementById('friendTierBoard').style.display = 'none';
+  document.getElementById('friendGrid').style.display = '';
 
   const p = await fetchProfileByUsername(username);
   if(!p){
@@ -3583,12 +3814,18 @@ async function openFriendCatalogue(username){
 
   const isSelf = p.user_id === currentUserId;
   const isFriend = myFriendIds.has(p.user_id);
+
+  // show this listener's own theme while browsing their catalogue; restore ours on the way out
+  applyTheme(isSelf ? loadTheme() : (p.theme || DEFAULT_THEME));
+
   if(!isSelf && !isFriend){
     document.getElementById('friendLockedState').style.display = 'block';
     return;
   }
+  document.getElementById('friendTierBoardBtn').style.display = '';
   const friendSongs = isSelf ? songs : await fetchReadOnlySongs(p.user_id);
-  renderFriendGrid(friendSongs);
+  currentFriendSongs = friendSongs;
+  updateFriendViewUI();
 }
 function checkRoute(){
   const username = usernameFromRoute();
@@ -4002,7 +4239,7 @@ let guestMode = false;
 async function fetchMyProfile(userId){
   const { data, error } = await sb
     .from('profiles')
-    .select('user_id, username, bio, photo')
+    .select('user_id, username, bio, photo, theme')
     .eq('user_id', userId)
     .maybeSingle();
   if(error){ console.error('Error loading your profile:', error); return null; }
@@ -4029,6 +4266,10 @@ async function loadAppForUser(user){
   currentUserId = user.id;
   myProfile = await fetchMyProfile(user.id);
   renderMyAvatar();
+  if(myProfile && myProfile.theme){
+    applyTheme(myProfile.theme);
+    localStorage.setItem(THEME_KEY, JSON.stringify(myProfile.theme));
+  }
   await ensureUserRow(user.id);
   const remote = await fetchUserData(user.id);
   songs = (remote && remote.songs) || [];
