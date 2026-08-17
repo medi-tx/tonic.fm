@@ -8224,6 +8224,13 @@ async function loadAppForUser(user){
   people = (remote && remote.people) || [];
   wishlist = (remote && remote.wishlist) || [];
 
+  const wishlistBefore = wishlist.length;
+  wishlist = wishlist.filter(w => !w.pinned && !w.clusterId && w.tier === undefined);
+  if(wishlistBefore !== wishlist.length){
+    console.warn(`Cleaned ${wishlistBefore - wishlist.length} catalogue songs from wishlist`);
+    syncToSupabase();
+  }
+
   // run the existing migration/backfill logic against the loaded songs
   songs.forEach(s=>{
     if(!s.artists){ s.artists = s.artist ? [s.artist] : []; }
