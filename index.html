@@ -9389,11 +9389,19 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
     wrap.appendChild(el);
     setTimeout(()=>{ if(el.parentNode) el.remove(); }, 8000);
   }
+  let notifTableMissing = false;
   async function checkSotdNotifs(){
-    if(!currentUserId || !sb) return;
+    if(!currentUserId || !sb || notifTableMissing) return;
     try{
       const { data, error } = await sb.from('notifications').select('*').eq('user_id', currentUserId).is('read_at', null).order('created_at', { ascending: false }).limit(10);
-      if(error || !data || data.length === 0) return;
+      if(error){
+        if(error.status === 404 || (error.message && error.message.includes('404'))){
+          notifTableMissing = true;
+          clearInterval(sotdNotifTimer);
+        }
+        return;
+      }
+      if(!data || data.length === 0) return;
       const seen = new Set(JSON.parse(localStorage.getItem('tonic-sotd-notif-seen') || '[]'));
       const fresh = data.filter(n => !seen.has(n.id));
       const toMark = [];
@@ -9730,7 +9738,11 @@ async function loadNotifications(){
     .eq('user_id', currentUserId)
     .order('created_at', { ascending: false })
     .limit(50);
-  if(error || !data) return;
+  if(error){
+    if(error.status === 404){ setNotifBadge(0); }
+    return;
+  }
+  if(!data) return;
   const unread = data.filter(n=>!n.read_at).length;
   setNotifBadge(unread);
   const list = document.getElementById('notifList');
