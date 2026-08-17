@@ -6637,7 +6637,7 @@ document.getElementById('friendBackBtn').addEventListener('click', ()=>{
   if(!currentUserId){
     history.pushState('', document.title, location.pathname + location.search);
     document.getElementById('friendWrap').style.display = 'none';
-    document.getElementById('authScreen').style.display = '';
+    showAuthScreen();
     applyTheme(DEFAULT_THEME);
     return;
   }
@@ -8013,20 +8013,30 @@ document.getElementById('auth-submit-btn').addEventListener('click', async ()=>{
   const password = document.getElementById('auth-password').value;
   setAuthError(null); setAuthMessage(null);
   if(!email || !password){ setAuthError('Enter an email and password.'); return; }
+  const btn = document.getElementById('auth-submit-btn');
+  btn.disabled = true; btn.textContent = '…';
 
-  if(authMode === 'login'){
-    const { error } = await sb.auth.signInWithPassword({ email, password });
-    if(error) setAuthError(error.message);
-  } else {
-    const { data, error } = await sb.auth.signUp({ email, password });
-    if(error){ setAuthError(error.message); return; }
-    if(data.session){
-      trackEvent('account_created');
-      autoFriendSam(data.session.user.id);
+  try{
+    if(authMode === 'login'){
+      const { error } = await sb.auth.signInWithPassword({ email, password });
+      if(error) setAuthError(error.message);
     } else {
-      trackEvent('account_created_pending_email');
-      setAuthMessage('Check your email to confirm your account, then log in.');
+      const { data, error } = await sb.auth.signUp({ email, password });
+      if(error){ setAuthError(error.message); return; }
+      if(data.session){
+        trackEvent('account_created');
+        autoFriendSam(data.session.user.id);
+      } else {
+        trackEvent('account_created_pending_email');
+        setAuthMessage('Check your email to confirm your account, then log in.');
+      }
     }
+  }catch(e){
+    console.error('Auth error:', e);
+    setAuthError(e.message || 'Something went wrong. Check your connection and try again.');
+  }finally{
+    btn.disabled = false;
+    btn.textContent = authMode === 'login' ? 'Log in' : 'Sign up';
   }
 });
 
