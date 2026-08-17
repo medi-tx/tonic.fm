@@ -8224,9 +8224,15 @@ async function loadAppForUser(user){
   people = (remote && remote.people) || [];
   wishlist = (remote && remote.wishlist) || [];
 
+  const songTitles = new Set(songs.map(s => normalizeTitle(s.title)));
   const songKeys = new Set(songs.map(s => normalizeTitle(s.title) + '||' + (s.artists||[]).map(normalizeArtist).sort().join(' ')));
   const wishlistBefore = wishlist.length;
-  wishlist = wishlist.filter(w => !songKeys.has(normalizeTitle(w.title) + '||' + (w.artists||[]).map(normalizeArtist).sort().join(' ')));
+  wishlist = wishlist.filter(w => {
+    const key = normalizeTitle(w.title) + '||' + (w.artists||[]).map(normalizeArtist).sort().join(' ');
+    if(songKeys.has(key)) return false;
+    if(songTitles.has(normalizeTitle(w.title)) && w.lyricSnippet === undefined && w.why === undefined) return false;
+    return true;
+  });
   if(wishlistBefore !== wishlist.length){
     console.warn(`Cleaned ${wishlistBefore - wishlist.length} catalogue songs from wishlist`);
     syncToSupabase();
