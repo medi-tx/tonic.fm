@@ -11457,8 +11457,8 @@ document.getElementById('tourNextBtn').addEventListener('click', ()=>{
 document.getElementById('tourSkipBtn').addEventListener('click', ()=>{
   endTour();
 });
-backdrop.addEventListener('click', ()=>{
-  endTour();
+backdrop.addEventListener('click', (e)=>{
+  e.stopPropagation();
 });
 
 function maybeStartTour(){
