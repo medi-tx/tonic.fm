@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Tonic.fm</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Space Grotesk',sans-serif;background:#11131b;color:#eef0f7;min-height:100vh;padding:40px 24px;line-height:1.7}
+  .container{max-width:720px;margin:0 auto}
+  h1{font-size:28px;margin-bottom:8px;color:#ffd700}
+  h2{font-size:20px;margin-top:32px;margin-bottom:8px;color:#b4b9f3}
+  p,li{font-size:15px;color:rgba(238,221,149,0.82)}
+  p{margin-bottom:14px}
+  ul{margin-left:20px;margin-bottom:14px}
+  li{margin-bottom:6px}
+  a{color:#467da0}
+  .updated{font-size:13px;color:rgba(238,221,149,0.5);margin-bottom:32px}
+  hr{border:none;border-top:1px solid rgba(238,221,149,0.12);margin:24px 0}
+  .back{display:inline-block;margin-bottom:24px;color:#ffd700;text-decoration:none;font-size:14px}
+  .back:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="index.html">← Back to Tonic.fm</a>
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated: August 18, 2026 · Governing law: State of Texas, USA</p>
+
+  <h2>1. Introduction</h2>
+  <p>Tonic.fm ("we", "our", "the app") is a personal music catalogue and journal. This Privacy Policy explains what data we collect, how we use it, and your rights. This policy applies to all users, including residents of Texas, California, and other U.S. states.</p>
+
+  <h2>2. Data We Collect</h2>
+  <ul>
+    <li><strong>Account information:</strong> Email address and password (stored via Supabase Auth).</li>
+    <li><strong>Catalogue data:</strong> Songs, ratings, tags, albums, artists, playlists, notes, and people you add — stored in Supabase and cached in your browser's localStorage.</li>
+    <li><strong>Usage analytics:</strong> Anonymous event logs (page views, feature usage) stored locally in your browser. These are not sent to any third-party analytics service. You may opt out at any time.</li>
+    <li><strong>Profile data:</strong> Display name and optional avatar, stored in Supabase.</li>
+  </ul>
+
+  <h2>3. How We Use Your Data</h2>
+  <ul>
+    <li>To provide and sync your music catalogue across devices.</li>
+    <li>To display your data on the site (e.g. tier boards, stats, friend comparisons).</li>
+    <li>To improve the app through anonymous, local-only usage analytics (opt-in only).</li>
+  </ul>
+  <p>We do <strong>not</strong> sell your personal data. We do <strong>not</strong> use your data for targeted advertising.</p>
+
+  <h2>4. Data Sharing</h2>
+  <p>We do <strong>not</strong> sell, trade, or share your personal data with third parties for marketing purposes. The only external services we use are:</p>
+  <ul>
+    <li><strong>Supabase</strong> — for authentication and data storage (hosted on AWS).</li>
+    <li><strong>iTunes Search API</strong> — to look up album art (no personal data is sent).</li>
+    <li><strong>Tidal API</strong> — for playlist imports (no personal data is sent beyond the playlist URL).</li>
+  </ul>
+
+  <h2>5. Data Storage &amp; Security</h2>
+  <p>Your data is stored in Supabase (hosted on AWS). We implement the following security measures:</p>
+  <ul>
+    <li><strong>Encryption in transit:</strong> All data transmitted between your browser and our servers is encrypted using TLS (Transport Layer Security).</li>
+    <li><strong>Encryption at rest:</strong> Stored data is encrypted at rest using AES-256 (provided by AWS/Supabase infrastructure).</li>
+    <li><strong>Row-Level Security (RLS):</strong> Supabase RLS policies ensure each user can only access their own data.</li>
+    <li><strong>Authentication:</strong> Passwords are hashed and salted using bcrypt (via Supabase Auth). We never store or have access to your plain-text password.</li>
+    <li><strong>Access controls:</strong> Administrative access to databases is restricted and logged.</li>
+  </ul>
+  <p>While we take reasonable precautions, no method of transmission or storage is 100% secure. We encourage you to use a strong, unique password.</p>
+
+  <h2>6. Your Rights</h2>
+  <p>You have the following rights regarding your personal data:</p>
+  <ul>
+    <li><strong>Access:</strong> You can view all your data at any time within the app.</li>
+    <li><strong>Export:</strong> You can download a complete copy of your data in JSON format from Account Settings (GDPR Art. 20, CCPA §1798.100).</li>
+    <li><strong>Deletion:</strong> You can permanently delete your account and all associated data from Account Settings. This removes all data from our servers within 30 days.</li>
+    <li><strong>Correction:</strong> You can edit your profile, catalogue, and all personal data at any time within the app.</li>
+    <li><strong>Opt-out of analytics:</strong> You can disable all analytics tracking at any time via the consent banner or Account Settings.</li>
+  </ul>
+
+  <h2>7. Texas Privacy Protection Act (TPPA)</h2>
+  <p>As a Texas-based service, we comply with the Texas Privacy Protection Act and the Texas Business and Commerce Code. This means:</p>
+  <ul>
+    <li>We provide clear notice of what data we collect and how it is used (this policy).</li>
+    <li>We do not sell your personal information.</li>
+    <li>We do not engage in targeted advertising based on your personal data.</li>
+    <li>You may request access to, correction of, or deletion of your personal data at any time.</li>
+    <li>We will not discriminate against you for exercising your privacy rights.</li>
+  </ul>
+
+  <h2>8. California Consumer Privacy Act (CCPA)</h2>
+  <p>If you are a California resident, you have additional rights under the California Consumer Privacy Act (CCPA):</p>
+  <ul>
+    <li><strong>Right to know:</strong> You may request disclosure of the categories and specific pieces of personal information we have collected about you.</li>
+    <li><strong>Right to delete:</strong> You may request deletion of your personal information.</li>
+    <li><strong>Right to opt out:</strong> You may opt out of the sale of your personal information. We do not sell personal information, so this right is inherently satisfied.</li>
+    <li><strong>Non-discrimination:</strong> We will not discriminate against you for exercising any CCPA rights.</li>
+  </ul>
+  <p>To exercise any of these rights, use the Export or Delete buttons in Account Settings, or contact the developer directly.</p>
+
+  <h2>9. Children's Privacy (COPPA)</h2>
+  <p>Tonic.fm is not directed at children under 13. We do not knowingly collect personal information from children under 13. If you are under 13, you may not create an account. If we become aware that a user is under 13, we will promptly delete their account and all associated data. If you believe a child has provided us with personal information, please contact us immediately.</p>
+
+  <h2>10. Cookies &amp; Tracking</h2>
+  <p>We do not use third-party cookies, tracking pixels, or advertising networks. The only cookies/session data are from Supabase Auth for authentication purposes. Local analytics data is stored in your browser's localStorage and is not transmitted to any server. You may clear this data at any time by opting out of analytics or clearing your browser storage.</p>
+
+  <h2>11. Data Retention</h2>
+  <p>We retain your data for as long as your account is active. When you delete your account, all data is permanently removed from our servers within 30 days. Local browser data (localStorage) is cleared immediately upon account deletion. Analytics logs older than 90 days are automatically pruned.</p>
+
+  <h2>12. Data Breach Notification</h2>
+  <p>In the event of a data breach that affects your personal information, we will notify you promptly via email and provide information about the nature of the breach and steps you can take. We will also comply with all applicable Texas and federal breach notification laws, including the Texas Identity Theft Enforcement and Protection Act (Tex. Bus. &amp; Com. Code §521.053), which requires notification to affected Texas residents within 60 days of discovering a breach.</p>
+
+  <h2>13. Changes to This Policy</h2>
+  <p>We may update this policy. Material changes will require re-consent via the app. The version number is tracked in the app's code. We will notify users of material changes via the app and, where required, by email.</p>
+
+  <h2>14. Contact</h2>
+  <p>If you have questions about this policy or your data, please email us at <a href="mailto:samannleblanc@gmail.com">samannleblanc@gmail.com</a> or open an issue at our GitHub repository. For DMCA requests, see our <a href="terms.html">Terms of Service</a>.</p>
+
+  <hr>
+  <p style="font-size:13px;color:rgba(238,221,149,0.5)">Tonic.fm · Built with care for music lovers. Based in Texas, USA.</p>
+</div>
+</body>
+</html>
