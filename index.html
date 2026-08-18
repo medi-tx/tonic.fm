@@ -182,6 +182,121 @@
     border-radius:7px; cursor:pointer; z-index:10000;
   }
   .walkthrough-overlay .walkthrough-close:hover{ background:rgba(253,159,28,0.25); color:var(--rose); }
+
+  /* GUIDED TOUR */
+  .tour-backdrop{
+    position:fixed; inset:0; z-index:10001;
+    pointer-events:none;
+  }
+  .tour-backdrop.open{ pointer-events:auto; }
+  .tour-highlight{
+    position:fixed; z-index:10002;
+    border:2px solid var(--rose);
+    border-radius:10px;
+    box-shadow:0 0 0 9999px rgba(0,0,0,0.7);
+    transition:all .3s ease;
+    pointer-events:none;
+  }
+  .tour-tooltip{
+    position:fixed; z-index:10003;
+    background:var(--ink-2);
+    border:1px solid rgba(253,159,28,0.4);
+    border-radius:12px;
+    padding:20px 22px 18px;
+    max-width:320px;
+    width:max-content;
+    box-shadow:0 12px 32px rgba(0,0,0,0.5);
+    transition:all .3s ease;
+    pointer-events:auto;
+  }
+  .tour-tooltip h4{
+    margin:0 0 6px;
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-style:italic;
+    font-size:17px;
+    color:var(--on-ink);
+  }
+  .tour-tooltip p{
+    margin:0 0 14px;
+    font-size:13px;
+    line-height:1.5;
+    color:var(--text-dim);
+  }
+  .tour-tooltip .tour-step-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px;
+    letter-spacing:1.5px;
+    color:var(--rose);
+    text-transform:uppercase;
+    margin-bottom:8px;
+    display:block;
+  }
+  .tour-arrow{
+    position:fixed; z-index:10003;
+    width:0; height:0;
+    transition:all .3s ease;
+    pointer-events:none;
+  }
+  .tour-arrow.arrow-bottom{
+    border-left:10px solid transparent;
+    border-right:10px solid transparent;
+    border-bottom:10px solid var(--rose);
+  }
+  .tour-arrow.arrow-top{
+    border-left:10px solid transparent;
+    border-right:10px solid transparent;
+    border-top:10px solid var(--rose);
+  }
+  .tour-arrow.arrow-right{
+    border-top:10px solid transparent;
+    border-bottom:10px solid transparent;
+    border-left:10px solid var(--rose);
+  }
+  .tour-arrow.arrow-left{
+    border-top:10px solid transparent;
+    border-bottom:10px solid transparent;
+    border-right:10px solid var(--rose);
+  }
+  .tour-actions{
+    display:flex; gap:8px; align-items:center;
+  }
+  .tour-next-btn{
+    background:var(--rose);
+    color:var(--ink);
+    border:none;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:13px;
+    padding:8px 18px;
+    border-radius:7px;
+    cursor:pointer;
+    transition:background .15s;
+  }
+  .tour-next-btn:hover{ background:#e5a810; }
+  .tour-skip-btn{
+    background:none;
+    border:1px solid rgba(var(--on-ink-rgb),0.2);
+    color:var(--text-dim);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    padding:7px 12px;
+    border-radius:7px;
+    cursor:pointer;
+    transition:border-color .15s;
+  }
+  .tour-skip-btn:hover{ border-color:var(--rose); color:var(--rose); }
+  .tour-dots{
+    display:flex; gap:5px; margin-left:auto; margin-right:8px;
+  }
+  .tour-dot{
+    width:7px; height:7px;
+    border-radius:50%;
+    background:rgba(var(--on-ink-rgb),0.2);
+    transition:background .2s;
+  }
+  .tour-dot.active{ background:var(--rose); }
+  .tour-dot.done{ background:rgba(var(--on-ink-rgb),0.5); }
   .theme-btn{
     font-family:'IBM Plex Mono', monospace;
     font-size:11px;
@@ -2791,6 +2906,20 @@
   <button class="walkthrough-close" id="walkthroughCloseBtn">✕ Close</button>
   <div class="walkthrough-inner">
     <iframe id="walkthroughVideo" src="https://www.youtube.com/embed/Lm3btFkdEZw" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+</div>
+
+<div class="tour-backdrop" id="tourBackdrop"></div>
+<div class="tour-highlight" id="tourHighlight" style="display:none;"></div>
+<div class="tour-arrow" id="tourArrow" style="display:none;"></div>
+<div class="tour-tooltip" id="tourTooltip" style="display:none;">
+  <span class="tour-step-label" id="tourStepLabel"></span>
+  <h4 id="tourTitle"></h4>
+  <p id="tourDesc"></p>
+  <div class="tour-actions">
+    <button class="tour-next-btn" id="tourNextBtn">Next</button>
+    <button class="tour-skip-btn" id="tourSkipBtn">Skip tour</button>
+    <div class="tour-dots" id="tourDots"></div>
   </div>
 </div>
 
@@ -8939,6 +9068,7 @@ async function loadAppForUser(user){
     openOnboarding();
   }
   updateRemoveExamplesBtn();
+  maybeStartTour();
 }
 
 /* ---- Apple Music / iTunes search (album + song lookup) ----
@@ -11132,6 +11262,201 @@ setTimeout(showAnalyticsBannerIfNeeded, 1500);
 const origTrackEvent = trackEvent;
 if(getAnalyticsConsent() === 'rejected'){
   window.trackEvent = function(){};
+}
+
+/* ---- GUIDED TOUR ---- */
+const TOUR_KEY = 'tonic-tour-seen-v2';
+function tourSeen(){ return localStorage.getItem(TOUR_KEY); }
+function tourMarkSeen(){ localStorage.setItem(TOUR_KEY, '1'); }
+
+const TOUR_STEPS = [
+  {
+    target: '#addSongBtn',
+    title: 'Add your first song',
+    desc: 'Search Apple Music to pull in tracks, art, and artists — or add them manually. Every track becomes its own entry in your catalogue.',
+    position: 'bottom'
+  },
+  {
+    target: '#search',
+    title: 'Search your catalogue',
+    desc: 'Find any song in your collection by title, artist, or tag. Filters narrow it down fast.',
+    position: 'bottom'
+  },
+  {
+    target: '#toggleTierBoard',
+    title: 'Tier board',
+    desc: 'Rank every song into tiers — ★, S, A, B, or C. Drag and drop to organize your taste at a glance.',
+    position: 'bottom'
+  },
+  {
+    target: '.pin-btn',
+    title: 'Currently obsessed with',
+    desc: 'Tap the heart on any song to mark it as a current obsession. These show up front and center on your profile.',
+    position: 'left',
+    perCard: true
+  },
+  {
+    target: '#feedBtn',
+    title: 'The feed',
+    desc: 'See what your friends are adding. Click any song to add it straight to your own catalogue.',
+    position: 'bottom'
+  },
+  {
+    target: '#statsBtn',
+    title: 'Stats & charts',
+    desc: 'Visual breakdowns of your taste — tier distribution, top genres, songs added over time.',
+    position: 'bottom'
+  },
+  {
+    target: '#themeBtn',
+    title: 'Customize your theme',
+    desc: 'Pick from presets or build your own palette. Your theme shows up on your shared cards too.',
+    position: 'bottom'
+  },
+  {
+    target: '#wishlistBtn',
+    title: 'Songs I Wish I Wrote',
+    desc: 'A dedicated space for songs you love so much you wish you wrote them yourself.',
+    position: 'bottom'
+  }
+];
+
+let tourStepIndex = -1;
+const backdrop = document.getElementById('tourBackdrop');
+const highlight = document.getElementById('tourHighlight');
+const arrow = document.getElementById('tourArrow');
+const tooltip = document.getElementById('tourTooltip');
+const stepLabel = document.getElementById('tourStepLabel');
+const tourTitle = document.getElementById('tourTitle');
+const tourDesc = document.getElementById('tourDesc');
+const tourDots = document.getElementById('tourDots');
+
+function startTour(){
+  tourStepIndex = 0;
+  backdrop.classList.add('open');
+  renderTourDots();
+  showTourStep();
+}
+
+function endTour(){
+  backdrop.classList.remove('open');
+  highlight.style.display = 'none';
+  arrow.style.display = 'none';
+  tooltip.style.display = 'none';
+  tourMarkSeen();
+  trackEvent('complete_tour');
+}
+
+function renderTourDots(){
+  tourDots.innerHTML = TOUR_STEPS.map((_,i) =>
+    `<div class="tour-dot${i < tourStepIndex ? ' done' : ''}${i === tourStepIndex ? ' active' : ''}"></div>`
+  ).join('');
+}
+
+function showTourStep(){
+  if(tourStepIndex >= TOUR_STEPS.length){ endTour(); return; }
+  const step = TOUR_STEPS[tourStepIndex];
+
+  let el = null;
+  if(step.perCard){
+    const cards = document.querySelectorAll('.card');
+    if(cards.length === 0){ tourStepIndex++; showTourStep(); return; }
+    el = cards[0].querySelector(step.target);
+    if(!el){ el = cards[0].querySelector('.card-top'); }
+  } else {
+    el = document.querySelector(step.target);
+  }
+  if(!el){ tourStepIndex++; showTourStep(); return; }
+
+  const rect = el.getBoundingClientRect();
+  const pad = 8;
+
+  highlight.style.display = '';
+  highlight.style.left = (rect.left - pad) + 'px';
+  highlight.style.top = (rect.top - pad) + 'px';
+  highlight.style.width = (rect.width + pad*2) + 'px';
+  highlight.style.height = (rect.height + pad*2) + 'px';
+
+  stepLabel.textContent = 'Step ' + (tourStepIndex + 1) + ' of ' + TOUR_STEPS.length;
+  tourTitle.textContent = step.title;
+  tourDesc.textContent = step.desc;
+
+  const btn = document.getElementById('tourNextBtn');
+  btn.textContent = tourStepIndex === TOUR_STEPS.length - 1 ? 'Got it!' : 'Next';
+
+  tooltip.style.display = '';
+  arrow.style.display = '';
+
+  positionTooltip(rect, step.position);
+
+  renderTourDots();
+  trackEvent('tour_step', { step: tourStepIndex });
+}
+
+function positionTooltip(targetRect, pos){
+  const tw = Math.min(320, window.innerWidth - 40);
+  const gap = 14;
+
+  let tipTop, tipLeft, arrowTop, arrowLeft;
+  let arrowClass;
+
+  tooltip.style.width = tw + 'px';
+  tooltip.style.left = '0px';
+  tooltip.style.top = '0px';
+  const tipRect = tooltip.getBoundingClientRect();
+
+  if(pos === 'bottom'){
+    arrowClass = 'arrow-bottom';
+    tipTop = targetRect.bottom + gap + 12;
+    tipLeft = Math.max(20, Math.min(targetRect.left + targetRect.width/2 - tw/2, window.innerWidth - tw - 20));
+    arrowTop = targetRect.bottom + gap + 2;
+    arrowLeft = targetRect.left + targetRect.width/2 - 10;
+  } else if(pos === 'top'){
+    arrowClass = 'arrow-top';
+    tipTop = targetRect.top - gap - tipRect.height - 12;
+    tipLeft = Math.max(20, Math.min(targetRect.left + targetRect.width/2 - tw/2, window.innerWidth - tw - 20));
+    arrowTop = targetRect.top - gap - 10;
+    arrowLeft = targetRect.left + targetRect.width/2 - 10;
+  } else if(pos === 'left'){
+    arrowClass = 'arrow-left';
+    tipTop = Math.max(20, Math.min(targetRect.top + targetRect.height/2 - tipRect.height/2, window.innerHeight - tipRect.height - 20));
+    tipLeft = targetRect.left - tw - gap - 18;
+    arrowTop = targetRect.top + targetRect.height/2 - 10;
+    arrowLeft = targetRect.left - gap - 8;
+  } else {
+    arrowClass = 'arrow-right';
+    tipTop = Math.max(20, Math.min(targetRect.top + targetRect.height/2 - tipRect.height/2, window.innerHeight - tipRect.height - 20));
+    tipLeft = targetRect.right + gap + 8;
+    arrowTop = targetRect.top + targetRect.height/2 - 10;
+    arrowLeft = targetRect.right + gap - 2;
+  }
+
+  if(tipTop < 10) tipTop = 10;
+  if(tipLeft < 10) tipLeft = 10;
+
+  tooltip.style.left = tipLeft + 'px';
+  tooltip.style.top = tipTop + 'px';
+
+  arrow.className = 'tour-arrow ' + arrowClass;
+  arrow.style.left = arrowLeft + 'px';
+  arrow.style.top = arrowTop + 'px';
+}
+
+document.getElementById('tourNextBtn').addEventListener('click', ()=>{
+  tourStepIndex++;
+  showTourStep();
+});
+document.getElementById('tourSkipBtn').addEventListener('click', ()=>{
+  endTour();
+});
+backdrop.addEventListener('click', ()=>{
+  endTour();
+});
+
+function maybeStartTour(){
+  if(tourSeen()) return;
+  if(!currentUserId) return;
+  setTimeout(()=>{ startTour(); }, 1200);
 }
 </script>
 <audio id="previewAudio" preload="none"></audio>
