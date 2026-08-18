@@ -6185,7 +6185,7 @@ async function loadTidalPlaylist(url){
     if(batchData.included){
       for(const inc of batchData.included){
         if(inc.type === 'artists' && inc.id) artistMap[inc.id] = inc.attributes && inc.attributes.name;
-        if(inc.type === 'albums' && inc.id) albumMap[inc.id] = inc.attributes && inc.attributes.title;
+        if(inc.type === 'albums' && inc.id) albumMap[inc.id] = inc.attributes || {};
       }
     }
     if(batchData.data){
@@ -6194,7 +6194,9 @@ async function loadTidalPlaylist(url){
         const artists = (t.relationships && t.relationships.artists && t.relationships.artists.data || [])
           .map(a => artistMap[a.id]).filter(Boolean);
         const albumRel = t.relationships && t.relationships.albums && t.relationships.albums.data;
-        const album = (albumRel && albumRel[0] && albumMap[albumRel[0].id]) || '';
+        const albumAttr = (albumRel && albumRel[0] && albumMap[albumRel[0].id]) || {};
+        const album = albumAttr.title || '';
+        const year = albumAttr.releaseDate ? parseInt(albumAttr.releaseDate.slice(0,4), 10) : null;
         const durationStr = attrs.duration || '';
         let durationMs = 0;
         const durMatch = durationStr.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
@@ -6207,6 +6209,7 @@ async function loadTidalPlaylist(url){
           album,
           coverArt: null,
           durationMs,
+          year: year || null,
         });
       }
     }
@@ -6448,6 +6451,7 @@ function enrichImportedSongs(clusterId, serviceLabel){
             if(hit.artworkUrl100) s.coverArt = hit.artworkUrl100.replace('100x100', '300x300');
             if(hit.collectionName && !s.album) s.album = hit.collectionName;
             if(hit.primaryGenreName && (!s.genres || s.genres.length === 0)) s.genres = [hit.primaryGenreName];
+            if(hit.releaseDate && !s.year) s.year = parseInt(hit.releaseDate.slice(0,4), 10) || null;
           }
         }catch(e){}
         done++;
@@ -6515,7 +6519,8 @@ document.getElementById('spotifyImportConfirmBtn').addEventListener('click', ()=
       credit: '',
       coverArt: t.coverArt || null,
       tier: null,
-      remindsOf: []
+      remindsOf: [],
+      year: t.year || null,
     }));
     const dupes = findDuplicates(newSongs);
     const doImportSave = ()=>{
@@ -11265,7 +11270,7 @@ if(getAnalyticsConsent() === 'rejected'){
 }
 
 /* ---- GUIDED TOUR ---- */
-const TOUR_KEY = 'tonic-tour-seen-v2';
+const TOUR_KEY = 'tonic-tour-seen-v4';
 function tourSeen(){ return localStorage.getItem(TOUR_KEY); }
 function tourMarkSeen(){ localStorage.setItem(TOUR_KEY, '1'); }
 
@@ -11332,6 +11337,7 @@ const tourDesc = document.getElementById('tourDesc');
 const tourDots = document.getElementById('tourDots');
 
 function startTour(){
+  console.log('[TOUR] startTour called, steps:', TOUR_STEPS.length);
   tourStepIndex = 0;
   backdrop.classList.add('open');
   renderTourDots();
@@ -11367,6 +11373,8 @@ function showTourStep(){
     el = document.querySelector(step.target);
   }
   if(!el){ tourStepIndex++; showTourStep(); return; }
+  const elRect = el.getBoundingClientRect();
+  if(elRect.width === 0 && elRect.height === 0){ tourStepIndex++; showTourStep(); return; }
 
   const rect = el.getBoundingClientRect();
   const pad = 8;
@@ -11454,8 +11462,10 @@ backdrop.addEventListener('click', ()=>{
 });
 
 function maybeStartTour(){
-  if(tourSeen()) return;
+  console.log('[TOUR] maybeStartTour called, currentUserId:', currentUserId, 'tourSeen:', tourSeen());
   if(!currentUserId) return;
+  if(tourSeen()) return;
+  console.log('[TOUR] starting tour in 1200ms');
   setTimeout(()=>{ startTour(); }, 1200);
 }
 </script>
