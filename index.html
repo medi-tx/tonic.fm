@@ -6004,8 +6004,21 @@ async function loadTidalPlaylist(url){
         if(resp.ok){ delay = Math.max(1500, delay - 200); return resp; }
         if(resp.status === 429){
           const retryAfter = parseInt(resp.headers.get('retry-after') || '5');
-          if(listEl) listEl.innerHTML = `<p class="profile-empty-note">Loading ${totalItems} tracks from Tidal… (cooling down ${retryAfter}s)</p>`;
+          const cdEnd = Date.now() + retryAfter * 1000;
+          importProgressState = { active: true, label: `Loading tracks from Tidal… (cooling down)`, done: trackIds.length, total: totalItems, startTime: tidalStartTime, listEl, cooldownEnd: cdEnd };
+          const cdTimer = setInterval(()=>{
+            if(Date.now() >= cdEnd){ clearInterval(cdTimer); return; }
+            const left = Math.ceil((cdEnd - Date.now()) / 1000);
+            if(listEl){
+              const elapsed = (Date.now() - tidalStartTime) / 1000;
+              const rate = page > 0 ? elapsed / page : 2;
+              const etaSec = Math.round((totalPages - page) * rate + left);
+              listEl.innerHTML = `<p class="profile-empty-note">Loading tracks from Tidal… ${trackIds.length}/${totalItems} · cooling down ${left}s · ~${fmtTime(etaSec)} remaining (${fmtTime(elapsed)} elapsed)</p>`;
+            }
+          }, 1000);
           await new Promise(r => setTimeout(r, retryAfter * 1000));
+          clearInterval(cdTimer);
+          importProgressState = { active: true, label: 'Loading tracks from Tidal…', done: trackIds.length, total: totalItems, startTime: tidalStartTime, listEl };
           delay = Math.min(5000, delay + 1000);
           continue;
         }
