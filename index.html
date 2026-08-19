@@ -570,7 +570,7 @@
   .add-btn.secondary{
     background:transparent;
     color:var(--on-ink);
-    border:1px solid var(--on-ink);
+    border:1px solid rgba(var(--on-paper-rgb),0.22);
   }
   .add-btn.secondary:hover{ background:rgba(var(--on-paper-rgb),0.12); }
   .add-btn.secondary.active{
@@ -589,6 +589,11 @@
     border:1px solid rgba(var(--on-paper-rgb),0.22);
   }
   .controls .add-btn.secondary:hover{ background:rgba(var(--on-paper-rgb),0.08); }
+  #toggleArchive{
+    color:var(--sage);
+    border:1px solid var(--sage) !important;
+  }
+  #toggleArchive:hover{ background:rgba(var(--sage),0.12); }
   .controls .add-btn.secondary.active{
     background:var(--rose);
     color:var(--ink);
