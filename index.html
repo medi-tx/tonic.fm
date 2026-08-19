@@ -17,11 +17,11 @@
     --ink-2:#2a2c33;
     --paper:#eedd95;
     --paper-2:#e0d08c;
-    --gold:#FFD600;
-    --rose:#FF3D00;
-    --teal:#00BFA5;
-    --lilac:#AA00FF;
-    --sage:#2962FF;
+    --gold:#F4A300;
+    --rose:#2A9D8F;
+    --teal:#E63946;
+    --lilac:#8E44AD;
+    --sage:#264653;
     --line: rgba(18,20,28,0.15);
     --text-on-ink: #eedd95;
     --text-dim: rgba(238,221,149,0.6);
@@ -3433,18 +3433,22 @@ function saveWishlist(){
 /* =========================================================
    THEME CUSTOMIZATION
    ========================================================= */
-const DEFAULT_THEME = { ink:'#12141c', paper:'#eedd95', gold:'#FFD600', rose:'#FF3D00', teal:'#00BFA5', lilac:'#AA00FF', sage:'#2962FF' };
+const DEFAULT_THEME = { ink:'#12141c', paper:'#eedd95', gold:'#F4A300', rose:'#2A9D8F', teal:'#E63946', lilac:'#8E44AD', sage:'#264653' };
 
 const THEME_PRESETS = [
-  { name:'tonicfm (default)', colors: DEFAULT_THEME },
-  { name:'Forest', colors: { ink:'#1a2420', paper:'#eef1e6', gold:'#FFD600', rose:'#FF3D00', teal:'#00BFA5', lilac:'#AA00FF', sage:'#2962FF' } },
-  { name:'Sunset', colors: { ink:'#2a1a2e', paper:'#fdf0e4', gold:'#FFD600', rose:'#FF3D00', teal:'#00BFA5', lilac:'#AA00FF', sage:'#2962FF' } },
-  { name:'Mono', colors: { ink:'#181818', paper:'#f2f0ec', gold:'#c0c0c0', rose:'#ffffff', teal:'#a0a0a0', lilac:'#d0d0d0', sage:'#606060' } },
-  { name:'Soft', colors: { ink:'#6d666d', paper:'#f1e8d6', gold:'#FFD600', rose:'#FF3D00', teal:'#00BFA5', lilac:'#AA00FF', sage:'#2962FF' } },
-  { name:'Futuristic', colors: { ink:'#2c3548', paper:'#6bf2d6', gold:'#FFD600', rose:'#FF3D00', teal:'#00BFA5', lilac:'#AA00FF', sage:'#2962FF' } },
-  { name:'Romantic', colors: { ink:'#684b6a', paper:'#f8e4d8', gold:'#FFD600', rose:'#FF3D00', teal:'#00BFA5', lilac:'#AA00FF', sage:'#2962FF' } },
-  { name:'Dark', colors: { ink:'#1e1c1f', paper:'#302a2c', gold:'#FFD600', rose:'#FF3D00', teal:'#00BFA5', lilac:'#AA00FF', sage:'#2962FF' } },
-  { name:'Light', colors: { ink:'#f5f2ea', paper:'#2a2c34', gold:'#FFD600', rose:'#FF3D00', teal:'#00BFA5', lilac:'#AA00FF', sage:'#2962FF' } }
+  { name:'tonicfm', colors: DEFAULT_THEME },
+  { name:'Euphoric', colors: { ink:'#1a0a2e', paper:'#fff8f0', gold:'#ff2fa0', teal:'#ff9e00', rose:'#ffd60a', lilac:'#7cff6b', sage:'#6bd8ff' } },
+  { name:'Calm', colors: { ink:'#0f2027', paper:'#f4faf9', gold:'#8ecae6', teal:'#a8dadc', rose:'#bde0c8', lilac:'#cdeac0', sage:'#e0ece4' } },
+  { name:'Melancholy', colors: { ink:'#141b2e', paper:'#eceff4', gold:'#5c6b8a', teal:'#4a5a78', rose:'#6b7a99', lilac:'#8c95ab', sage:'#aab0c2' } },
+  { name:'Fierce', colors: { ink:'#100000', paper:'#fff2f0', gold:'#ff7a00', teal:'#ff1e1e', rose:'#8a0f0f', lilac:'#c81d1d', sage:'#4a0a0a' } },
+  { name:'Dreamy', colors: { ink:'#2b1b3d', paper:'#faf4ff', gold:'#e0b3ff', teal:'#c9a0ff', rose:'#a0c4ff', lilac:'#bde0fe', sage:'#ffd6e8' } },
+  { name:'Nostalgic', colors: { ink:'#2e2318', paper:'#f5ecd9', gold:'#d4a24c', teal:'#c17f4a', rose:'#a85d3b', lilac:'#8a5a44', sage:'#6e6350' } },
+  { name:'Mysterious', colors: { ink:'#0a0a14', paper:'#e8e4f0', gold:'#7b2fbe', teal:'#4b1d78', rose:'#2e0f52', lilac:'#1a1a3d', sage:'#3d1f5c' } },
+  { name:'Romantic', colors: { ink:'#2b0f1a', paper:'#fff0f3', gold:'#ff6f91', teal:'#e63958', rose:'#c9184a', lilac:'#f8a5c2', sage:'#ffccd5' } },
+  { name:'Anxious', colors: { ink:'#1c1f14', paper:'#eef0e2', gold:'#c9d92b', teal:'#8a9a3c', rose:'#5c6b2e', lilac:'#9c8a3c', sage:'#4a4a3c' } },
+  { name:'Confident', colors: { ink:'#0a1128', paper:'#f4f6fb', gold:'#ffd60a', teal:'#1d3d8f', rose:'#3a6ea5', lilac:'#c0c0c0', sage:'#001233' } },
+  { name:'Playful', colors: { ink:'#1a1a2e', paper:'#fffbf0', gold:'#ff595e', teal:'#ffca3a', rose:'#8ac926', lilac:'#1982c4', sage:'#6a4c93' } },
+  { name:'Serene', colors: { ink:'#1b2b23', paper:'#f7faf5', gold:'#a8c9a1', teal:'#c8dfc0', rose:'#dceedd', lilac:'#e8f0e3', sage:'#cfe0d8' } }
 ];
 function hexToRgb(hex){
   const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -4041,7 +4045,7 @@ document.getElementById('timeline').addEventListener('click', e=>{
 });
 
 /* ---- stats page ---- */
-const TIER_CHART_COLORS = { '★':'#FFD600', S:'#FF3D00', A:'#00BFA5', B:'#AA00FF', C:'#2962FF' };
+const TIER_CHART_COLORS = { '★':'#F4A300', S:'#E63946', A:'#2A9D8F', B:'#8E44AD', C:'#264653' };
 function statChartCanvas(id){
   const c = document.getElementById(id);
   const dpr = window.devicePixelRatio || 1;
@@ -4543,7 +4547,7 @@ async function drawShareCard(opts){
     ctx.font = '500 21px "Space Grotesk", sans-serif';
     ctx.fillText(cardTruncate(ctx, formatArtists(s.artists), tw, ctx.font), tx, y + 52);
     const tier = s.tier || '';
-        const chipCol = { '★':'#FFD600', S:'#FF3D00', A:'#00BFA5', B:'#AA00FF', C:'#2962FF' }[tier] || '#AA00FF';
+        const chipCol = { '★':'#F4A300', S:'#E63946', A:'#2A9D8F', B:'#8E44AD', C:'#264653' }[tier] || '#8E44AD';
     ctx.fillStyle = chipCol;
     cardRoundRect(ctx, tx, y + 64, 46, 30, 8);
     ctx.fill();
@@ -4658,7 +4662,7 @@ async function drawSongShareCard(opts){
     ctx.fillText(cardTruncate(ctx, genresStr, W - 176, ctx.font), W/2, coverY + coverS + 240);
   }
   const tier = s.tier || '';
-  const chipCol = { S: t.teal || '#FF3D00', A: t.rose || '#00BFA5', B: t.lilac || '#AA00FF', C: t.sage || '#2962FF', '★': t.gold || '#FFD600' }[tier] || t.paper || '#eedd95';
+  const chipCol = { S: t.teal || '#E63946', A: t.rose || '#2A9D8F', B: t.lilac || '#8E44AD', C: t.sage || '#264653', '★': t.gold || '#F4A300' }[tier] || t.paper || '#eedd95';
   ctx.fillStyle = chipCol;
   cardRoundRect(ctx, W/2 - 44, coverY + coverS + 262, 88, 48, 12);
   ctx.fill();
@@ -4696,7 +4700,7 @@ async function drawTierShareCard(opts){
   ctx.fillStyle = t.paper ? t.paper + 'B3' : 'rgba(238,221,149,0.7)';
   ctx.font = '500 30px "Space Grotesk", sans-serif';
   ctx.fillText('TIER BOARD', PAD, titleY);
-  const tierColors = { '★': t.gold || '#FFD600', S: t.teal || '#FF3D00', A: t.rose || '#00BFA5', B: t.lilac || '#AA00FF', C: t.sage || '#2962FF' };
+  const tierColors = { '★': t.gold || '#F4A300', S: t.teal || '#E63946', A: t.rose || '#2A9D8F', B: t.lilac || '#8E44AD', C: t.sage || '#264653' };
   const tierTextColors = { '★': t.ink || '#12141c', S: t.paper || '#eedd95', A: t.ink || '#12141c', B: t.ink || '#12141c', C: t.ink || '#12141c' };
   const allSongs = tiers.flatMap(t=>byTier[t]);
   const imgs = await Promise.all(allSongs.map(s=>loadCardImage(s.coverArt)));
