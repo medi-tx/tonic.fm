@@ -20,6 +20,8 @@
     --gold:#b4b9f3;
     --rose:#fd9f1c;
     --teal:#ad0505;
+    --lilac:#c9a0dc;
+    --sage:#7a8b6a;
     --line: rgba(18,20,28,0.15);
     --text-on-ink: #eedd95;
     --text-dim: rgba(238,221,149,0.6);
@@ -386,8 +388,8 @@
   .track-tier-btn.tier-S{ color:var(--teal); }
   .track-tier-btn.tier-★{ color:var(--gold); }
   .track-tier-btn.tier-A{ color:var(--rose); }
-  .track-tier-btn.tier-B{ color:var(--paper); }
-  .track-tier-btn.tier-C{ color:var(--ink); opacity:0.7; }
+  .track-tier-btn.tier-B{ color:var(--lilac); }
+  .track-tier-btn.tier-C{ color:var(--sage); }
 
 
   /* CLUSTER NAME LIST / DETAIL */
@@ -644,8 +646,8 @@
   .tier-board-badge.tier-S{ background:var(--teal); border-color:var(--teal); }
   .tier-board-badge.tier-★{ background:var(--gold); border-color:var(--gold); }
   .tier-board-badge.tier-A{ background:var(--rose); border-color:var(--rose); }
-  .tier-board-badge.tier-B{ background:var(--paper); border-color:var(--paper); }
-  .tier-board-badge.tier-C{ background:#7a7468; border-color:#7a7468; }
+  .tier-board-badge.tier-B{ background:var(--lilac); border-color:var(--lilac); }
+  .tier-board-badge.tier-C{ background:var(--sage); border-color:var(--sage); }
 
   .tier-board-covers{
     display:flex;
@@ -833,8 +835,8 @@
   .tier-badge.tier-S{ background:var(--teal); border-color:var(--teal); }
   .tier-badge.tier-★{ background:var(--gold); border-color:var(--gold); }
   .tier-badge.tier-A{ background:var(--rose); color:var(--on-ink); border-color:var(--rose); }
-  .tier-badge.tier-B{ background:var(--paper); color:var(--on-ink); border-color:var(--paper); }
-  .tier-badge.tier-C{ background:#7a7468; color:var(--on-ink); border-color:#7a7468; }
+  .tier-badge.tier-B{ background:var(--lilac); color:var(--on-ink); border-color:var(--lilac); }
+  .tier-badge.tier-C{ background:var(--sage); color:var(--on-ink); border-color:var(--sage); }
 
   .tier-badge.tier-none{ background:none; color: rgba(var(--on-paper-rgb),0.55); border-style:dashed; font-style:normal; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.5px; }
 
@@ -1003,8 +1005,8 @@
   .tier-picker button.selected.tier-S{ background:var(--teal); border-color:var(--teal); }
   .tier-picker button.selected.tier-★{ background:var(--gold); border-color:var(--gold); }
   .tier-picker button.selected.tier-A{ background:var(--rose); border-color:var(--rose); color:var(--on-ink); }
-  .tier-picker button.selected.tier-B{ background:var(--paper); border-color:var(--paper); color:var(--on-ink); }
-  .tier-picker button.selected.tier-C{ background:#7a7468; border-color:#7a7468; color:var(--on-ink); }
+  .tier-picker button.selected.tier-B{ background:var(--lilac); border-color:var(--lilac); color:var(--on-ink); }
+  .tier-picker button.selected.tier-C{ background:var(--sage); border-color:var(--sage); color:var(--on-ink); }
 
 
   .modal-actions{
@@ -3194,8 +3196,22 @@
       <div class="color-field">
         <input type="color" id="theme-teal" data-var="--teal">
         <div class="color-field-labels">
-          <span>Dark blue accent</span>
+          <span>Red accent</span>
           <input type="text" id="theme-teal-text" data-var="--teal">
+        </div>
+      </div>
+      <div class="color-field">
+        <input type="color" id="theme-lilac" data-var="--lilac">
+        <div class="color-field-labels">
+          <span>B tier</span>
+          <input type="text" id="theme-lilac-text" data-var="--lilac">
+        </div>
+      </div>
+      <div class="color-field">
+        <input type="color" id="theme-sage" data-var="--sage">
+        <div class="color-field-labels">
+          <span>C tier</span>
+          <input type="text" id="theme-sage-text" data-var="--sage">
         </div>
       </div>
     </div>
@@ -3469,14 +3485,14 @@ function saveWishlist(){
 /* =========================================================
    THEME CUSTOMIZATION
    ========================================================= */
-const DEFAULT_THEME = { ink:'#12141c', paper:'#eedd95', gold:'#b4b9f3', rose:'#fd9f1c', teal:'#ad0505' };
+const DEFAULT_THEME = { ink:'#12141c', paper:'#eedd95', gold:'#b4b9f3', rose:'#fd9f1c', teal:'#ad0505', lilac:'#c9a0dc', sage:'#7a8b6a' };
 
 const THEME_PRESETS = [
   { name:'Red Accent', colors: DEFAULT_THEME },
-  { name:'Side A Personal Mixtape', colors: { ink:'#12141c', paper:'#eedd95', gold:'#b4b9f3', rose:'#fd9f1c', teal:'#b4b9f3' } },
-  { name:'Forest', colors: { ink:'#1a2420', paper:'#eef1e6', gold:'#c9a24b', rose:'#b5654a', teal:'#4f8f6a' } },
-  { name:'Sunset', colors: { ink:'#2a1a2e', paper:'#fdf0e4', gold:'#f0973b', rose:'#e0526f', teal:'#7a5ea8' } },
-  { name:'Mono', colors: { ink:'#181818', paper:'#f2f0ec', gold:'#9a9a9a', rose:'#c96b6b', teal:'#6b96a0' } }
+  { name:'Side A Personal Mixtape', colors: { ink:'#12141c', paper:'#eedd95', gold:'#b4b9f3', rose:'#fd9f1c', teal:'#b4b9f3', lilac:'#c9a0dc', sage:'#7a8b6a' } },
+  { name:'Forest', colors: { ink:'#1a2420', paper:'#eef1e6', gold:'#c9a24b', rose:'#b5654a', teal:'#4f8f6a', lilac:'#8b7bb5', sage:'#6b8f63' } },
+  { name:'Sunset', colors: { ink:'#2a1a2e', paper:'#fdf0e4', gold:'#f0973b', rose:'#e0526f', teal:'#7a5ea8', lilac:'#c87dba', sage:'#7a9e6f' } },
+  { name:'Mono', colors: { ink:'#181818', paper:'#f2f0ec', gold:'#9a9a9a', rose:'#c96b6b', teal:'#6b96a0', lilac:'#8a7a9a', sage:'#7a8a7a' } }
 ];
 function hexToRgb(hex){
   const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -3516,6 +3532,8 @@ function applyTheme(theme){
   root.setProperty('--gold', t.gold);
   root.setProperty('--rose', t.rose);
   root.setProperty('--teal', t.teal);
+  root.setProperty('--lilac', t.lilac || '#c9a0dc');
+  root.setProperty('--sage', t.sage || '#7a8b6a');
   root.setProperty('--line', rgba(t.ink, 0.15));
   const inkLum = luminance(t.ink);
   const paperLum = luminance(t.paper);
@@ -4109,7 +4127,7 @@ document.getElementById('timeline').addEventListener('click', e=>{
 });
 
 /* ---- stats page ---- */
-const TIER_CHART_COLORS = { '★':'#b4b9f3', S:'#ad0505', A:'#fd9f1c', B:'#eedd95', C:'#7a7468' };
+const TIER_CHART_COLORS = { '★':'#b4b9f3', S:'#ad0505', A:'#fd9f1c', B:'#c9a0dc', C:'#7a8b6a' };
 function statChartCanvas(id){
   const c = document.getElementById(id);
   const dpr = window.devicePixelRatio || 1;
@@ -4611,7 +4629,7 @@ async function drawShareCard(opts){
     ctx.font = '500 21px "Space Grotesk", sans-serif';
     ctx.fillText(cardTruncate(ctx, formatArtists(s.artists), tw, ctx.font), tx, y + 52);
     const tier = s.tier || '';
-        const chipCol = { '★':'#b4b9f3', S:'#ad0505', A:'#fd9f1c', B:'#eedd95', C:'#7a7468' }[tier] || '#eedd95';
+        const chipCol = { '★':'#b4b9f3', S:'#ad0505', A:'#fd9f1c', B:'#c9a0dc', C:'#7a8b6a' }[tier] || '#c9a0dc';
     ctx.fillStyle = chipCol;
     cardRoundRect(ctx, tx, y + 64, 46, 30, 8);
     ctx.fill();
@@ -4726,7 +4744,7 @@ async function drawSongShareCard(opts){
     ctx.fillText(cardTruncate(ctx, genresStr, W - 176, ctx.font), W/2, coverY + coverS + 240);
   }
   const tier = s.tier || '';
-  const chipCol = { S:'#272d82', A:'#fd9f1c', B:'#eedd95', C:'#7a7468', '★': t.gold || '#b4b9f3' }[tier] || '#eedd95';
+  const chipCol = { S: t.teal || '#ad0505', A: t.rose || '#fd9f1c', B: t.lilac || '#c9a0dc', C: t.sage || '#7a8b6a', '★': t.gold || '#b4b9f3' }[tier] || t.paper || '#eedd95';
   ctx.fillStyle = chipCol;
   cardRoundRect(ctx, W/2 - 44, coverY + coverS + 262, 88, 48, 12);
   ctx.fill();
@@ -4764,7 +4782,7 @@ async function drawTierShareCard(opts){
   ctx.fillStyle = t.paper ? t.paper + 'B3' : 'rgba(238,221,149,0.7)';
   ctx.font = '500 30px "Space Grotesk", sans-serif';
   ctx.fillText('TIER BOARD', PAD, titleY);
-  const tierColors = { '★': t.gold || '#b4b9f3', S: t.teal || '#272d82', A: t.rose || '#fd9f1c', B: t.paper || '#eedd95', C: '#7a7468' };
+  const tierColors = { '★': t.gold || '#b4b9f3', S: t.teal || '#ad0505', A: t.rose || '#fd9f1c', B: t.lilac || '#c9a0dc', C: t.sage || '#7a8b6a' };
   const tierTextColors = { '★': t.ink || '#12141c', S: t.paper || '#eedd95', A: t.ink || '#12141c', B: t.ink || '#12141c', C: t.ink || '#12141c' };
   const allSongs = tiers.flatMap(t=>byTier[t]);
   const imgs = await Promise.all(allSongs.map(s=>loadCardImage(s.coverArt)));
