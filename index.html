@@ -2558,7 +2558,7 @@
       <button class="theme-btn" id="editStickersBtn">🎨 Stickers</button>
       <button class="theme-btn" id="discoverBtn">🔎 Friends</button>
       <button class="theme-btn" id="themeBtn">🎨 Theme</button>
-      <a href="songdb.html" class="theme-btn" style="text-decoration:none;">📀 Song Database</a>
+      <a href="songdb.html" class="theme-btn" id="songDbBtn" style="text-decoration:none; display:none;">📀 Song Database</a>
       <button class="avatar-btn" id="myProfileBtn" title="My profile"><span id="myAvatarContent">?</span></button>
       <button class="logout-btn" id="logoutBtn">Log out</button>
     </div>
@@ -4394,6 +4394,7 @@ document.getElementById('yearReviewOverlay').addEventListener('click', e=>{
 function showAnalyticsExport(){
   if(myProfile && myProfile.username === 'samannleblanc'){
     document.getElementById('exportAnalyticsBtn').style.display = '';
+    document.getElementById('songDbBtn').style.display = '';
   }
 }
 /* ---- SONG OF THE DAY: WEEKLY SCHEDULER (samannleblanc only) ---- */
