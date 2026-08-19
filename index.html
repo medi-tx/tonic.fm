@@ -2755,7 +2755,7 @@
   <div class="modal">
     <h3 id="modalTitle">Add a song</h3>
     <div class="field">
-      <label>Cover art</label>
+      <label>Artwork</label>
       <div class="cover-upload">
         <img id="f-cover-preview" class="cover-preview" style="display:none;">
         <div id="f-cover-empty" class="cover-preview-empty"></div>
@@ -2895,7 +2895,7 @@
     <h3 id="multiModalTitle">New Linked Stack</h3>
     <p class="multi-hint" id="multiHint">These fields apply to every song you add below.</p>
     <div class="field">
-      <label id="multiCoverLabel">Cover art (shared)</label>
+      <label id="multiCoverLabel">Artwork (shared)</label>
       <div class="cover-upload">
         <img id="mf-cover-preview" class="cover-preview" style="display:none;">
         <div id="mf-cover-empty" class="cover-preview-empty"></div>
@@ -3169,7 +3169,7 @@
       <div class="discover-list" id="wishSearchResults" style="display:none; margin-top:6px;"></div>
     </div>
     <div class="field">
-      <label>Cover art</label>
+      <label>Artwork</label>
       <div class="cover-upload">
         <img id="w-cover-preview" class="cover-preview" style="display:none;">
         <div id="w-cover-empty" class="cover-preview-empty"></div>
@@ -5035,7 +5035,7 @@ document.getElementById('shareDownloadBtn').addEventListener('click', async ()=>
     }
   }catch(err){
     console.error('PNG download failed:', err);
-    note.textContent = 'Download failed — some cover art blocks export. Try Copy image instead.';
+    note.textContent = 'Download failed — some artwork blocks export. Try Copy image instead.';
   }
 });
 document.getElementById('shareCopyBtn').addEventListener('click', async ()=>{
@@ -5545,7 +5545,7 @@ function openMultiModal(mode){
   document.getElementById('mf-tags').value = '';
   document.getElementById('mf-why').value = '';
   document.getElementById('mf-credit').value = '';
-  document.getElementById('multiCoverLabel').textContent = isAlbum ? 'Cover art (shared)' : 'Cover art (optional, shared)';
+  document.getElementById('multiCoverLabel').textContent = isAlbum ? 'Artwork (shared)' : 'Artwork (optional, shared)';
   currentMultiCoverArt = null;
   setImagePreview('mf-cover', null);
   renderRemindsPicker('mf', []);
@@ -6339,8 +6339,8 @@ async function enrichTracksFromItunes(tracks, listEl, statusEl){
   const totalBatches = Math.ceil(tracks.length / BATCH_SIZE);
   const initialEtaSec = Math.round(totalBatches * (BATCH_DELAY / 1000) + totalBatches * 0.3);
   const initialEtaStr = fmtTime(initialEtaSec);
-  if(statusEl) statusEl.textContent = `Fetching cover art from iTunes… 0/${tracks.length} · ~${initialEtaStr} estimated`;
-  importProgressState = { active: true, label: 'Fetching cover art from iTunes…', done: 0, total: tracks.length, startTime, statusEl };
+  if(statusEl) statusEl.textContent = `Fetching artwork from iTunes… 0/${tracks.length} · ~${initialEtaStr} estimated`;
+  importProgressState = { active: true, label: 'Fetching artwork from iTunes…', done: 0, total: tracks.length, startTime, statusEl };
   startImportProgressTimer();
   for(let batchNum = 0; batchNum < totalBatches; batchNum++){
     const i = batchNum * BATCH_SIZE;
@@ -6372,7 +6372,7 @@ async function enrichTracksFromItunes(tracks, listEl, statusEl){
       const etaSec = Math.round(remainingBatches * rate);
       const etaStr = fmtTime(etaSec);
       const elapsedStr = fmtTime(elapsed);
-      statusEl.textContent = `Fetching cover art from iTunes… ${done}/${tracks.length} · ~${etaStr} remaining (${elapsedStr} elapsed)`;
+      statusEl.textContent = `Fetching artwork from iTunes… ${done}/${tracks.length} · ~${etaStr} remaining (${elapsedStr} elapsed)`;
     }
     if(importProgressState) importProgressState.done = done;
     if(listEl && done <= 200){
@@ -6464,7 +6464,7 @@ document.getElementById('spotify-url-input').addEventListener('input', e=>{
 document.getElementById('spotifyImportConfirmBtn').addEventListener('click', ()=>{
   if(playlistImportedTracks.length === 0) return;
   if(playlistImportInProgress){
-    const proceed = confirm('This playlist is still loading cover art. Are you sure you want to import now? Some tracks may be missing cover art.');
+    const proceed = confirm('This playlist is still loading artwork. Are you sure you want to import now? Some tracks may be missing artwork.');
     if(!proceed) return;
   }
   const playlistIdMatch = playlistImportLoadedUrl && playlistImportLoadedUrl.match(/playlist\/([a-f0-9-]+)/i);
@@ -8895,7 +8895,7 @@ function syncToSupabase(){
           const { error: stripErr } = await sb.from('user_data')
             .upsert({ user_id: currentUserId, songs: stripped, updated_at: new Date().toISOString() }, { onConflict: 'user_id' });
           if(stripErr) console.error('Error saving stripped songs:', stripErr);
-          else console.warn('Saved songs without cover art due to size limit. Cover art preserved in localStorage.');
+          else console.warn('Saved songs without artwork due to size limit. Artwork preserved in localStorage.');
         }
       }
     }catch(e){
