@@ -5186,7 +5186,7 @@ function render(){
   const active = songs.filter(s=>!s.archived);
   const archivedCount = songs.filter(s=>s.archived).length;
   const sCount = active.filter(s=>s.tier==='S').length;
-  document.getElementById('stats').innerHTML = `<b>${myFriendsCount}</b> friend${myFriendsCount!==1?'s':''} &nbsp;·&nbsp; <b>${active.length}</b> songs logged &nbsp;·&nbsp; <span style="color:var(--teal)"><b>${sCount}</b> S</span> &nbsp;·&nbsp; <span style="color:var(--rose)"><b>${active.filter(s=>s.tier==='A').length}</b> A</span> &nbsp;·&nbsp; <span style="color:var(--lilac)"><b>${active.filter(s=>s.tier==='B').length}</b> B</span> &nbsp;·&nbsp; <span style="color:var(--sage)"><b>${active.filter(s=>s.tier==='C').length}</b> C</span> &nbsp;·&nbsp; <b>${active.filter(s=>s.tier==='★').length}</b> ★ &nbsp;·&nbsp; <b>${archivedCount}</b> archived`;
+  document.getElementById('stats').innerHTML = `<b>${myFriendsCount}</b> friend${myFriendsCount!==1?'s':''} &nbsp;·&nbsp; <b>${active.length}</b> songs logged &nbsp;·&nbsp; <span style="color:var(--teal)"><b>${sCount}</b> S</span> &nbsp;·&nbsp; <span style="color:var(--rose)"><b>${active.filter(s=>s.tier==='A').length}</b> A</span> &nbsp;·&nbsp; <span style="color:var(--lilac)"><b>${active.filter(s=>s.tier==='B').length}</b> B</span> &nbsp;·&nbsp; <span style="color:var(--sage)"><b>${active.filter(s=>s.tier==='C').length}</b> C</span> &nbsp;·&nbsp; <span style="color:var(--gold)"><b>${active.filter(s=>s.tier==='★').length}</b> ★</span> &nbsp;·&nbsp; <b>${archivedCount}</b> archived`;
 
   populateFilters();
   renderStickerSections();
