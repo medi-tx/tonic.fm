@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>tonicfm</title>
+<title>timbre.fm</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="tonicfm">
+<meta name="apple-mobile-web-app-title" content="timbre.fm">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#12141c">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -2491,10 +2491,10 @@
 <!-- AUTH SCREEN -->
 <div id="authScreen" class="auth-screen">
   <div class="auth-screen-inner">
-  <div class="auth-logo-row"><img class="brand-logo js-logo" alt="tonicfm"></div>
+  <div class="auth-logo-row"><img class="brand-logo js-logo" alt="timbre.fm"></div>
   <div class="auth-card">
     <div id="loginFields">
-      <h1 class="auth-title"><span class="side-a">tonicfm</span>Sign in to your cataloguex</h1>
+      <h1 class="auth-title"><span class="side-a">timbre.fm</span>Sign in to your cataloguex</h1>
       <p class="auth-sub">Your entries are saved to your account, so you can pick up on any device.</p>
       <div class="field"><label>Email</label><input id="auth-email" type="email" autocomplete="email" placeholder="you@example.com"></div>
       <div class="field"><label>Password</label><input id="auth-password" type="password" autocomplete="current-password" placeholder="••••••••"></div>
@@ -2511,7 +2511,7 @@
       <button class="add-btn secondary auth-submit" id="auth-toggle-btn">Need an account? Sign up</button>
     </div>
     <div id="forgotFields" style="display:none;">
-      <h1 class="auth-title"><span class="side-a">tonicfm</span>Reset your password</h1>
+      <h1 class="auth-title"><span class="side-a">timbre.fm</span>Reset your password</h1>
       <p class="auth-sub">Enter your email and we'll send you a link to reset your password.</p>
       <div class="field"><label>Email</label><input id="forgot-email" type="email" autocomplete="email" placeholder="you@example.com"></div>
       <div id="forgot-error" class="auth-error" style="display:none;"></div>
@@ -2527,9 +2527,9 @@
 <!-- PASSWORD RECOVERY SCREEN (shown when the user arrives from a reset-password email link) -->
 <div id="recoveryScreen" class="auth-screen" style="display:none;">
   <div class="auth-screen-inner">
-  <div class="auth-logo-row"><img class="brand-logo js-logo" alt="tonicfm"></div>
+  <div class="auth-logo-row"><img class="brand-logo js-logo" alt="timbre.fm"></div>
   <div class="auth-card">
-    <h1 class="auth-title"><span class="side-a">tonicfm</span>Set a new password</h1>
+    <h1 class="auth-title"><span class="side-a">timbre.fm</span>Set a new password</h1>
     <p class="auth-sub">Choose a new password for your account.</p>
     <div class="field"><label>New password</label><input id="recovery-password" type="password" autocomplete="new-password" placeholder="••••••••"></div>
     <div class="field"><label>Confirm password</label><input id="recovery-password-2" type="password" autocomplete="new-password" placeholder="••••••••"></div>
@@ -2545,7 +2545,7 @@
   <div class="modal" style="max-width:440px;">
     <h3>Updated Terms of Service</h3>
     <p style="font-size:14px; line-height:1.6; color:rgba(var(--on-paper-rgb),0.85); margin:0 0 18px;">
-      We've published a Terms of Service and Privacy Policy for tonicfm. Please review and accept them to keep using your account.
+      We've published a Terms of Service and Privacy Policy for timbre.fm. Please review and accept them to keep using your account.
     </p>
     <p style="font-size:13px; margin:0 0 18px;">
       <a href="terms.html" target="_blank" rel="noopener" style="color:var(--teal); font-weight:600;">Read the Terms of Service</a>
@@ -2568,7 +2568,7 @@
 
   <header>
     <div class="header-brand">
-      <h1 style="margin:0;"><span style="font-family:'Fraunces',serif; font-style:italic; font-weight:700; color:var(--gold); font-size:22px; display:block; margin-bottom:6px;">tonicfm ♪</span><span class="side-a">SIDE A · PERSONAL MIXTAPE</span>Your Music Cataloguex</h1>
+      <h1 style="margin:0;"><span style="font-family:'Fraunces',serif; font-style:italic; font-weight:700; color:var(--gold); font-size:22px; display:block; margin-bottom:6px;">timbre.fm ♪</span><span class="side-a">SIDE A · PERSONAL MIXTAPE</span>Your Music Cataloguex</h1>
     </div>
     <div class="stats" id="stats"></div>
     <div class="header-actions">
@@ -2659,7 +2659,7 @@
 <div class="wrap" id="friendWrap" style="display:none;">
   <header>
     <div class="header-brand">
-      <span style="font-family:'Fraunces',serif; font-style:italic; font-weight:700; color:var(--gold); font-size:18px;">tonicfm ♪</span>
+      <span style="font-family:'Fraunces',serif; font-style:italic; font-weight:700; color:var(--gold); font-size:18px;">timbre.fm ♪</span>
       <button type="button" class="back-btn" id="friendBackBtn">← Back to my cataloguex</button>
     </div>
   </header>
@@ -2978,7 +2978,7 @@
       <input type="text" id="friend-username-search" placeholder="Search by username…" autocomplete="off">
     </div>
     <p class="profile-empty-note" id="discoverBlockedNote" style="display:none;">🔒 Friend requests are turned off for this account — you can't add or accept friends right now.</p>
-    <p class="theme-section-label" id="discoverListLabel">People on tonicfm</p>
+    <p class="theme-section-label" id="discoverListLabel">People on timbre.fm</p>
     <div class="discover-list" id="discoverList"></div>
     <div class="modal-actions">
       <button class="btn-cancel" id="discoverCloseBtn">Close</button>
@@ -3412,7 +3412,7 @@ let viewingWishlist = false;
 let viewingTierBoard = false;
 
 /* ---- FEATURE USAGE TRACKING ---- */
-const ANALYTICS_KEY = 'tonic-fm-analytics';
+const ANALYTICS_KEY = 'timbre-fm-analytics';
 let analyticsLog = [];
 function trackEvent(feature, detail){
   analyticsLog.push({ ts: Date.now(), feature, detail: detail || null });
@@ -3459,7 +3459,7 @@ function saveWishlist(){
 const DEFAULT_THEME = { ink:'#12141c', paper:'#eedd95', gold:'#F4A300', rose:'#2A9D8F', teal:'#E63946', lilac:'#8E44AD', sage:'#264653' };
 
 const THEME_PRESETS = [
-  { name:'tonicfm', colors: DEFAULT_THEME },
+  { name:'timbre.fm', colors: DEFAULT_THEME },
   { name:'Dark', colors: { ink:'#14151A', paper:'#1E2028', paperElevated:'#262933', border:'rgba(52,56,66,0.5)', gold:'#F4A300', teal:'#E63946', rose:'#2A9D8F', lilac:'#8E44AD', sage:'#264653' } },
   { name:'Light', colors: { ink:'#F7F5F0', paper:'#FFFFFF', paperElevated:'#FDFBF6', border:'#E5E1D8', gold:'#F4A300', teal:'#E63946', rose:'#2A9D8F', lilac:'#8E44AD', sage:'#264653' } },
   { name:'Euphoric', colors: { ink:'#1a0a2e', paper:'#fff8f0', paperElevated:'#ffe8ea', border:'#d6cdcdcc', gold:'#ff2fa0', teal:'#ff9e00', rose:'#ffd60a', lilac:'#7cff6b', sage:'#6bd8ff' } },
@@ -3779,7 +3779,7 @@ function renderRemindsPicker(prefix, selectedIds){
     const imgOrFallback = photo
       ? `<img src="${photo}">`
       : `<span class="rc-fallback">${escapeHtml((p.name||'?').charAt(0).toUpperCase())}</span>`;
-    const friendMark = lp ? `<span class="rc-linked" title="Actual friend on tonicfm">✓</span>` : '';
+    const friendMark = lp ? `<span class="rc-linked" title="Actual friend on timbre.fm">✓</span>` : '';
     label.innerHTML = `<input type="checkbox" value="${escapeAttr(p.id)}" ${selectedIds.includes(p.id)?'checked':''}> ${imgOrFallback} ${escapeHtml(p.name)}${friendMark}`;
     label.querySelector('input').addEventListener('change', e=>{
       label.classList.toggle('selected', e.target.checked);
@@ -3806,7 +3806,7 @@ function renderPeople(){
     const isExample = (p.id || '').startsWith('ex-');
     const lp = linkedProfile(p);
     const photo = (lp && lp.photo) ? lp.photo : p.photo;
-    const tip = lp ? 'Songs that remind me of @' + lp.username + ' (friend on tonicfm)' : 'Songs that remind me of ' + escapeAttr(p.name);
+    const tip = lp ? 'Songs that remind me of @' + lp.username + ' (friend on timbre.fm)' : 'Songs that remind me of ' + escapeAttr(p.name);
     return `
     <button type="button" class="person-card ${remindsFilterId===p.id?'active':''}${isExample?' example':''}${lp?' linked':''}" data-person="${p.id}" title="${tip}">
       <span class="person-edit" data-edit-person="${p.id}" title="Edit person">✎</span>
@@ -3997,7 +3997,7 @@ function songCardHtml(s, clusterCounts){
           if(!p) return '';
           const lp = linkedProfile(p);
           const photo = (lp && lp.photo) ? lp.photo : p.photo;
-          const tip = lp ? 'Friend @' + escapeAttr(lp.username) + ' on tonicfm' : 'Songs that remind me of ' + escapeAttr(p.name);
+          const tip = lp ? 'Friend @' + escapeAttr(lp.username) + ' on timbre.fm' : 'Songs that remind me of ' + escapeAttr(p.name);
           return `<span class="reminds-badge${lp?' linked':''}" data-person="${p.id}" title="${tip}">${photo?`<img src="${photo}" loading="lazy" decoding="async">`:''}${escapeHtml(p.name)}${lp?' <span class="rc-linked">✓</span>':''}<button type="button" class="reminds-badge-x" data-remove-reminder="${s.id}|${p.id}" title="Remove ${escapeAttr(p.name)} from this song">×</button></span>`;
         }).join('')}</div>` : (showEx ? `<div class="reminds-badges"><span class="reminds-badge ex">e.g. Mom</span><span class="reminds-badge ex">e.g. a college roommate</span></div>` : '')}
         <div class="card-actions">
@@ -4290,7 +4290,7 @@ document.getElementById('exportBackupBtn').addEventListener('click', ()=>{
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `tonic-fm-backup-${new Date().toISOString().slice(0,10)}.json`;
+  a.download = `timbre-fm-backup-${new Date().toISOString().slice(0,10)}.json`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -4432,7 +4432,7 @@ function exportUsageData(){
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `tonic-fm-usage-${new Date().toISOString().slice(0,10)}.json`;
+  a.download = `timbre-fm-usage-${new Date().toISOString().slice(0,10)}.json`;
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -4559,7 +4559,7 @@ async function drawShareCard(opts){
 
   ctx.fillStyle = '#b4b9f3';
   ctx.font = '700 42px "Space Grotesk", sans-serif';
-  ctx.fillText('tonicfm', 88, 142);
+  ctx.fillText('timbre.fm', 88, 142);
   ctx.fillStyle = 'rgba(238,221,149,0.8)';
   ctx.font = '600 28px "Space Grotesk", sans-serif';
   ctx.fillText('CATALOGUEX CARD', 88, 190);
@@ -4636,7 +4636,7 @@ async function drawShareCard(opts){
   ctx.fillStyle = 'rgba(238,221,149,0.4)';
   ctx.font = '500 20px "Space Grotesk", sans-serif';
   const now = new Date();
-  ctx.fillText('Join tonicfm today to share your own music', W/2, H - 96);
+  ctx.fillText('Join timbre.fm today to share your own music', W/2, H - 96);
   ctx.textAlign = 'left';
 }
 function cardWrapText(ctx, text, maxW, font){
@@ -4669,7 +4669,7 @@ function cardBase(ctx, W, H, username){
   ctx.beginPath(); ctx.arc(W*0.08, H*0.92, 280, 0, Math.PI*2); ctx.fill();
   ctx.fillStyle = t.gold || '#b4b9f3';
   ctx.font = '700 42px "Space Grotesk", sans-serif';
-  ctx.fillText('tonicfm', 88, 142);
+  ctx.fillText('timbre.fm', 88, 142);
   ctx.fillStyle = t.paper || 'rgba(238,221,149,0.8)';
   ctx.font = '600 28px "Space Grotesk", sans-serif';
   ctx.fillText('CATALOGUEX CARD', 88, 190);
@@ -4745,7 +4745,7 @@ async function drawSongShareCard(opts){
   ctx.fillStyle = t.paper ? t.paper + '66' : 'rgba(238,221,149,0.4)';
   ctx.font = '500 20px "Space Grotesk", sans-serif';
   const now = new Date();
-  ctx.fillText('Join tonicfm today to share your own music', W/2, H - 96);
+  ctx.fillText('Join timbre.fm today to share your own music', W/2, H - 96);
   ctx.textAlign = 'left';
 }
 async function drawTierShareCard(opts){
@@ -4837,7 +4837,7 @@ async function drawTierShareCard(opts){
   ctx.fillStyle = 'rgba(238,221,149,0.4)';
   ctx.font = '500 20px "Space Grotesk", sans-serif';
   const now = new Date();
-  ctx.fillText('Join tonicfm today to share your own music', W/2, H - 96);
+  ctx.fillText('Join timbre.fm today to share your own music', W/2, H - 96);
   ctx.textAlign = 'left';
 }
 async function openShareCard(opts){
@@ -6485,7 +6485,7 @@ document.getElementById('clusterOverlay').addEventListener('click', e=>{ if(e.ta
 document.getElementById('openCluster').addEventListener('click', ()=>{ trackEvent('create_stack'); openClusterModal(); });
 
 /* ---- COLLAB STACKS ---- */
-const STACK_META_KEY = 'tonic-fm-stack-meta';
+const STACK_META_KEY = 'timbre-fm-stack-meta';
 let collabSelectedFriendIds = [];
 function getStackMeta(){
   try{ return JSON.parse(localStorage.getItem(STACK_META_KEY)||'{}'); }catch(e){ return {}; }
@@ -8050,7 +8050,7 @@ function renderStickerPicker(){
 document.getElementById('stickerWipOkBtn').addEventListener('click', ()=>{
   trackEvent('sticker_wip_dismiss');
   if(document.getElementById('stickerWipDismiss').checked){
-    localStorage.setItem('tonic-fm-sticker-wip-dismissed', '1');
+    localStorage.setItem('timbre-fm-sticker-wip-dismissed', '1');
   }
   document.getElementById('stickerWipOverlay').classList.remove('open');
 });
@@ -8059,7 +8059,7 @@ document.getElementById('stickerWipOverlay').addEventListener('click', e=>{
 });
 document.getElementById('editStickersBtn').addEventListener('click', ()=>{
   trackEvent('open_stickers');
-  if(!localStorage.getItem('tonic-fm-sticker-wip-dismissed')){
+  if(!localStorage.getItem('timbre-fm-sticker-wip-dismissed')){
     document.getElementById('stickerWipOverlay').classList.add('open');
   } else {
     renderStickerPicker();
@@ -8394,7 +8394,7 @@ document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ closeWishModal()
 // the "examples removed" flag is per-account, so it stays consistent
 // across devices instead of leaking between accounts on the same browser
 function examplesRemovedKey(){
-  return 'tonicExamplesRemoved-' + (currentUserId || 'guest');
+  return 'timbreExamplesRemoved-' + (currentUserId || 'guest');
 }
 function examplesRemoved(){
   return localStorage.getItem(examplesRemovedKey()) === '1';
@@ -9457,7 +9457,7 @@ document.getElementById('exportDataBtn').addEventListener('click', async ()=>{
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'tonic-fm-data-' + new Date().toISOString().slice(0,10) + '.json';
+  a.download = 'timbre-fm-data-' + new Date().toISOString().slice(0,10) + '.json';
   document.body.appendChild(a);
   a.click();
   a.remove();
@@ -9613,7 +9613,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
        );
 */
 (function(){
-  const MSG_LAST_READ_KEY = 'tonic-msg-last-read';
+  const MSG_LAST_READ_KEY = 'timbre-msg-last-read';
   let msgLastRead = {};          // friendId -> ISO timestamp
   let msgFriendProfiles = [];    // [{ user_id, username, bio, photo }]
   let msgActiveFriend = null;
@@ -10104,7 +10104,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
         return;
       }
       if(!data || data.length === 0) return;
-      const seen = new Set(JSON.parse(localStorage.getItem('tonic-sotd-notif-seen') || '[]'));
+      const seen = new Set(JSON.parse(localStorage.getItem('timbre-sotd-notif-seen') || '[]'));
       const fresh = data.filter(n => !seen.has(n.id));
       const toMark = [];
       for(const n of fresh){
@@ -10112,7 +10112,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
         toMark.push(n.id);
         showSotdToast(n);
       }
-      localStorage.setItem('tonic-sotd-notif-seen', JSON.stringify([...seen].slice(-100)));
+      localStorage.setItem('timbre-sotd-notif-seen', JSON.stringify([...seen].slice(-100)));
       if(toMark.length > 0){
         const { error: e2 } = await sb.from('notifications').update({ read_at: new Date().toISOString() }).in('id', toMark);
         if(e2) console.error('Error marking notifications read:', e2);
@@ -11069,7 +11069,7 @@ document.getElementById('feedOverlay').addEventListener('click', e=>{
 });
 
 /* ---- ANALYTICS CONSENT ---- */
-const ANALYTICS_CONSENT_KEY = 'tonic-analytics-consent';
+const ANALYTICS_CONSENT_KEY = 'timbre-analytics-consent';
 function getAnalyticsConsent(){ return localStorage.getItem(ANALYTICS_CONSENT_KEY); }
 window.acceptAnalytics = function(){
   localStorage.setItem(ANALYTICS_CONSENT_KEY, 'accepted');
