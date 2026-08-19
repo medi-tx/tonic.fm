@@ -1472,6 +1472,15 @@
   .cb-item.active{ font-weight:700; }
   .cb-item .cb-swatch{ display:inline-flex; gap:2px; flex-shrink:0; }
   .cb-item .cb-swatch span{ width:10px; height:10px; border-radius:50%; border:1px solid rgba(0,0,0,.15); }
+  .theme-color-grid{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px; }
+  .theme-color-field{ display:flex; align-items:center; gap:8px; background:var(--paper-2); border:1px solid var(--border); border-radius:8px; padding:6px 10px; }
+  .theme-color-field label{ font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--on-paper); opacity:.7; min-width:52px; }
+  .theme-color-field input[type="color"]{ width:28px; height:28px; border:none; border-radius:6px; cursor:pointer; background:none; padding:0; }
+  .theme-color-field input[type="color"]::-webkit-color-swatch-wrapper{ padding:0; }
+  .theme-color-field input[type="color"]::-webkit-color-swatch{ border:1px solid var(--border); border-radius:6px; }
+  .theme-color-field input[type="text"]{ flex:1; border:none; background:none; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--on-paper); outline:none; min-width:0; }
+  #themeResetBtn{ background:none; border:1px solid var(--border); color:var(--on-paper); border-radius:8px; padding:8px 16px; font-size:13px; cursor:pointer; }
+  #themeResetBtn:hover{ border-color:var(--teal); color:var(--teal); }
   .theme-preset-btn.custom{ position:relative; padding-right:26px; }
   .theme-preset-x{
     position:absolute;
@@ -3194,8 +3203,17 @@
     <p class="theme-section-label">Presets</p>
     <div class="theme-presets" id="themePresets"></div>
 
+    <p class="theme-section-label">Custom colors</p>
+    <div class="theme-color-grid" id="themeColorGrid"></div>
+
+    <div class="theme-save-row" id="themeSaveRow">
+      <input id="themeSaveName" type="text" placeholder="Name your theme…" maxlength="24">
+      <button type="button" id="themeSaveBtn" disabled>Save as theme</button>
+    </div>
+
     <div class="modal-actions">
       <button class="btn-cancel" id="themeCloseBtn">Close</button>
+      <button type="button" id="themeResetBtn">Reset</button>
     </div>
   </div>
 </div>
@@ -3537,11 +3555,11 @@ function applyTheme(theme){
   if(meta) meta.setAttribute('content', t.ink);
 
   // sync the picker UI to match
-  Object.keys(DEFAULT_THEME).forEach(key=>{
+  Object.keys(THEME_COLOR_LABELS).forEach(key=>{
     const colorInput = document.getElementById('theme-' + key);
     const textInput = document.getElementById('theme-' + key + '-text');
-    if(colorInput) colorInput.value = t[key];
-    if(textInput) textInput.value = t[key];
+    if(colorInput && t[key] && t[key].startsWith('#')) colorInput.value = t[key];
+    if(textInput && t[key]) textInput.value = t[key];
   });
 }
 function loadTheme(){
@@ -3565,8 +3583,59 @@ function persistRemoteTheme(theme){
   // also save immediately so it isn't lost if the user navigates away quickly
   upsertMyProfile({ theme });
 }
+const THEME_COLOR_LABELS = {
+  ink:'Page', paper:'Card', gold:'★ Star', rose:'A', teal:'S', lilac:'B', sage:'C',
+  paperElevated:'Elevated', border:'Border'
+};
 function currentThemeFromInputs(){
-  return { ...loadTheme() };
+  const theme = {};
+  Object.keys(THEME_COLOR_LABELS).forEach(key=>{
+    const el = document.getElementById('theme-' + key);
+    if(el) theme[key] = el.value;
+  });
+  return theme;
+}
+function renderThemeColorGrid(){
+  const grid = document.getElementById('themeColorGrid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  const cur = loadTheme();
+  Object.keys(THEME_COLOR_LABELS).forEach(key=>{
+    const val = cur[key] || '';
+    const isHex = val.startsWith('#');
+    const field = document.createElement('div');
+    field.className = 'theme-color-field';
+    field.innerHTML = `<label>${THEME_COLOR_LABELS[key]}</label><input type="color" id="theme-${key}" value="${isHex ? val : '#888888'}"><input type="text" id="theme-${key}-text" value="${val}" maxlength="20">`;
+    grid.appendChild(field);
+    const colorInput = field.querySelector('input[type="color"]');
+    const textInput = field.querySelector('input[type="text"]');
+    colorInput.addEventListener('input', ()=>{
+      textInput.value = colorInput.value;
+      const theme = currentThemeFromInputs();
+      applyTheme(theme);
+      saveTheme(theme);
+      renderThemePresets();
+    });
+    textInput.addEventListener('change', ()=>{
+      const v = textInput.value.trim();
+      if(v.startsWith('#') && v.length >= 4){
+        colorInput.value = v.length === 4 ? '#' + v[1]+v[1]+v[2]+v[2]+v[3]+v[3] : v;
+      }
+      const theme = currentThemeFromInputs();
+      applyTheme(theme);
+      saveTheme(theme);
+      renderThemePresets();
+    });
+  });
+}
+function syncThemeColorGrid(){
+  const cur = loadTheme();
+  Object.keys(THEME_COLOR_LABELS).forEach(key=>{
+    const el = document.getElementById('theme-' + key);
+    const txt = document.getElementById('theme-' + key + '-text');
+    if(el && cur[key]) el.value = cur[key].startsWith('#') ? cur[key] : '#888888';
+    if(txt && cur[key]) txt.value = cur[key];
+  });
 }
 
 const CUSTOM_THEMES_KEY = 'song-journal-custom-themes';
@@ -3685,6 +3754,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.getElementById('themeBtn').addEventListener('click', ()=>{
     trackEvent('open_theme');
     applyTheme(loadTheme());
+    renderThemeColorGrid();
     document.getElementById('themeOverlay').classList.add('open');
   });
   document.getElementById('themeCloseBtn').addEventListener('click', ()=>{
@@ -3696,6 +3766,35 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.addEventListener('keydown', e=>{
     if(e.key==='Escape') document.getElementById('themeOverlay').classList.remove('open');
   });
+
+  const themeSaveName = document.getElementById('themeSaveName');
+  const themeSaveBtn = document.getElementById('themeSaveBtn');
+  themeSaveName.addEventListener('input', ()=>{
+    themeSaveBtn.disabled = !themeSaveName.value.trim();
+  });
+  themeSaveBtn.addEventListener('click', ()=>{
+    const name = themeSaveName.value.trim();
+    if(!name) return;
+    const id = 'custom-' + Date.now();
+    const customThemes = loadCustomThemes();
+    customThemes.push({ id, name, colors: currentThemeFromInputs() });
+    saveCustomThemes(customThemes);
+    themeSaveName.value = '';
+    themeSaveBtn.disabled = true;
+    renderThemePresets();
+  });
+
+  const themeResetBtn = document.getElementById('themeResetBtn');
+  themeResetBtn.addEventListener('click', ()=>{
+    localStorage.removeItem(CB_THEME_KEY);
+    applyTheme(DEFAULT_THEME);
+    saveTheme(DEFAULT_THEME);
+    renderThemeColorGrid();
+    renderThemePresets();
+  });
+
+  renderThemePresets();
+  renderThemeColorGrid();
 });
 
 function uid(){ return 's' + Date.now() + Math.random().toString(36).slice(2,7); }
