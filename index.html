@@ -2366,16 +2366,16 @@
   .preview-row{ display:flex; align-items:center; gap:8px; margin-top:2px; }
   .preview-btn{
     width:26px; height:26px; border-radius:50%;
-    border:1px solid rgba(var(--on-paper-rgb),0.25);
+    border:1px solid var(--sage);
     background:rgba(var(--on-paper-rgb),0.04);
-    color:rgba(var(--on-paper-rgb),0.92);
+    color:var(--sage);
     font-size:11px; line-height:1;
     display:inline-flex; align-items:center; justify-content:center;
     cursor:pointer; padding:0;
     font-family:inherit;
     transition:background 0.12s ease, border-color 0.12s ease;
   }
-  .preview-btn:hover{ background:var(--ink); color:var(--on-ink); border-color:var(--ink); }
+  .preview-btn:hover{ background:var(--sage); color:var(--ink); border-color:var(--sage); }
   .preview-btn.playing{ background:var(--rose); color:var(--ink); border-color:var(--rose); }
   .preview-btn.loading{ animation:previewPulse 0.8s ease-in-out infinite; border-color:var(--rose); color:var(--rose); }
   .preview-btn.none{ opacity:0.35; cursor:default; }
