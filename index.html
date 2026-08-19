@@ -2160,7 +2160,7 @@
   .feed-empty{ font-size:13px; color:var(--on-paper); opacity:0.6; text-align:center; padding:24px 0; }
   .feed-card{
     background:rgba(var(--on-paper-rgb),0.04); border:1px solid rgba(var(--on-paper-rgb),0.1);
-    border-radius:10px; padding:14px; margin-bottom:10px; cursor:pointer;
+    border-radius:10px; padding:14px; margin-bottom:10px;
   }
   .feed-card:hover{ border-color:rgba(var(--on-paper-rgb),0.25); }
   .feed-card-mine{ opacity:0.6; border-style:dashed; cursor:default; }
@@ -2203,6 +2203,8 @@
   .feed-card-reminds span{ color:var(--teal); }
   .feed-card-when{ font-size:11px; color:rgba(var(--on-paper-rgb),0.45); margin-top:4px; }
   .feed-card-edits{ font-size:10px; color:rgba(var(--on-paper-rgb),0.35); margin-top:2px; font-style:italic; }
+  .feed-add-btn{ margin-top:8px; padding:5px 12px; font-size:11px; font-weight:700; border:1px solid var(--teal); background:transparent; color:var(--teal); border-radius:6px; cursor:pointer; }
+  .feed-add-btn:hover{ background:var(--teal); color:var(--ink); }
 
   /* DUPLICATE CONFIRM */
   .dup-modal{ max-width:420px; }
@@ -11029,6 +11031,7 @@ function feedCardHtml(entry){
           ${reminds}
           ${when}
           ${edits}
+          ${isMe ? '' : '<button type="button" class="feed-add-btn" data-feed-add="1">+ Add to my library</button>'}
         </div>
       </div>
       ${reactionsHtml}
@@ -11084,34 +11087,39 @@ async function loadFeed(){
 }
 
 document.getElementById('feedList').addEventListener('click', e=>{
+  if(e.target.closest('[data-preview]')) return;
+  const addBtn = e.target.closest('[data-feed-add]');
+  if(addBtn){
+    e.stopPropagation();
+    const card = addBtn.closest('.feed-card');
+    const idx = Array.from(document.querySelectorAll('#feedList .feed-card')).indexOf(card);
+    if(idx < 0) return;
+    const listEl = document.getElementById('feedList');
+    const allData = listEl.__feedData || [];
+    const entry = allData[idx];
+    if(!entry) return;
+    document.getElementById('feedOverlay').classList.remove('open');
+    const s = entry.song;
+    openAddFromData({
+      title: s.title || '',
+      artists: (s.artists||[]).slice(),
+      album: s.album || '',
+      year: s.year || '',
+      genres: (s.genres||[]).slice(),
+      tags: (s.tags||[]).slice(),
+      coverArt: s.coverArt || null,
+      why: s.why ? `${s.why} (from @${entry.who}'s feed)` : '',
+      credit: `from @${entry.who}'s feed`,
+      tier: s.tier || null
+    });
+    return;
+  }
   const reactionBtn = e.target.closest('.feed-reaction-btn');
   if(reactionBtn){
     e.stopPropagation();
     handleFeedReaction(reactionBtn);
     return;
   }
-  const card = e.target.closest('.feed-card');
-  if(!card || card.dataset.mine) return;
-  const idx = Array.from(document.querySelectorAll('#feedList .feed-card')).indexOf(card);
-  if(idx < 0) return;
-  const listEl = document.getElementById('feedList');
-  const allData = listEl.__feedData || [];
-  const entry = allData[idx];
-  if(!entry) return;
-  document.getElementById('feedOverlay').classList.remove('open');
-  const s = entry.song;
-  openAddFromData({
-    title: s.title || '',
-    artists: (s.artists||[]).slice(),
-    album: s.album || '',
-    year: s.year || '',
-    genres: (s.genres||[]).slice(),
-    tags: (s.tags||[]).slice(),
-    coverArt: s.coverArt || null,
-    why: s.why ? `${s.why} (from @${entry.who}'s feed)` : '',
-    credit: `from @${entry.who}'s feed`,
-    tier: s.tier || null
-  });
 });
 
 async function handleFeedReaction(btn){
