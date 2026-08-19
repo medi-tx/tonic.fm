@@ -3638,7 +3638,7 @@ function renderThemePresets(){
     btn.type = 'button';
     btn.className = 'theme-preset-btn';
     const c = preset.colors;
-    btn.innerHTML = `<span class="theme-preset-swatch"><span style="background:${c.ink}"></span><span style="background:${c.gold}"></span><span style="background:${c.rose}"></span><span style="background:${c.teal}"></span></span>${preset.name}`;
+    btn.innerHTML = `<span class="theme-preset-swatch"><span style="background:${c.ink}"></span><span style="background:${c.gold}"></span><span style="background:${c.rose}"></span><span style="background:${c.teal}"></span><span style="background:${c.lilac||'#c9a0dc'}"></span><span style="background:${c.sage||'#7a8b6a'}"></span></span>${preset.name}`;
     btn.addEventListener('click', ()=>{
       applyTheme(preset.colors);
       saveTheme(currentThemeFromInputs());
@@ -3650,7 +3650,7 @@ function renderThemePresets(){
     btn.type = 'button';
     btn.className = 'theme-preset-btn custom';
     const c = theme.colors;
-    btn.innerHTML = `<span class="theme-preset-swatch"><span style="background:${c.ink}"></span><span style="background:${c.gold}"></span><span style="background:${c.rose}"></span><span style="background:${c.teal}"></span></span>${escapeHtml(theme.name)}<span class="theme-preset-x" data-delete-theme="${theme.id}" title="Delete this theme">×</span>`;
+    btn.innerHTML = `<span class="theme-preset-swatch"><span style="background:${c.ink}"></span><span style="background:${c.gold}"></span><span style="background:${c.rose}"></span><span style="background:${c.teal}"></span><span style="background:${c.lilac||'#c9a0dc'}"></span><span style="background:${c.sage||'#7a8b6a'}"></span></span>${escapeHtml(theme.name)}<span class="theme-preset-x" data-delete-theme="${theme.id}" title="Delete this theme">×</span>`;
     btn.addEventListener('click', (e)=>{
       if(e.target.closest('[data-delete-theme]')) return;
       applyTheme(theme.colors);
