@@ -3621,39 +3621,6 @@ window.addEventListener('storage', e=>{
 document.addEventListener('DOMContentLoaded', ()=>{
   renderThemePresets();
 
-  document.getElementById('themeSaveBtn').addEventListener('click', ()=>{
-    trackEvent('save_custom_theme');
-    const nameInput = document.getElementById('theme-save-name');
-    const name = nameInput.value.trim();
-    if(!name){ nameInput.focus(); return; }
-    const list = loadCustomThemes();
-    list.push({ id:'th'+Date.now()+Math.random().toString(36).slice(2,6), name, colors: currentThemeFromInputs() });
-    saveCustomThemes(list);
-    nameInput.value = '';
-    renderThemePresets();
-  });
-
-  Object.keys(DEFAULT_THEME).forEach(key=>{
-    const colorInput = document.getElementById('theme-' + key);
-    const textInput = document.getElementById('theme-' + key + '-text');
-    colorInput.addEventListener('input', ()=>{
-      textInput.value = colorInput.value;
-      applyTheme(currentThemeFromInputs());
-      saveTheme(currentThemeFromInputs());
-    });
-    textInput.addEventListener('change', ()=>{
-      let val = textInput.value.trim();
-      if(!val.startsWith('#')) val = '#' + val;
-      if(/^#[0-9a-fA-F]{6}$/.test(val)){
-        colorInput.value = val;
-        applyTheme(currentThemeFromInputs());
-        saveTheme(currentThemeFromInputs());
-      } else {
-        textInput.value = colorInput.value; // revert invalid input
-      }
-    });
-  });
-
   document.getElementById('themeBtn').addEventListener('click', ()=>{
     trackEvent('open_theme');
     applyTheme(loadTheme());
@@ -3664,11 +3631,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   });
   document.getElementById('themeOverlay').addEventListener('click', e=>{
     if(e.target.id==='themeOverlay') document.getElementById('themeOverlay').classList.remove('open');
-  });
-  document.getElementById('themeResetBtn').addEventListener('click', ()=>{
-    trackEvent('reset_theme');
-    applyTheme(DEFAULT_THEME);
-    saveTheme(DEFAULT_THEME);
   });
   document.addEventListener('keydown', e=>{
     if(e.key==='Escape') document.getElementById('themeOverlay').classList.remove('open');
