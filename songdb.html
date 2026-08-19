@@ -1,0 +1,977 @@
+﻿<!-- 
+SUPABASE TABLE SETUP - Run this in Supabase SQL Editor:
+
+CREATE TABLE IF NOT EXISTS song_database (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  title text NOT NULL,
+  artist text,
+  album text,
+  year text,
+  genres jsonb DEFAULT '[]'::jsonb,
+  track_number int,
+  duration text,
+  cover_art text,
+  record_label text,
+  producer text,
+  songwriters text,
+  bpm text,
+  key text,
+  tags jsonb DEFAULT '[]'::jsonb,
+  streaming_links jsonb DEFAULT '{}'::jsonb,
+  notes text,
+  source text,
+  source_id text,
+  album_key text,
+  created_at timestamptz DEFAULT now(),
+  added_by uuid REFERENCES auth.users(id)
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_song_db_source ON song_database (source, source_id) WHERE source_id IS NOT NULL;
+
+ALTER TABLE song_database ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public read" ON song_database FOR SELECT USING (true);
+CREATE POLICY "Authenticated insert" ON song_database FOR INSERT WITH CHECK (auth.role() = 'authenticated');
+CREATE POLICY "Authenticated delete" ON song_database FOR DELETE USING (auth.role() = 'authenticated');
+CREATE POLICY "Authenticated update" ON song_database FOR UPDATE USING (auth.role() = 'authenticated');
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Song Database</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#12141c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#12141c;--ink-2:#2a2c33;--paper:#eedd95;--paper-2:#e0d08c;--gold:#b4b9f3;--rose:#fd9f1c;--teal:#272d82;--line:rgba(18,20,28,0.15);--text-on-ink:#eedd95;--text-dim:rgba(238,221,149,0.6);--on-paper:#12141c;--on-ink:#eedd95;--on-paper-rgb:18,20,28;--on-ink-rgb:238,221,149;--field-bg:#ffffff;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--ink);background-image:radial-gradient(circle at 15% 20%,rgba(253,159,28,0.10),transparent 40%),radial-gradient(circle at 85% 75%,rgba(39,45,130,0.08),transparent 40%);color:var(--text-on-ink);font-family:'Space Grotesk',sans-serif;min-height:100vh;}
+.wrap{max-width:1100px;margin:0 auto;padding:40px 24px 100px;}
+header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;margin-bottom:36px;border-bottom:1px solid rgba(238,221,149,0.15);padding-bottom:24px;}
+h1{font-family:'Fraunces',serif;font-weight:700;font-style:italic;font-size:clamp(32px,5vw,52px);margin:0;letter-spacing:-0.5px;color:var(--on-ink);}
+h1 .side-a{font-family:'IBM Plex Mono',monospace;font-style:normal;font-size:13px;display:block;letter-spacing:3px;color:var(--gold);margin-bottom:6px;}
+.stats{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-dim);text-align:right;line-height:1.6;}
+.stats b{color:var(--on-ink);font-weight:500;}
+.header-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+input,select{font-family:'Space Grotesk',sans-serif;background:var(--ink-2);border:1px solid rgba(238,221,149,0.32);color:var(--on-ink);padding:10px 14px;border-radius:8px;font-size:14px;}
+input::placeholder{color:rgba(238,221,149,0.62);}
+input:focus,select:focus{outline:2px solid var(--gold);outline-offset:1px;}
+select{cursor:pointer;}
+.controls{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px;align-items:center;}
+#browseSearch{flex:1;min-width:180px;}
+.btn{font-family:'Space Grotesk',sans-serif;background:var(--gold);color:var(--ink);border:none;font-weight:600;padding:11px 20px;border-radius:8px;cursor:pointer;font-size:14px;transition:transform .15s ease,background .15s ease;}
+.btn:hover{background:#eab654;transform:translateY(-1px);}
+.btn:active{transform:translateY(0);}
+.btn.secondary{background:transparent;color:var(--on-ink);border:1px solid color-mix(in srgb,var(--gold) 55%,transparent);}
+.btn.secondary:hover{background:color-mix(in srgb,var(--gold) 14%,transparent);}
+.btn.small{padding:7px 14px;font-size:12px;}
+.btn.teal{background:var(--teal);color:#fff;}
+.btn.teal:hover{filter:brightness(1.15);}
+.btn:disabled{opacity:0.5;cursor:default;transform:none;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;}
+.card{position:relative;background:var(--paper);color:var(--on-paper);border-radius:10px;padding:20px 20px 18px;display:flex;flex-direction:column;gap:10px;box-shadow:0 8px 20px rgba(0,0,0,0.25);transition:transform .18s ease,box-shadow .18s ease;}
+.card:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(0,0,0,0.32);}
+.card::after{content:"";position:absolute;top:0;right:14px;bottom:0;width:0;border-right:2px dashed rgba(var(--on-paper-rgb),0.18);}
+.card-top{display:flex;gap:12px;align-items:flex-start;padding-right:26px;}
+.title-stack{flex:1;min-width:0;}
+.track-title{font-family:'Fraunces',serif;font-weight:700;font-size:20px;line-height:1.2;margin:0 0 2px;}
+.track-artist{font-size:14px;color:rgba(var(--on-paper-rgb),0.9);margin:0;}
+.cover-thumb{width:56px;height:56px;border-radius:6px;object-fit:cover;flex-shrink:0;border:1px solid rgba(var(--on-paper-rgb),0.15);box-shadow:0 2px 6px rgba(0,0,0,0.2);}
+.cover-fallback{width:56px;height:56px;border-radius:6px;flex-shrink:0;background:linear-gradient(135deg,#e0a638,#b8892f);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:22px;}
+.meta-row{font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(var(--on-paper-rgb),0.82);display:flex;flex-wrap:wrap;gap:6px 10px;padding-right:26px;}
+.meta-row span{white-space:nowrap;}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.tag{background:rgba(var(--on-paper-rgb),0.08);border:1px solid rgba(var(--on-paper-rgb),0.12);color:var(--ink);font-size:11px;padding:3px 9px;border-radius:20px;font-family:'IBM Plex Mono',monospace;}
+.card-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px;}
+.card-link{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.5px;text-decoration:none;padding:4px 8px;border-radius:5px;border:1px solid rgba(var(--on-paper-rgb),0.2);color:rgba(var(--on-paper-rgb),0.88);}
+.card-link:hover{border-color:var(--teal);color:var(--teal);}
+.card-actions{display:flex;gap:10px;margin-top:auto;padding-top:10px;border-top:1px solid rgba(var(--on-paper-rgb),0.1);}
+.card-actions button{background:none;border:none;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.5px;cursor:pointer;color:rgba(var(--on-paper-rgb),0.95);font-weight:600;padding:4px 0;}
+.card-actions button:hover{color:var(--on-paper);text-decoration:underline;}
+.card-actions .del:hover{color:var(--rose);}
+.empty{text-align:center;padding:80px 20px;color:var(--text-dim);}
+.empty h2{font-family:'Fraunces',serif;font-style:italic;color:var(--on-ink);font-size:26px;margin-bottom:8px;}
+.overlay{position:fixed;inset:0;background:rgba(12,11,20,0.7);display:none;align-items:center;justify-content:center;padding:20px;z-index:50;}
+.overlay.open{display:flex;}
+.modal{background:var(--paper);color:var(--on-paper);width:100%;max-width:640px;max-height:88vh;overflow-y:auto;border-radius:14px;padding:28px;}
+.modal h3{font-family:'Fraunces',serif;font-style:italic;font-weight:600;font-size:24px;margin:0 0 20px;}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px;}
+.modal-actions button{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;padding:10px 18px;border-radius:8px;cursor:pointer;border:none;}
+.btn-cancel{background:none;color:rgba(var(--on-paper-rgb),0.85);}
+.btn-cancel:hover{text-decoration:underline;}
+.btn-save{background:var(--ink);color:var(--on-ink);}
+.btn-save:hover{background:var(--ink-2);}
+.import-search{display:flex;gap:8px;margin-bottom:14px;}
+.import-search input{flex:1;background:var(--field-bg);color:var(--on-paper);}
+.import-source-tabs{display:flex;gap:6px;margin-bottom:12px;}
+.import-source-tab{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.5px;background:rgba(var(--on-paper-rgb),0.06);border:1px solid rgba(var(--on-paper-rgb),0.15);color:rgba(var(--on-paper-rgb),0.75);padding:6px 14px;border-radius:7px;cursor:pointer;}
+.import-source-tab:hover{border-color:var(--teal);color:var(--teal);}
+.import-source-tab.active{background:var(--teal);color:#fff;border-color:var(--teal);}
+.import-status{font-size:11px;color:rgba(var(--on-paper-rgb),0.55);margin-bottom:8px;font-family:'IBM Plex Mono',monospace;}
+.import-album{border:1px solid rgba(var(--on-paper-rgb),0.15);border-radius:10px;padding:12px;margin-bottom:10px;background:rgba(var(--field-bg),0.5);}
+.import-album-header{display:flex;align-items:center;gap:10px;cursor:pointer;}
+.import-album-header img{width:48px;height:48px;border-radius:6px;object-fit:cover;flex-shrink:0;}
+.import-album-header .ia-fallback{width:48px;height:48px;border-radius:6px;flex-shrink:0;background:linear-gradient(135deg,#e0a638,#b8892f);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:18px;}
+.import-album-info{flex:1;min-width:0;}
+.import-album-name{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.import-album-meta{font-size:11px;color:rgba(var(--on-paper-rgb),0.65);}
+.import-album-check{width:20px;height:20px;border-radius:4px;border:2px solid rgba(var(--on-paper-rgb),0.3);accent-color:var(--teal);flex-shrink:0;}
+.import-tracks{margin-top:8px;display:none;}
+.import-tracks.open{display:block;}
+.import-track{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px;border-bottom:1px solid rgba(var(--on-paper-rgb),0.06);}
+.import-track-num{font-family:'IBM Plex Mono',monospace;color:rgba(var(--on-paper-rgb),0.45);width:20px;text-align:right;flex-shrink:0;}
+.import-track-title{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.import-track-dur{color:rgba(var(--on-paper-rgb),0.55);flex-shrink:0;}
+.import-track.existing{opacity:0.35;text-decoration:line-through;}
+.import-results{max-height:50vh;overflow-y:auto;margin-bottom:12px;}
+.import-actions{display:flex;gap:8px;justify-content:space-between;align-items:center;}
+.import-selected-count{font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(var(--on-paper-rgb),0.65);}
+.auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+.auth-card{width:100%;max-width:380px;background:var(--ink-2);border:1px solid rgba(238,221,149,0.15);border-radius:14px;padding:32px 28px;}
+.auth-card .field{margin-bottom:14px;}
+.auth-card .field label{display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1px;color:var(--teal);margin-bottom:6px;text-transform:uppercase;}
+.auth-card .field input{width:100%;background:var(--ink);border:1px solid rgba(238,221,149,0.3);color:var(--on-ink);}
+.auth-card .field input:focus{border-color:var(--rose);}
+.auth-submit{width:100%;margin-top:8px;}
+.auth-error{background:rgba(214,83,109,0.12);border:1px solid rgba(214,83,109,0.4);color:#f2b6c2;font-size:13px;padding:10px 12px;border-radius:8px;margin-bottom:12px;display:none;}
+.logout-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1px;background:none;border:1px solid rgba(238,221,149,0.25);color:var(--text-dim);padding:7px 12px;border-radius:7px;cursor:pointer;}
+.logout-btn:hover{color:var(--rose);border-color:var(--rose);}
+.toast-wrap{position:fixed;top:16px;right:16px;z-index:3000;display:flex;flex-direction:column;gap:8px;}
+.toast{background:var(--ink);color:var(--text-on-ink);border:1px solid var(--gold);border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.35);cursor:pointer;max-width:340px;animation:toastIn .25s ease;}
+.toast-icon{font-size:20px;}.toast-body b{font-size:13px;font-weight:600;line-height:1.4;}
+@keyframes toastIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:none;}}
+.edit-field{margin-bottom:14px;}
+.edit-field label{display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--teal);margin-bottom:5px;text-transform:uppercase;}
+.edit-field input,.edit-field textarea,.edit-field select{width:100%;background:var(--field-bg);color:var(--on-paper);border:1px solid rgba(var(--on-paper-rgb),0.2);border-radius:7px;padding:9px 12px;font-size:14px;font-family:'Space Grotesk',sans-serif;}
+.edit-field textarea{min-height:60px;resize:vertical;}
+.edit-field input:focus,.edit-field textarea:focus,.edit-field select:focus{outline:2px solid var(--teal);outline-offset:1px;}
+.edit-row{display:flex;gap:12px;}
+.edit-row .edit-field{flex:1;}
+.edit-cover-preview{width:80px;height:80px;border-radius:8px;object-fit:cover;margin-top:6px;border:1px solid rgba(var(--on-paper-rgb),0.15);}
+@media(max-width:480px){header{flex-direction:column;align-items:flex-start;}.stats{text-align:left;}.edit-row{flex-direction:column;}}
+</style>
+</head>
+<body>
+<!-- AUTH SCREEN -->
+<div id="authScreen" class="auth-screen">
+  <div class="auth-card">
+    <h1 style="font-size:26px;margin-bottom:8px;"><span class="side-a" style="color:var(--rose);">SONG DATABASE</span>Sign in</h1>
+    <p style="font-size:13px;color:var(--text-dim);margin:0 0 22px;line-height:1.5;">Browse the shared song database. Only admins can add songs.</p>
+    <div class="field"><label>Email</label><input id="authEmail" type="email" autocomplete="email" placeholder="you@example.com"></div>
+    <div class="field"><label>Password</label><input id="authPass" type="password" autocomplete="current-password" placeholder="..."></div>
+    <div class="auth-error" id="authError"></div>
+    <button class="btn auth-submit" id="authSubmitBtn">Log in</button>
+    <button class="btn secondary auth-submit" id="authToggleBtn" style="margin-top:8px;width:100%;">Need an account? Sign up</button>
+    <button class="btn secondary auth-submit" id="skipAuthBtn" style="margin-top:8px;width:100%;">Browse without signing in</button>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div class="wrap" id="appWrap" style="display:none;">
+  <header>
+    <h1><span class="side-a">SHARED SONG FACTS</span>Song Database</h1>
+    <div class="stats" id="stats"></div>
+    <div class="header-actions">
+      <button class="btn small secondary" id="importBtn" style="display:none;">+ Import Music</button>
+      <button class="logout-btn" id="logoutBtn">Log out</button>
+    </div>
+  </header>
+
+  <div class="controls">
+    <input type="text" id="browseSearch" placeholder="Search title, artist, album...">
+    <select id="filterGenre"><option value="">All genres</option></select>
+    <select id="sortBy">
+      <option value="artist">Artist (A-Z)</option>
+      <option value="title">Title (A-Z)</option>
+      <option value="album">Album (A-Z)</option>
+      <option value="year-desc">Year (newest)</option>
+      <option value="year-asc">Year (oldest)</option>
+    </select>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="emptyState">
+    <h2>No songs yet</h2>
+    <p>The admin hasn't added any songs yet.</p>
+  </div>
+  <div id="pager" style="display:none;text-align:center;padding:30px 0;">
+    <button class="btn secondary" id="loadMoreBtn">Load more</button>
+    <p id="pageInfo" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-dim);margin-top:10px;"></p>
+  </div>
+</div>
+
+<!-- IMPORT MODAL (admin only) -->
+<div class="overlay" id="importOverlay">
+  <div class="modal" style="max-width:680px;">
+    <h3>Import Music</h3>
+    <div class="import-source-tabs" id="sourceTabs">
+      <button class="import-source-tab active" data-source="itunes">iTunes / Apple Music</button>
+      <button class="import-source-tab" data-source="spotify">Spotify</button>
+      <button class="import-source-tab" data-source="tidal">Tidal</button>
+    </div>
+    <div class="import-search">
+      <input type="text" id="importSearchInput" placeholder="Search artist name...">
+      <button class="btn teal" id="importSearchBtn">Search</button>
+    </div>
+    <div class="import-status" id="importStatus"></div>
+    <div class="import-results" id="importResults"></div>
+    <div class="import-actions">
+      <span class="import-selected-count" id="importSelectedCount">0 albums selected</span>
+      <div style="display:flex;gap:8px;">
+        <button class="btn-cancel" id="importCancel" type="button">Cancel</button>
+        <button class="btn-save" id="importConfirm" type="button" disabled>Import Selected</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM -->
+<div class="overlay" id="deleteOverlay">
+  <div class="modal" style="max-width:400px;">
+    <h3>Delete Song?</h3>
+    <p style="font-size:14px;color:rgba(var(--on-paper-rgb),0.85);margin:0 0 18px;">This can't be undone.</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="deleteCancel" type="button">Cancel</button>
+      <button class="btn-save" id="deleteConfirm" type="button" style="background:#d6536d;">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT MODAL (admin only) -->
+<div class="overlay" id="editOverlay">
+  <div class="modal" style="max-width:560px;">
+    <h3 id="editModalTitle">Edit Song</h3>
+    <div class="edit-row">
+      <div class="edit-field"><label>Title</label><input id="ef_title" type="text"></div>
+      <div class="edit-field" style="max-width:80px;"><label>Track #</label><input id="ef_track_number" type="number"></div>
+    </div>
+    <div class="edit-row">
+      <div class="edit-field"><label>Artist</label><input id="ef_artist" type="text"></div>
+      <div class="edit-field" style="max-width:100px;"><label>Year</label><input id="ef_year" type="text"></div>
+    </div>
+    <div class="edit-row">
+      <div class="edit-field"><label>Album</label><input id="ef_album" type="text"></div>
+      <div class="edit-field" style="max-width:100px;"><label>Duration</label><input id="ef_duration" type="text" placeholder="3:45"></div>
+    </div>
+    <div class="edit-row">
+      <div class="edit-field"><label>Genres (comma separated)</label><input id="ef_genres" type="text"></div>
+      <div class="edit-field"><label>Record Label</label><input id="ef_record_label" type="text"></div>
+    </div>
+    <div class="edit-row">
+      <div class="edit-field"><label>Producer</label><input id="ef_producer" type="text"></div>
+      <div class="edit-field"><label>Songwriters</label><input id="ef_songwriters" type="text"></div>
+    </div>
+    <div class="edit-row">
+      <div class="edit-field" style="max-width:100px;"><label>BPM</label><input id="ef_bpm" type="text"></div>
+      <div class="edit-field" style="max-width:120px;"><label>Key</label><input id="ef_key" type="text" placeholder="C major"></div>
+    </div>
+    <div class="edit-field"><label>Tags (comma separated)</label><input id="ef_tags" type="text"></div>
+    <div class="edit-row">
+      <div class="edit-field"><label>Spotify URL</label><input id="ef_spotify" type="url" placeholder="https://..."></div>
+      <div class="edit-field"><label>Apple Music URL</label><input id="ef_apple" type="url" placeholder="https://..."></div>
+    </div>
+    <div class="edit-field"><label>Tidal URL</label><input id="ef_tidal" type="url" placeholder="https://tidal.com/browse/track/..."></div>
+    <div class="edit-field"><label>Cover Art URL</label><input id="ef_cover_art" type="url" placeholder="https://..."><img id="ef_cover_preview" class="edit-cover-preview" style="display:none;" alt=""></div>
+    <div class="edit-field"><label>Notes</label><textarea id="ef_notes"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="editCancel" type="button">Cancel</button>
+      <button class="btn-save" id="editSave" type="button">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = 'https://aaqlnjdooeydtaihhdia.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_90hp8v69T6JrZKTQnKDIEA_Ku0J7eh0';
+const SPOTIFY_CLIENT_ID = 'd53cc1de9d0c4ac0a45483affc63f998';
+const TIDAL_CLIENT_ID = '7n9d7FqPupVD9l9D';
+const TIDAL_CLIENT_SECRET = 'TliyHzIbneRdGgOtzolIRQ7es1N8oI1wOltRInu5xZs=';
+const ADMIN_USERNAME = 'samannleblanc';
+const TABLE = 'song_database';
+
+let sb, currentUser = null, currentProfile = null, isAdmin = false;
+let allSongs = [];
+let totalCount = 0;
+const PAGE_SIZE = 60;
+let currentPage = 0;
+let hasMore = true;
+let deleteTargetId = null;
+let importSource = 'itunes';
+let importData = [];
+let importSelected = new Set();
+
+function esc(s){ var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+function toast(msg, icon){
+  var w = document.getElementById('toastWrap');
+  var t = document.createElement('div'); t.className = 'toast';
+  t.innerHTML = '<span class="toast-icon">' + (icon || '&#10003;') + '</span><span class="toast-body"><b>' + msg + '</b></span>';
+  w.appendChild(t); t.onclick = function(){ t.remove(); };
+  setTimeout(function(){ if(t.parentNode) t.remove(); }, 3500);
+}
+
+function fmtDuration(ms){
+  if(!ms) return '';
+  var s = Math.round(ms / 1000), m = Math.floor(s / 60), sec = s % 60;
+  return m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+function albumKey(artist, album){
+  return ((artist || '').toLowerCase().trim() + '|||' + (album || '').toLowerCase().trim());
+}
+async function initSupabase(){
+  sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  var session = await sb.auth.getSession();
+  if(session.data.session && session.data.session.user){
+    await onLogin(session.data.session.user);
+  } else {
+    showAuth();
+  }
+}
+
+function showAuth(){
+  document.getElementById('authScreen').style.display = 'flex';
+  document.getElementById('appWrap').style.display = 'none';
+}
+
+function showApp(){
+  document.getElementById('authScreen').style.display = 'none';
+  document.getElementById('appWrap').style.display = 'block';
+}
+
+async function onLogin(user){
+  currentUser = user;
+  var res = await sb.from('profiles').select('username').eq('user_id', user.id).single();
+  currentProfile = res.data;
+  isAdmin = currentProfile && currentProfile.username === ADMIN_USERNAME;
+  document.getElementById('importBtn').style.display = isAdmin ? '' : 'none';
+  showApp();
+  await loadSongs();
+}
+
+document.getElementById('authSubmitBtn').onclick = async function(){
+  var email = document.getElementById('authEmail').value.trim();
+  var pass = document.getElementById('authPass').value;
+  var errEl = document.getElementById('authError');
+  var isSignup = this.dataset.mode === 'signup';
+  errEl.style.display = 'none';
+  if(!email || !pass){ errEl.textContent = 'Fill in all fields'; errEl.style.display = 'block'; return; }
+  try {
+    var res = isSignup ?
+      await sb.auth.signUp({ email: email, password: pass }) :
+      await sb.auth.signInWithPassword({ email: email, password: pass });
+    if(res.error) throw res.error;
+    await onLogin(res.data.user);
+  } catch(e){
+    errEl.textContent = e.message || 'Login failed';
+    errEl.style.display = 'block';
+  }
+};
+
+document.getElementById('authToggleBtn').onclick = function(){
+  var btn = document.getElementById('authSubmitBtn');
+  if(btn.dataset.mode === 'signup'){
+    btn.textContent = 'Log in'; btn.dataset.mode = '';
+    this.textContent = 'Need an account? Sign up';
+  } else {
+    btn.textContent = 'Sign up'; btn.dataset.mode = 'signup';
+    this.textContent = 'Already have an account? Log in';
+  }
+};
+
+document.getElementById('skipAuthBtn').onclick = function(){
+  isAdmin = false;
+  showApp();
+  loadSongs();
+};
+
+document.getElementById('logoutBtn').onclick = async function(){
+  if(currentUser) await sb.auth.signOut();
+  currentUser = null; currentProfile = null; isAdmin = false;
+  document.getElementById('importBtn').style.display = 'none';
+  showAuth();
+};
+async function loadSongs(){
+  var status = document.getElementById('stats');
+  status.innerHTML = 'Loading...';
+  currentPage = 0; allSongs = []; hasMore = true;
+  await loadPage();
+}
+
+async function loadPage(){
+  var status = document.getElementById('stats');
+  var q = document.getElementById('browseSearch').value.trim();
+  var genre = document.getElementById('filterGenre').value;
+  var sort = document.getElementById('sortBy').value;
+  var sortCol = 'artist', sortAsc = true;
+  if(sort === 'title'){ sortCol = 'title'; }
+  else if(sort === 'album'){ sortCol = 'album'; }
+  else if(sort === 'year-desc'){ sortCol = 'year'; sortAsc = false; }
+  else if(sort === 'year-asc'){ sortCol = 'year'; sortAsc = true; }
+
+  var query = sb.from(TABLE).select('*', { count: 'exact' }).order(sortCol, { ascending: sortAsc }).range(currentPage * PAGE_SIZE, (currentPage + 1) * PAGE_SIZE - 1);
+  if(q){ query = query.or('title.ilike.%' + encodeURIComponent(q) + '%,artist.ilike.%' + encodeURIComponent(q) + '%,album.ilike.%' + encodeURIComponent(q) + '%'); }
+  if(genre){ query = query.contains('genres', [genre]); }
+
+  var res = await query;
+  if(res.error){
+    status.innerHTML = 'Error loading songs';
+    toast('Failed to load database', '&#9888;');
+    return;
+  }
+  if(currentPage === 0){ allSongs = res.data || []; totalCount = res.count || 0; }
+  else { allSongs = allSongs.concat(res.data || []); }
+  hasMore = allSongs.length < totalCount;
+  renderGenreFilter();
+  renderStats();
+  renderGrid();
+}
+
+function getGenres(){
+  var g = new Set();
+  allSongs.forEach(function(s){ (s.genres || []).forEach(function(x){ g.add(x); }); });
+  return Array.from(g).sort();
+}
+
+function renderGenreFilter(){
+  var sel = document.getElementById('filterGenre');
+  var cur = sel.value;
+  var genres = getGenres();
+  sel.innerHTML = '<option value="">All genres</option>';
+  genres.forEach(function(g){
+    var o = document.createElement('option'); o.value = g; o.textContent = g; sel.appendChild(o);
+  });
+  sel.value = cur;
+}
+
+function renderStats(){
+  document.getElementById('stats').innerHTML = '<b>' + totalCount.toLocaleString() + '</b> song' + (totalCount !== 1 ? 's' : '') + ' in database';
+}
+
+function renderGrid(){
+  var grid = document.getElementById('grid');
+  var empty = document.getElementById('emptyState');
+  var pager = document.getElementById('pager');
+  var pageInfo = document.getElementById('pageInfo');
+
+  if(allSongs.length === 0){
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    pager.style.display = 'none';
+    empty.querySelector('p').textContent = totalCount === 0 ?
+      'The admin hasn\'t added any songs yet.' : 'No songs match your search.';
+    return;
+  }
+
+  empty.style.display = 'none';
+  pager.style.display = 'block';
+  pageInfo.textContent = 'Showing ' + allSongs.length.toLocaleString() + ' of ' + totalCount.toLocaleString();
+  document.getElementById('loadMoreBtn').style.display = hasMore ? '' : 'none';
+
+  grid.innerHTML = allSongs.map(function(s){
+    var genres = (s.genres || []).join(', ');
+    var tags = s.tags || [];
+    var meta = [];
+    if(s.album) meta.push(s.album);
+    if(s.year) meta.push(s.year);
+    if(genres) meta.push(genres);
+    if(s.track_number) meta.push('#' + s.track_number);
+    if(s.duration) meta.push(s.duration);
+    if(s.key) meta.push(s.key);
+    if(s.bpm) meta.push(s.bpm + ' BPM');
+
+    var streamLinks = [];
+    if(s.streaming_links){
+      if(s.streaming_links.spotify) streamLinks.push({label:'Spotify', url:s.streaming_links.spotify});
+      if(s.streaming_links.apple) streamLinks.push({label:'Apple', url:s.streaming_links.apple});
+      if(s.streaming_links.tidal) streamLinks.push({label:'Tidal', url:s.streaming_links.tidal});
+    }
+
+    var coverHTML = s.cover_art ?
+      '<img class="cover-thumb" src="' + esc(s.cover_art) + '" alt="">' :
+      '<div class="cover-fallback">' + (s.title || '?')[0].toUpperCase() + '</div>';
+
+    var html = '<div class="card"><div class="card-top">' + coverHTML +
+      '<div class="title-stack"><p class="track-title">' + esc(s.title || 'Untitled') + '</p>' +
+      '<p class="track-artist">' + esc(s.artist || 'Unknown') + '</p></div></div>';
+    if(meta.length) html += '<div class="meta-row">' + meta.map(function(m){ return '<span>' + esc(m) + '</span>'; }).join('') + '</div>';
+    if(s.producer) html += '<div class="meta-row"><span>Prod. by ' + esc(s.producer) + '</span></div>';
+    if(s.songwriters) html += '<div class="meta-row"><span>Written by ' + esc(s.songwriters) + '</span></div>';
+    if(s.record_label) html += '<div class="meta-row"><span>' + esc(s.record_label) + '</span></div>';
+    if(tags.length) html += '<div class="tags">' + tags.map(function(t){ return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</div>';
+    if(streamLinks.length) html += '<div class="card-links">' + streamLinks.map(function(l){ return '<a class="card-link" href="' + esc(l.url) + '" target="_blank" rel="noopener">' + l.label + '</a>'; }).join('') + '</div>';
+    if(isAdmin) html += '<div class="card-actions"><button onclick="openEdit(\'' + s.id + '\')">Edit</button><button class="del" onclick="confirmDelete(\'' + s.id + '\')">Delete</button></div>';
+    html += '</div>';
+    return html;
+  }).join('');
+}
+function confirmDelete(id){ deleteTargetId = id; document.getElementById('deleteOverlay').classList.add('open'); }
+function cancelDelete(){ deleteTargetId = null; document.getElementById('deleteOverlay').classList.remove('open'); }
+
+document.getElementById('deleteConfirm').onclick = async function(){
+  if(!deleteTargetId) return;
+  var res = await sb.from(TABLE).delete().eq('id', deleteTargetId);
+  if(res.error){ toast('Delete failed', '&#9888;'); return; }
+  allSongs = allSongs.filter(function(s){ return s.id !== deleteTargetId; });
+  cancelDelete(); renderStats(); renderGrid(); renderGenreFilter();
+  toast('Song deleted');
+};
+
+function openImport(){ document.getElementById('importOverlay').classList.add('open'); }
+function closeImport(){
+  document.getElementById('importOverlay').classList.remove('open');
+  document.getElementById('importResults').innerHTML = '';
+  document.getElementById('importStatus').textContent = '';
+  document.getElementById('importSelectedCount').textContent = '0 albums selected';
+  document.getElementById('importConfirm').disabled = true;
+  importData = []; importSelected.clear();
+}
+
+document.getElementById('importBtn').onclick = openImport;
+document.getElementById('importCancel').onclick = closeImport;
+document.getElementById('importOverlay').onclick = function(e){ if(e.target === this) closeImport(); };
+document.getElementById('deleteOverlay').onclick = function(e){ if(e.target === this) cancelDelete(); };
+
+document.getElementById('sourceTabs').onclick = function(e){
+  var tab = e.target.closest('.import-source-tab');
+  if(!tab) return;
+  document.querySelectorAll('.import-source-tab').forEach(function(t){ t.classList.remove('active'); });
+  tab.classList.add('active');
+  importSource = tab.dataset.source;
+};
+
+document.getElementById('importSearchBtn').onclick = doImportSearch;
+document.getElementById('importSearchInput').onkeydown = function(e){ if(e.key === 'Enter') doImportSearch(); };
+
+async function doImportSearch(){
+  var q = document.getElementById('importSearchInput').value.trim();
+  if(!q){ toast('Type an artist name', '&#9888;'); return; }
+  document.getElementById('importStatus').textContent = 'Searching ' + importSource + '...';
+  document.getElementById('importResults').innerHTML = '';
+  importData = []; importSelected.clear();
+  updateImportCount();
+
+  if(importSource === 'itunes'){
+    await searchiTunesImport(q);
+  } else if(importSource === 'spotify'){
+    await searchSpotifyImport(q);
+  } else if(importSource === 'tidal'){
+    await searchTidalImport(q);
+  }
+}
+function searchiTunesImport(q){
+  return new Promise(function(resolve){
+    window._itunesImportCb = function(data){
+      if(!data || !data.results || data.results.length === 0){
+        document.getElementById('importStatus').textContent = 'No results found on iTunes.';
+        resolve(); return;
+      }
+      var albums = {};
+      data.results.forEach(function(r){
+        var key = albumKey(r.artistName, r.collectionName);
+        if(!albums[key]){
+          albums[key] = {
+            artist: r.artistName, album: r.collectionName, year: r.releaseDate ? r.releaseDate.substring(0,4) : '',
+            cover: r.artworkUrl100 ? r.artworkUrl100.replace('100x100', '600x600') : '',
+            genre: r.primaryGenreName || '', label: r.collectionName !== r.trackName ? '' : '',
+            tracks: []
+          };
+        }
+        albums[key].tracks.push({
+          title: r.trackName, trackNumber: r.trackNumber, duration: fmtDuration(r.trackTimeMillis),
+          sourceId: String(r.trackId), genre: r.primaryGenreName || '',
+          appleUrl: r.trackViewUrl || null
+        });
+      });
+      importData = Object.values(albums);
+      renderImportResults();
+      resolve();
+    };
+    var script = document.createElement('script');
+    script.src = 'https://itunes.apple.com/search?term=' + encodeURIComponent(q) + '&media=music&entity=song,album&limit=200&callback=_itunesImportCb';
+    script.onerror = function(){
+      document.getElementById('importStatus').textContent = 'iTunes search failed. Try again.';
+      resolve();
+    };
+    document.body.appendChild(script);
+  });
+}
+
+async function searchSpotifyImport(q){
+  try {
+    var tokenResp = await fetch('https://accounts.spotify.com/api/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'grant_type=client_credentials&client_id=' + SPOTIFY_CLIENT_ID
+    });
+    if(!tokenResp.ok) throw new Error('Spotify auth failed');
+    var tokenData = await tokenResp.json();
+    var token = tokenData.access_token;
+
+    var searchResp = await fetch('https://api.spotify.com/v1/search?q=' + encodeURIComponent(q) + '&type=artist&limit=5', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    var searchData = await searchResp.json();
+    if(!searchData.artists || !searchData.artists.items.length){
+      document.getElementById('importStatus').textContent = 'No artists found on Spotify.';
+      return;
+    }
+    var artistId = searchData.artists.items[0].id;
+    var artistName = searchData.artists.items[0].name;
+    document.getElementById('importStatus').textContent = 'Fetching albums for ' + artistName + '...';
+
+    var albumsResp = await fetch('https://api.spotify.com/v1/artists/' + artistId + '/albums?include_groups=album,single&limit=50&market=US', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    var albumsData = await albumsResp.json();
+    if(!albumsData.items || !albumsData.items.length){
+      document.getElementById('importStatus').textContent = 'No albums found.';
+      return;
+    }
+
+    var albums = {};
+    for(var i = 0; i < albumsData.items.length; i++){
+      var alb = albumsData.items[i];
+      var tracksResp = await fetch('https://api.spotify.com/v1/albums/' + alb.id + '/tracks?limit=50', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      var tracksData = await tracksResp.json();
+      var key = albumKey(alb.artist, alb.name);
+      albums[key] = {
+        artist: alb.artist, album: alb.name,
+        year: alb.release_date ? alb.release_date.substring(0, 4) : '',
+        cover: alb.images && alb.images[0] ? alb.images[0].url : '',
+        genre: '', label: alb.label || '',
+        tracks: (tracksData.items || []).map(function(t, idx){
+          return {
+            title: t.name, trackNumber: t.track_number,
+            duration: fmtDuration(t.duration_ms),
+            sourceId: t.id, genre: '',
+            spotifyUrl: t.external_urls ? t.external_urls.spotify || null : null
+          };
+        })
+      };
+    }
+    importData = Object.values(albums);
+    renderImportResults();
+  } catch(e){
+    document.getElementById('importStatus').textContent = 'Spotify search failed: ' + (e.message || 'Unknown error');
+  }
+}
+
+var _tidalToken = null, _tidalTokenExpiry = 0;
+async function getTidalToken(){
+  if(_tidalToken && Date.now() < _tidalTokenExpiry) return _tidalToken;
+  var resp = await fetch('https://auth.tidal.com/v1/oauth2/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: 'client_id=' + TIDAL_CLIENT_ID + '&client_secret=' + encodeURIComponent(TIDAL_CLIENT_SECRET) + '&grant_type=client_credentials'
+  });
+  if(!resp.ok) throw new Error('Tidal auth failed');
+  var data = await resp.json();
+  _tidalToken = data.access_token;
+  _tidalTokenExpiry = Date.now() + (data.expires_in - 60) * 1000;
+  return _tidalToken;
+}
+
+async function searchTidalImport(q){
+  try {
+    var token = await getTidalToken();
+    var headers = { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.api+json' };
+
+    // Search for artist
+    var searchResp = await fetch('https://openapi.tidal.com/v2/searchresults?query=' + encodeURIComponent(q) + '&type=artists&limit=1&countryCode=US', { headers: headers });
+    if(!searchResp.ok){
+      document.getElementById('importStatus').textContent = 'Tidal search not available. Try iTunes instead.';
+      return;
+    }
+    var searchData = await searchResp.json();
+    if(!searchData.data || !searchData.data.length){
+      document.getElementById('importStatus').textContent = 'No artists found on Tidal.';
+      return;
+    }
+    var artistId = searchData.data[0].id;
+    var artistName = searchData.data[0].attributes?.name || q;
+    document.getElementById('importStatus').textContent = 'Fetching albums for ' + artistName + '...';
+
+    // Get artist albums
+    var albumsResp = await fetch('https://openapi.tidal.com/v2/artists/' + artistId + '/relationships/albums?countryCode=US&limit=50', { headers: headers });
+    if(!albumsResp.ok){
+      document.getElementById('importStatus').textContent = 'Could not fetch albums from Tidal.';
+      return;
+    }
+    var albumsData = await albumsResp.json();
+    if(!albumsData.data || !albumsData.data.length){
+      document.getElementById('importStatus').textContent = 'No albums found on Tidal.';
+      return;
+    }
+
+    var albums = {};
+    for(var i = 0; i < albumsData.data.length; i++){
+      var alb = albumsData.data[i];
+      var albId = alb.id;
+      var albAttr = alb.attributes || {};
+
+      // Get album tracks
+      var tracksResp = await fetch('https://openapi.tidal.com/v2/albums/' + albId + '/relationships/items?countryCode=US&limit=50', { headers: headers });
+      if(!tracksResp.ok) continue;
+      var tracksData = await tracksResp.json();
+      if(!tracksData.data) continue;
+
+      var key = albumKey(artistName, albAttr.title);
+      albums[key] = {
+        artist: artistName,
+        album: albAttr.title || '',
+        year: albAttr.releaseDate ? albAttr.releaseDate.substring(0, 4) : '',
+        cover: albAttr.cover || null,
+        genre: '',
+        label: albAttr.copyright || '',
+        tracks: tracksData.data.filter(function(t){ return t.type === 'tracks'; }).map(function(t, idx){
+          var attr = t.attributes || {};
+          var tidalUrl = 'https://tidal.com/browse/track/' + t.id;
+          return {
+            title: attr.title || '',
+            trackNumber: attr.trackNumber || (idx + 1),
+            duration: attr.duration ? formatTidalDuration(attr.duration) : '',
+            sourceId: t.id,
+            genre: '',
+            tidalUrl: tidalUrl
+          };
+        })
+      };
+    }
+    importData = Object.values(albums);
+    renderImportResults();
+  } catch(e){
+    document.getElementById('importStatus').textContent = 'Tidal search failed: ' + (e.message || 'Unknown error');
+  }
+}
+
+function formatTidalDuration(iso){
+  var m = iso.match(/PT(?:(\d+)M)?(?:(\d+)S)?/);
+  if(!m) return '';
+  var min = parseInt(m[1] || '0');
+  var sec = parseInt(m[2] || '0');
+  return min + ':' + (sec < 10 ? '0' : '') + sec;
+}
+function renderImportResults(){
+  var box = document.getElementById('importResults');
+  if(importData.length === 0){
+    document.getElementById('importStatus').textContent = 'No albums found.';
+    box.innerHTML = '';
+    return;
+  }
+
+  var existingKeys = new Set();
+  allSongs.forEach(function(s){ existingKeys.add(s.source_id); });
+
+  document.getElementById('importStatus').textContent = importData.length + ' album' + (importData.length !== 1 ? 's' : '') + ' found';
+
+  box.innerHTML = importData.map(function(alb, ai){
+    var trackList = alb.tracks.map(function(t){
+      var isDup = existingKeys.has(t.sourceId);
+      return '<div class="import-track' + (isDup ? ' existing' : '') + '">' +
+        '<span class="import-track-num">' + (t.trackNumber || '') + '</span>' +
+        '<span class="import-track-title">' + esc(t.title) + '</span>' +
+        '<span class="import-track-dur">' + (t.duration || '') + '</span></div>';
+    }).join('');
+
+    var newCount = alb.tracks.filter(function(t){ return !existingKeys.has(t.sourceId); }).length;
+
+    return '<div class="import-album" data-idx="' + ai + '">' +
+      '<div class="import-album-header" onclick="toggleAlbumTracks(' + ai + ')">' +
+      (alb.cover ? '<img src="' + esc(alb.cover) + '" alt="">' : '<div class="ia-fallback">' + (alb.album || '?')[0].toUpperCase() + '</div>') +
+      '<div class="import-album-info"><div class="import-album-name">' + esc(alb.album) + '</div>' +
+      '<div class="import-album-meta">' + esc(alb.artist) + ' &middot; ' + esc(alb.year) + ' &middot; ' + alb.tracks.length + ' tracks' +
+      (newCount < alb.tracks.length ? ' &middot; ' + (alb.tracks.length - newCount) + ' already in DB' : '') + '</div></div>' +
+      '<input type="checkbox" class="import-album-check" data-idx="' + ai + '" onchange="toggleAlbumSelect(' + ai + ', this.checked)">' +
+      '</div><div class="import-tracks" id="albumTracks' + ai + '">' + trackList + '</div></div>';
+  }).join('');
+}
+
+function toggleAlbumTracks(i){
+  var el = document.getElementById('albumTracks' + i);
+  if(el) el.classList.toggle('open');
+}
+
+function toggleAlbumSelect(i, checked){
+  if(checked) importSelected.add(i); else importSelected.delete(i);
+  updateImportCount();
+}
+
+function updateImportCount(){
+  var count = importSelected.size;
+  var totalTracks = 0;
+  importSelected.forEach(function(i){ if(importData[i]) totalTracks += importData[i].tracks.length; });
+  document.getElementById('importSelectedCount').textContent = count + ' album' + (count !== 1 ? 's' : '') + ' selected (' + totalTracks + ' tracks)';
+  document.getElementById('importConfirm').disabled = count === 0;
+}
+
+document.getElementById('importConfirm').onclick = async function(){
+  if(importSelected.size === 0 || !isAdmin) return;
+  this.disabled = true;
+  this.textContent = 'Importing...';
+
+  var existingSourceIds = new Set();
+  allSongs.forEach(function(s){ if(s.source_id) existingSourceIds.add(s.source_id); });
+
+  var toInsert = [];
+  importSelected.forEach(function(i){
+    var alb = importData[i];
+    if(!alb) return;
+    alb.tracks.forEach(function(t){
+      if(existingSourceIds.has(t.sourceId)) return;
+      toInsert.push({
+        title: t.title,
+        artist: alb.artist,
+        album: alb.album,
+        year: alb.year,
+        genres: t.genre ? [t.genre] : (alb.genre ? [alb.genre] : []),
+        track_number: t.trackNumber,
+        duration: t.duration,
+        cover_art: alb.cover || null,
+        record_label: alb.label || '',
+        tags: [],
+        streaming_links: {
+          spotify: t.spotifyUrl || null,
+          apple: importSource === 'itunes' ? (t.appleUrl || ('https://music.apple.com/us/song/' + t.sourceId)) : null,
+          tidal: t.tidalUrl || null
+        },
+        notes: '',
+        source: importSource,
+        source_id: t.sourceId,
+        album_key: albumKey(alb.artist, alb.album),
+        added_by: currentUser ? currentUser.id : null,
+        created_at: new Date().toISOString()
+      });
+      existingSourceIds.add(t.sourceId);
+    });
+  });
+
+  if(toInsert.length === 0){
+    toast('All tracks already in database');
+    this.disabled = false; this.textContent = 'Import Selected';
+    return;
+  }
+
+  var batchSize = 50;
+  var inserted = 0;
+  for(var i = 0; i < toInsert.length; i += batchSize){
+    var batch = toInsert.slice(i, i + batchSize);
+    var res = await sb.from(TABLE).insert(batch);
+    if(!res.error) inserted += batch.length;
+  }
+
+  toast('Imported ' + inserted + ' track' + (inserted !== 1 ? 's' : ''));
+  this.disabled = false; this.textContent = 'Import Selected';
+  closeImport();
+  await loadSongs();
+};
+document.getElementById('browseSearch').oninput = function(){ clearTimeout(window._searchTimer); window._searchTimer = setTimeout(loadSongs, 300); };
+document.getElementById('filterGenre').onchange = loadSongs;
+document.getElementById('sortBy').onchange = loadSongs;
+
+document.getElementById('loadMoreBtn').onclick = function(){
+  currentPage++;
+  loadPage();
+};
+
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape'){ closeImport(); cancelDelete(); closeEdit(); }
+});
+
+// ===== EDIT =====
+var editTargetId = null;
+
+function openEdit(id){
+  var s = allSongs.find(function(x){ return x.id === id; });
+  if(!s) return;
+  editTargetId = id;
+  document.getElementById('editModalTitle').textContent = 'Edit: ' + (s.title || 'Untitled');
+  document.getElementById('ef_title').value = s.title || '';
+  document.getElementById('ef_artist').value = s.artist || '';
+  document.getElementById('ef_album').value = s.album || '';
+  document.getElementById('ef_year').value = s.year || '';
+  document.getElementById('ef_genres').value = (s.genres || []).join(', ');
+  document.getElementById('ef_track_number').value = s.track_number || '';
+  document.getElementById('ef_duration').value = s.duration || '';
+  document.getElementById('ef_record_label').value = s.record_label || '';
+  document.getElementById('ef_producer').value = s.producer || '';
+  document.getElementById('ef_songwriters').value = s.songwriters || '';
+  document.getElementById('ef_bpm').value = s.bpm || '';
+  document.getElementById('ef_key').value = s.key || '';
+  document.getElementById('ef_tags').value = (s.tags || []).join(', ');
+  document.getElementById('ef_spotify').value = (s.streaming_links && s.streaming_links.spotify) || '';
+  document.getElementById('ef_apple').value = (s.streaming_links && s.streaming_links.apple) || '';
+  document.getElementById('ef_tidal').value = (s.streaming_links && s.streaming_links.tidal) || '';
+  document.getElementById('ef_cover_art').value = s.cover_art || '';
+  document.getElementById('ef_notes').value = s.notes || '';
+  var prev = document.getElementById('ef_cover_preview');
+  if(s.cover_art){ prev.src = s.cover_art; prev.style.display = ''; } else { prev.style.display = 'none'; }
+  document.getElementById('editOverlay').classList.add('open');
+}
+
+function closeEdit(){
+  editTargetId = null;
+  document.getElementById('editOverlay').classList.remove('open');
+}
+
+document.getElementById('editCancel').onclick = closeEdit;
+document.getElementById('editOverlay').onclick = function(e){ if(e.target === this) closeEdit(); };
+
+document.getElementById('ef_cover_art').oninput = function(){
+  var prev = document.getElementById('ef_cover_preview');
+  var url = this.value.trim();
+  if(url){ prev.src = url; prev.style.display = ''; } else { prev.style.display = 'none'; }
+};
+
+document.getElementById('editSave').onclick = async function(){
+  if(!editTargetId) return;
+  this.disabled = true; this.textContent = 'Saving...';
+  var updates = {
+    title: document.getElementById('ef_title').value.trim(),
+    artist: document.getElementById('ef_artist').value.trim(),
+    album: document.getElementById('ef_album').value.trim(),
+    year: document.getElementById('ef_year').value.trim(),
+    genres: document.getElementById('ef_genres').value.split(',').map(function(s){ return s.trim(); }).filter(Boolean),
+    track_number: parseInt(document.getElementById('ef_track_number').value) || null,
+    duration: document.getElementById('ef_duration').value.trim(),
+    record_label: document.getElementById('ef_record_label').value.trim(),
+    producer: document.getElementById('ef_producer').value.trim(),
+    songwriters: document.getElementById('ef_songwriters').value.trim(),
+    bpm: document.getElementById('ef_bpm').value.trim(),
+    key: document.getElementById('ef_key').value.trim(),
+    tags: document.getElementById('ef_tags').value.split(',').map(function(s){ return s.trim(); }).filter(Boolean),
+    streaming_links: {
+      spotify: document.getElementById('ef_spotify').value.trim() || null,
+      apple: document.getElementById('ef_apple').value.trim() || null,
+      tidal: document.getElementById('ef_tidal').value.trim() || null
+    },
+    cover_art: document.getElementById('ef_cover_art').value.trim() || null,
+    notes: document.getElementById('ef_notes').value.trim(),
+    album_key: albumKey(document.getElementById('ef_artist').value.trim(), document.getElementById('ef_album').value.trim())
+  };
+  var res = await sb.from(TABLE).update(updates).eq('id', editTargetId);
+  if(res.error){
+    toast('Save failed', '&#9888;');
+    this.disabled = false; this.textContent = 'Save Changes';
+    return;
+  }
+  var idx = allSongs.findIndex(function(x){ return x.id === editTargetId; });
+  if(idx !== -1) Object.assign(allSongs[idx], updates);
+  toast('Song updated');
+  closeEdit();
+  this.disabled = false; this.textContent = 'Save Changes';
+  renderGrid(); renderGenreFilter(); renderStats();
+};
+
+initSupabase();
+</script>
+</html>
