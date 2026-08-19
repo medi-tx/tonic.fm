@@ -5094,7 +5094,7 @@ async function fetchPreviewUrl(song){
   const term = [song.title, (song.artists||[])[0]].filter(Boolean).join(' ');
   let url = null;
   try{
-    const rows = await searchItunes(term, 'song', 5) || [];
+    const rows = await itunesSearch(term, 'song', 5) || [];
     const wantTitle = String(song.title||'').trim().toLowerCase();
     const wantArtist = String((song.artists||[])[0]||'').trim().toLowerCase();
     let hit = rows.find(r=> r.previewUrl && String(r.trackName||'').trim().toLowerCase() === wantTitle);
@@ -5457,7 +5457,7 @@ function handleSave(){
   const doSave = ()=>{
     if(!data.coverArt && (data.title || data.artists.length)){
       const q = [data.title, data.artists[0]].filter(Boolean).join(' ');
-      searchItunes(q, 'song', 1).then(hit=>{
+      itunesSearch(q, 'song', 1).then(hit=>{
         if(hit && hit[0] && hit[0].artworkUrl100){
           data.coverArt = upscaleArtwork(hit[0].artworkUrl100);
         }
@@ -6351,7 +6351,7 @@ async function enrichTracksFromItunes(tracks, listEl, statusEl){
       batch.push((async ()=>{
         const term = t.title + ' ' + (t.artists[0] || '');
         try{
-          const hits = await searchItunes(term, 'song', 1);
+          const hits = await itunesSearch(term, 'song', 1);
           if(hits && hits.length){
             const hit = hits[0];
             if(hit.artworkUrl100) t.coverArt = hit.artworkUrl100.replace('100x100', '300x300');
@@ -6422,7 +6422,7 @@ function enrichImportedSongs(clusterId, serviceLabel){
         if(abort.aborted) return;
         const term = s.title + ' ' + (s.artists[0] || '');
         try{
-          const hits = await searchItunes(term, 'song', 1);
+          const hits = await itunesSearch(term, 'song', 1);
           if(hits && hits.length){
             const hit = hits[0];
             if(hit.artworkUrl100) s.coverArt = hit.artworkUrl100.replace('100x100', '300x300');
@@ -9079,24 +9079,29 @@ function itunesJsonp(url){
     }, 10000);
   });
 }
-async function searchItunes(term, entity, limit){
+async function itunesFetch(url){
+  const cleanUrl = url.replace(/&callback=[^&]*/, '');
+  const res = await fetch(cleanUrl, { headers: { 'Accept': 'application/json' } });
+  if(!res.ok) throw new Error('itunes_http_' + res.status);
+  return await res.json();
+}
+async function itunesSearch(term, entity, limit){
   const url = 'https://itunes.apple.com/search?media=music&entity=' + entity + '&limit=' + (limit||8) + '&term=' + encodeURIComponent(term);
-  const data = await itunesJsonp(url);
+  let data = null;
+  try{ data = await itunesJsonp(url); }catch(e){
+    try{ data = await itunesFetch(url); }catch(e2){ throw e2; }
+  }
   const results = (data && data.results) || [];
-  // The iTunes API is notoriously inconsistent about honoring `entity` —
-  // it can slip music videos into song results or stray tracks into album
-  // results — so filter client-side to guarantee the right kind of result.
-  if(entity === 'song'){
-    return results.filter(r=>r.wrapperType==='track' && r.kind!=='music-video');
-  }
-  if(entity === 'album'){
-    return results.filter(r=>r.wrapperType==='collection');
-  }
+  if(entity === 'song') return results.filter(r=>r.wrapperType==='track' && r.kind!=='music-video');
+  if(entity === 'album') return results.filter(r=>r.wrapperType==='collection');
   return results;
 }
 async function lookupItunesAlbum(collectionId){
   const url = 'https://itunes.apple.com/lookup?id=' + encodeURIComponent(collectionId) + '&entity=song&limit=200';
-  const data = await itunesJsonp(url);
+  let data = null;
+  try{ data = await itunesJsonp(url); }catch(e){
+    try{ data = await itunesFetch(url); }catch(e2){ throw e2; }
+  }
   return (data && data.results) || [];
 }
 function upscaleArtwork(url){
@@ -9202,7 +9207,7 @@ async function renderAlbumSearchResults(query){
   wrap.innerHTML = '<p class="profile-empty-note">Searching…</p>';
   let albums;
   try{
-    albums = await searchItunes(q, 'album', 8);
+    albums = await itunesSearch(q, 'album', 8);
   }catch(e){
     albums = null;
   }
@@ -9288,7 +9293,7 @@ async function renderSongSearchResults(query){
   wrap.innerHTML = '<p class="profile-empty-note">Searching…</p>';
   let results;
   try{
-    results = await searchItunes(q, 'song', 8);
+    results = await itunesSearch(q, 'song', 8);
   }catch(e){
     results = null;
   }
@@ -9957,7 +9962,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
     if(!query.trim()){ wrap.innerHTML = '<p class="msg-empty">Search to find a song to recommend.</p>'; return; }
     wrap.innerHTML = '<p class="msg-empty">Searching…</p>';
     let results = [];
-    try{ results = await searchItunes(query, 'song', 8); }catch(e){ results = []; }
+    try{ results = await itunesSearch(query, 'song', 8); }catch(e){ results = []; }
     if(!results || results.length === 0){
       try{ results = await mbSearchSongs(query); }catch(e2){ results = []; }
     }
@@ -10259,7 +10264,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
   async function sotdRandomSong(){
     const term = SOTD_RANDOM_TERMS[Math.floor(Math.random() * SOTD_RANDOM_TERMS.length)];
     let rows = [];
-    try{ rows = await searchItunes(term, 'song', 8); }catch(e){ rows = []; }
+    try{ rows = await itunesSearch(term, 'song', 8); }catch(e){ rows = []; }
     if(rows.length === 0) return null;
     const r = rows[Math.floor(Math.random() * rows.length)];
     return sotdMapItunes(r);
@@ -10292,7 +10297,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
       const term = [old.title, old.artist].filter(Boolean).join(' ');
       let hits = [];
       if(term){
-        try{ hits = await searchItunes(term, 'song', 5); }catch(e){ hits = []; }
+        try{ hits = await itunesSearch(term, 'song', 5); }catch(e){ hits = []; }
       }
       let best = null;
       const wantTitle = String(old.title || '').trim().toLowerCase();
@@ -10841,7 +10846,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
     searchState[date] = { term, loading: true };
     renderScheduler();
     try{
-      const results = await searchItunes(term, 'song', 6);
+      const results = await itunesSearch(term, 'song', 6);
       searchState[date] = { term, results: results || [] };
       if(!results || results.length === 0){
         searchState[date].error = 'No songs found — try a different search.';
