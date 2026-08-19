@@ -3494,11 +3494,11 @@ function applyTheme(theme){
   root.setProperty('--teal', t.teal);
   root.setProperty('--lilac', t.lilac || '#c9a0dc');
   root.setProperty('--sage', t.sage || '#7a8b6a');
-  root.setProperty('--paper-elevated', t.paperElevated || shade(t.paper, paperLum > 0.5 ? -0.04 : 0.08));
-  root.setProperty('--border', t.border || rgba(t.paper, paperLum > 0.5 ? 0.5 : 0.2));
   root.setProperty('--line', rgba(t.ink, 0.15));
   const inkLum = luminance(t.ink);
   const paperLum = luminance(t.paper);
+  root.setProperty('--paper-elevated', t.paperElevated || shade(t.paper, paperLum > 0.5 ? -0.04 : 0.08));
+  root.setProperty('--border', t.border || rgba(t.paper, paperLum > 0.5 ? 0.5 : 0.2));
   const onInk = inkLum > 0.55
     ? (paperLum > 0.5 ? '#12141c' : t.paper)
     : (paperLum > 0.45 ? t.paper : '#f5f2ea');
@@ -3548,11 +3548,7 @@ function persistRemoteTheme(theme){
   upsertMyProfile({ theme });
 }
 function currentThemeFromInputs(){
-  const theme = {};
-  Object.keys(DEFAULT_THEME).forEach(key=>{
-    theme[key] = document.getElementById('theme-' + key).value;
-  });
-  return theme;
+  return { ...loadTheme() };
 }
 
 const CUSTOM_THEMES_KEY = 'song-journal-custom-themes';
@@ -3584,7 +3580,7 @@ function renderThemePresets(){
     btn.innerHTML = `<span class="theme-preset-swatch"><span style="background:${c.ink}"></span><span style="background:${c.gold}"></span><span style="background:${c.rose}"></span><span style="background:${c.teal}"></span><span style="background:${c.lilac||'#c9a0dc'}"></span><span style="background:${c.sage||'#7a8b6a'}"></span></span>${preset.name}`;
     btn.addEventListener('click', ()=>{
       applyTheme(preset.colors);
-      saveTheme(currentThemeFromInputs());
+      saveTheme(preset.colors);
     });
     wrap.appendChild(btn);
   });
@@ -3597,7 +3593,7 @@ function renderThemePresets(){
     btn.addEventListener('click', (e)=>{
       if(e.target.closest('[data-delete-theme]')) return;
       applyTheme(theme.colors);
-      saveTheme(currentThemeFromInputs());
+      saveTheme(theme.colors);
     });
     wrap.appendChild(btn);
   });
