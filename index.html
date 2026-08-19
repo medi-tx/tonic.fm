@@ -22,6 +22,8 @@
     --teal:#E63946;
     --lilac:#8E44AD;
     --sage:#264653;
+    --paper-elevated: #e0d08c;
+    --border: rgba(238,221,149,0.5);
     --line: rgba(18,20,28,0.15);
     --text-on-ink: #eedd95;
     --text-dim: rgba(238,221,149,0.6);
@@ -3437,6 +3439,8 @@ const DEFAULT_THEME = { ink:'#12141c', paper:'#eedd95', gold:'#F4A300', rose:'#2
 
 const THEME_PRESETS = [
   { name:'tonicfm', colors: DEFAULT_THEME },
+  { name:'Dark', colors: { ink:'#14151A', paper:'#1E2028', paperElevated:'#262933', border:'rgba(52,56,66,0.5)', gold:'#F4A300', teal:'#E63946', rose:'#2A9D8F', lilac:'#8E44AD', sage:'#264653' } },
+  { name:'Light', colors: { ink:'#F7F5F0', paper:'#FFFFFF', paperElevated:'#FDFBF6', border:'#E5E1D8', gold:'#F4A300', teal:'#E63946', rose:'#2A9D8F', lilac:'#8E44AD', sage:'#264653' } },
   { name:'Euphoric', colors: { ink:'#1a0a2e', paper:'#fff8f0', gold:'#ff2fa0', teal:'#ff9e00', rose:'#ffd60a', lilac:'#7cff6b', sage:'#6bd8ff' } },
   { name:'Calm', colors: { ink:'#0f2027', paper:'#f4faf9', gold:'#8ecae6', teal:'#a8dadc', rose:'#bde0c8', lilac:'#cdeac0', sage:'#e0ece4' } },
   { name:'Melancholy', colors: { ink:'#141b2e', paper:'#eceff4', gold:'#5c6b8a', teal:'#4a5a78', rose:'#6b7a99', lilac:'#8c95ab', sage:'#aab0c2' } },
@@ -3490,6 +3494,8 @@ function applyTheme(theme){
   root.setProperty('--teal', t.teal);
   root.setProperty('--lilac', t.lilac || '#c9a0dc');
   root.setProperty('--sage', t.sage || '#7a8b6a');
+  root.setProperty('--paper-elevated', t.paperElevated || shade(t.paper, paperLum > 0.5 ? -0.04 : 0.08));
+  root.setProperty('--border', t.border || rgba(t.paper, paperLum > 0.5 ? 0.5 : 0.2));
   root.setProperty('--line', rgba(t.ink, 0.15));
   const inkLum = luminance(t.ink);
   const paperLum = luminance(t.paper);
