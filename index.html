@@ -844,7 +844,7 @@
     font-size:13.5px;
     line-height:1.5;
     color: rgba(var(--on-paper-rgb),0.95);
-    border-left:2px solid var(--lilac);
+    border-left:2px solid var(--teal);
     padding-left:10px;
     margin:4px 0 0;
     font-style:italic;
@@ -1490,8 +1490,11 @@
   .avatar-btn:hover{ border-color:var(--rose); }
   .avatar-btn img{ width:100%; height:100%; object-fit:cover; }
   .header-actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-  .header-actions .theme-btn{ border-color:var(--lilac); }
-  .header-actions .theme-btn:hover{ border-color:var(--lilac); color:var(--lilac); }
+  .header-actions .theme-btn{
+    color:var(--lilac);
+    border:1px solid var(--lilac);
+  }
+  .header-actions .theme-btn:hover{ background:rgba(var(--on-paper-rgb),0.08); }
 
   .profile-header{
     display:flex;
