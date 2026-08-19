@@ -294,8 +294,8 @@
     align-items:center;
     gap:14px;
     flex-wrap:wrap;
-    background:color-mix(in srgb, var(--rose) 18%, var(--field-bg));
-    border:1px solid color-mix(in srgb, var(--rose) 45%, var(--on-paper));
+    background:color-mix(in srgb, var(--lilac) 18%, var(--field-bg));
+    border:1px solid color-mix(in srgb, var(--lilac) 45%, var(--on-paper));
     border-radius:10px;
     padding:12px 18px;
     margin-bottom:12px;
@@ -304,8 +304,8 @@
     font-family:'IBM Plex Mono', monospace;
     font-size:11px;
     letter-spacing:1.5px;
-    color:var(--rose);
-    color:color-mix(in srgb, var(--rose) 50%, var(--on-paper));
+    color:var(--lilac);
+    color:color-mix(in srgb, var(--lilac) 50%, var(--on-paper));
     font-weight:700;
     text-transform:uppercase;
     white-space:nowrap;
@@ -536,6 +536,10 @@
     flex-wrap:wrap;
     margin-bottom:28px;
     align-items:center;
+    padding:10px 14px;
+    border-radius:10px;
+    background:color-mix(in srgb, var(--sage) 6%, var(--field-bg));
+    border:1px solid color-mix(in srgb, var(--sage) 15%, var(--on-paper));
   }
   input, select{
     font-family:'Space Grotesk', sans-serif;
@@ -547,7 +551,7 @@
     font-size:14px;
   }
   input::placeholder{ color: rgba(238,221,149,0.62); }
-  input:focus, select:focus{ outline:2px solid var(--rose); outline-offset:1px; }
+  input:focus, select:focus{ outline:2px solid var(--sage); outline-offset:1px; }
   #search{ flex:1; min-width:180px; }
   select{ cursor:pointer; }
 
@@ -563,7 +567,7 @@
     font-size:14px;
     transition:transform .15s ease, background .15s ease;
   }
-  .add-btn:hover{ background:#e5a810; transform:translateY(-1px); }
+  .add-btn:hover{ background:color-mix(in srgb, var(--rose) 85%, var(--lilac)); transform:translateY(-1px); }
   .add-btn:active{ transform:translateY(0); }
   .add-btn:disabled{ opacity:0.55; cursor:default; transform:none; }
   .add-btn.secondary:disabled{ background:transparent; }
@@ -712,7 +716,7 @@
     box-shadow:0 8px 20px rgba(0,0,0,0.25);
     transition: transform .18s ease, box-shadow .18s ease;
   }
-  .card:hover{ transform:translateY(-3px); box-shadow:0 14px 28px rgba(253,159,28,0.12), 0 14px 28px rgba(0,0,0,0.25); }
+  .card:hover{ transform:translateY(-3px); box-shadow:0 14px 28px rgba(201,160,220,0.12), 0 14px 28px rgba(122,139,106,0.10), 0 14px 28px rgba(0,0,0,0.25); }
   .card.archived{ opacity:0.6; }
   .card.archived:hover{ opacity:0.85; }
   .archived-badge{
@@ -2198,7 +2202,7 @@
     cursor:pointer;
     transition:border-color .15s, transform .15s;
   }
-  .obsessed-chip:hover{ border-color:var(--rose); transform:translateY(-1px); }
+  .obsessed-chip:hover{ border-color:var(--sage); transform:translateY(-1px); }
   .obsessed-chip img{
     width:36px; height:36px; border-radius:6px; object-fit:cover; flex-shrink:0;
     background:rgba(var(--on-paper-rgb),0.08);
@@ -5187,7 +5191,7 @@ function render(){
   const active = songs.filter(s=>!s.archived);
   const archivedCount = songs.filter(s=>s.archived).length;
   const sCount = active.filter(s=>s.tier==='S').length;
-  document.getElementById('stats').innerHTML = `<b>${myFriendsCount}</b> friend${myFriendsCount!==1?'s':''} &nbsp;·&nbsp; <b>${active.length}</b> songs logged &nbsp;·&nbsp; <b>${sCount}</b> S-tier &nbsp;·&nbsp; <b>${active.filter(s=>s.tier==='★').length}</b> favorites &nbsp;·&nbsp; <b>${archivedCount}</b> archived`;
+  document.getElementById('stats').innerHTML = `<b>${myFriendsCount}</b> friend${myFriendsCount!==1?'s':''} &nbsp;·&nbsp; <b>${active.length}</b> songs logged &nbsp;·&nbsp; <span style="color:var(--teal)"><b>${sCount}</b> S</span> &nbsp;·&nbsp; <span style="color:var(--lilac)"><b>${active.filter(s=>s.tier==='B').length}</b> B</span> &nbsp;·&nbsp; <span style="color:var(--sage)"><b>${active.filter(s=>s.tier==='C').length}</b> C</span> &nbsp;·&nbsp; <b>${active.filter(s=>s.tier==='★').length}</b> ★ &nbsp;·&nbsp; <b>${archivedCount}</b> archived`;
 
   populateFilters();
   renderStickerSections();
