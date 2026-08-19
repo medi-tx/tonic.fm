@@ -17,11 +17,11 @@
     --ink-2:#2a2c33;
     --paper:#eedd95;
     --paper-2:#e0d08c;
-    --gold:#F4A300;
-    --rose:#E63946;
-    --teal:#2A9D8F;
-    --lilac:#8E44AD;
-    --sage:#264653;
+    --gold:#FFD600;
+    --rose:#FF3D00;
+    --teal:#00BFA5;
+    --lilac:#AA00FF;
+    --sage:#2962FF;
     --line: rgba(18,20,28,0.15);
     --text-on-ink: #eedd95;
     --text-dim: rgba(238,221,149,0.6);
@@ -3433,18 +3433,18 @@ function saveWishlist(){
 /* =========================================================
    THEME CUSTOMIZATION
    ========================================================= */
-const DEFAULT_THEME = { ink:'#12141c', paper:'#eedd95', gold:'#F4A300', rose:'#E63946', teal:'#2A9D8F', lilac:'#8E44AD', sage:'#264653' };
+const DEFAULT_THEME = { ink:'#12141c', paper:'#eedd95', gold:'#FFD600', rose:'#FF3D00', teal:'#00BFA5', lilac:'#AA00FF', sage:'#2962FF' };
 
 const THEME_PRESETS = [
   { name:'tonicfm (default)', colors: DEFAULT_THEME },
-  { name:'Forest', colors: { ink:'#1a2420', paper:'#eef1e6', gold:'#F4A300', rose:'#E63946', teal:'#2A9D8F', lilac:'#8E44AD', sage:'#264653' } },
-  { name:'Sunset', colors: { ink:'#2a1a2e', paper:'#fdf0e4', gold:'#F4A300', rose:'#E63946', teal:'#2A9D8F', lilac:'#8E44AD', sage:'#264653' } },
-  { name:'Mono', colors: { ink:'#181818', paper:'#f2f0ec', gold:'#b0b0b0', rose:'#e0e0e0', teal:'#909090', lilac:'#c0c0c0', sage:'#606060' } },
-  { name:'Soft', colors: { ink:'#6d666d', paper:'#f1e8d6', gold:'#E69F00', rose:'#D55E00', teal:'#009E73', lilac:'#CC79A7', sage:'#56B4E9' } },
-  { name:'Futuristic', colors: { ink:'#2c3548', paper:'#6bf2d6', gold:'#FFCC00', rose:'#FF3B30', teal:'#34C759', lilac:'#AF52DE', sage:'#007AFF' } },
-  { name:'Romantic', colors: { ink:'#684b6a', paper:'#f8e4d8', gold:'#F4A300', rose:'#E63946', teal:'#2A9D8F', lilac:'#8E44AD', sage:'#264653' } },
-  { name:'Dark', colors: { ink:'#1e1c1f', paper:'#302a2c', gold:'#F4A300', rose:'#E63946', teal:'#2A9D8F', lilac:'#8E44AD', sage:'#264653' } },
-  { name:'Light', colors: { ink:'#f5f2ea', paper:'#2a2c34', gold:'#F4A300', rose:'#E63946', teal:'#2A9D8F', lilac:'#8E44AD', sage:'#264653' } }
+  { name:'Forest', colors: { ink:'#1a2420', paper:'#eef1e6', gold:'#FFD600', rose:'#FF3D00', teal:'#00BFA5', lilac:'#AA00FF', sage:'#2962FF' } },
+  { name:'Sunset', colors: { ink:'#2a1a2e', paper:'#fdf0e4', gold:'#FFD600', rose:'#FF3D00', teal:'#00BFA5', lilac:'#AA00FF', sage:'#2962FF' } },
+  { name:'Mono', colors: { ink:'#181818', paper:'#f2f0ec', gold:'#c0c0c0', rose:'#ffffff', teal:'#a0a0a0', lilac:'#d0d0d0', sage:'#606060' } },
+  { name:'Soft', colors: { ink:'#6d666d', paper:'#f1e8d6', gold:'#FFD600', rose:'#FF3D00', teal:'#00BFA5', lilac:'#AA00FF', sage:'#2962FF' } },
+  { name:'Futuristic', colors: { ink:'#2c3548', paper:'#6bf2d6', gold:'#FFD600', rose:'#FF3D00', teal:'#00BFA5', lilac:'#AA00FF', sage:'#2962FF' } },
+  { name:'Romantic', colors: { ink:'#684b6a', paper:'#f8e4d8', gold:'#FFD600', rose:'#FF3D00', teal:'#00BFA5', lilac:'#AA00FF', sage:'#2962FF' } },
+  { name:'Dark', colors: { ink:'#1e1c1f', paper:'#302a2c', gold:'#FFD600', rose:'#FF3D00', teal:'#00BFA5', lilac:'#AA00FF', sage:'#2962FF' } },
+  { name:'Light', colors: { ink:'#f5f2ea', paper:'#2a2c34', gold:'#FFD600', rose:'#FF3D00', teal:'#00BFA5', lilac:'#AA00FF', sage:'#2962FF' } }
 ];
 function hexToRgb(hex){
   const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -4041,7 +4041,7 @@ document.getElementById('timeline').addEventListener('click', e=>{
 });
 
 /* ---- stats page ---- */
-const TIER_CHART_COLORS = { '★':'#F4A300', S:'#E63946', A:'#2A9D8F', B:'#8E44AD', C:'#264653' };
+const TIER_CHART_COLORS = { '★':'#FFD600', S:'#FF3D00', A:'#00BFA5', B:'#AA00FF', C:'#2962FF' };
 function statChartCanvas(id){
   const c = document.getElementById(id);
   const dpr = window.devicePixelRatio || 1;
@@ -4543,7 +4543,7 @@ async function drawShareCard(opts){
     ctx.font = '500 21px "Space Grotesk", sans-serif';
     ctx.fillText(cardTruncate(ctx, formatArtists(s.artists), tw, ctx.font), tx, y + 52);
     const tier = s.tier || '';
-        const chipCol = { '★':'#F4A300', S:'#E63946', A:'#2A9D8F', B:'#8E44AD', C:'#264653' }[tier] || '#8E44AD';
+        const chipCol = { '★':'#FFD600', S:'#FF3D00', A:'#00BFA5', B:'#AA00FF', C:'#2962FF' }[tier] || '#AA00FF';
     ctx.fillStyle = chipCol;
     cardRoundRect(ctx, tx, y + 64, 46, 30, 8);
     ctx.fill();
@@ -4658,7 +4658,7 @@ async function drawSongShareCard(opts){
     ctx.fillText(cardTruncate(ctx, genresStr, W - 176, ctx.font), W/2, coverY + coverS + 240);
   }
   const tier = s.tier || '';
-  const chipCol = { S: t.teal || '#E63946', A: t.rose || '#2A9D8F', B: t.lilac || '#8E44AD', C: t.sage || '#264653', '★': t.gold || '#F4A300' }[tier] || t.paper || '#eedd95';
+  const chipCol = { S: t.teal || '#FF3D00', A: t.rose || '#00BFA5', B: t.lilac || '#AA00FF', C: t.sage || '#2962FF', '★': t.gold || '#FFD600' }[tier] || t.paper || '#eedd95';
   ctx.fillStyle = chipCol;
   cardRoundRect(ctx, W/2 - 44, coverY + coverS + 262, 88, 48, 12);
   ctx.fill();
@@ -4696,7 +4696,7 @@ async function drawTierShareCard(opts){
   ctx.fillStyle = t.paper ? t.paper + 'B3' : 'rgba(238,221,149,0.7)';
   ctx.font = '500 30px "Space Grotesk", sans-serif';
   ctx.fillText('TIER BOARD', PAD, titleY);
-  const tierColors = { '★': t.gold || '#F4A300', S: t.teal || '#E63946', A: t.rose || '#2A9D8F', B: t.lilac || '#8E44AD', C: t.sage || '#264653' };
+  const tierColors = { '★': t.gold || '#FFD600', S: t.teal || '#FF3D00', A: t.rose || '#00BFA5', B: t.lilac || '#AA00FF', C: t.sage || '#2962FF' };
   const tierTextColors = { '★': t.ink || '#12141c', S: t.paper || '#eedd95', A: t.ink || '#12141c', B: t.ink || '#12141c', C: t.ink || '#12141c' };
   const allSongs = tiers.flatMap(t=>byTier[t]);
   const imgs = await Promise.all(allSongs.map(s=>loadCardImage(s.coverArt)));
