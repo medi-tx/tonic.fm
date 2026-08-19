@@ -151,152 +151,7 @@
     cursor:pointer;
   }
   .logout-btn:hover{ color:var(--rose); border-color:var(--rose); }
-  .walkthrough-btn{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px;
-    letter-spacing:1.5px;
-    background:rgba(var(--on-ink-rgb),0.1);
-    border:1px solid rgba(var(--on-ink-rgb),0.35);
-    color:var(--on-ink);
-    padding:8px 16px;
-    border-radius:7px;
-    cursor:pointer;
-    font-weight:700;
-  }
-  .walkthrough-btn:hover{ background:rgba(var(--on-ink-rgb),0.2); border-color:var(--rose); }
-  .walkthrough-overlay{
-    position:fixed; inset:0; background:rgba(0,0,0,0.85);
-    display:flex; align-items:center; justify-content:center;
-    z-index:9999; opacity:0; pointer-events:none; transition:opacity 0.25s;
-  }
-  .walkthrough-overlay.open{ opacity:1; pointer-events:auto; }
-  .walkthrough-overlay .walkthrough-inner{
-    width:min(90vw,840px); aspect-ratio:16/9;
-    border-radius:12px; overflow:hidden; border:2px solid rgba(238,221,149,0.3);
-  }
-  .walkthrough-overlay iframe{ width:100%; height:100%; border:none; }
-  .walkthrough-overlay .walkthrough-close{
-    position:absolute; top:20px; right:20px;
-    background:none; border:1px solid rgba(238,221,149,0.4); color:var(--ink);
-    font-family:'IBM Plex Mono', monospace; font-size:13px; padding:6px 14px;
-    border-radius:7px; cursor:pointer; z-index:10000;
-  }
-  .walkthrough-overlay .walkthrough-close:hover{ background:rgba(253,159,28,0.25); color:var(--rose); }
 
-  /* GUIDED TOUR */
-  .tour-backdrop{
-    position:fixed; inset:0; z-index:10001;
-    pointer-events:none;
-  }
-  .tour-backdrop.open{ pointer-events:auto; }
-  .tour-highlight{
-    position:fixed; z-index:10002;
-    border:2px solid var(--rose);
-    border-radius:10px;
-    box-shadow:0 0 0 9999px rgba(0,0,0,0.7);
-    transition:all .3s ease;
-    pointer-events:none;
-  }
-  .tour-tooltip{
-    position:fixed; z-index:10003;
-    background:var(--ink-2);
-    border:1px solid rgba(253,159,28,0.4);
-    border-radius:12px;
-    padding:20px 22px 18px;
-    max-width:320px;
-    width:max-content;
-    box-shadow:0 12px 32px rgba(0,0,0,0.5);
-    transition:all .3s ease;
-    pointer-events:auto;
-  }
-  .tour-tooltip h4{
-    margin:0 0 6px;
-    font-family:'Fraunces', serif;
-    font-weight:700;
-    font-style:italic;
-    font-size:17px;
-    color:var(--on-ink);
-  }
-  .tour-tooltip p{
-    margin:0 0 14px;
-    font-size:13px;
-    line-height:1.5;
-    color:var(--text-dim);
-  }
-  .tour-tooltip .tour-step-label{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:10px;
-    letter-spacing:1.5px;
-    color:var(--rose);
-    text-transform:uppercase;
-    margin-bottom:8px;
-    display:block;
-  }
-  .tour-arrow{
-    position:fixed; z-index:10003;
-    width:0; height:0;
-    transition:all .3s ease;
-    pointer-events:none;
-  }
-  .tour-arrow.arrow-bottom{
-    border-left:10px solid transparent;
-    border-right:10px solid transparent;
-    border-bottom:10px solid var(--rose);
-  }
-  .tour-arrow.arrow-top{
-    border-left:10px solid transparent;
-    border-right:10px solid transparent;
-    border-top:10px solid var(--rose);
-  }
-  .tour-arrow.arrow-right{
-    border-top:10px solid transparent;
-    border-bottom:10px solid transparent;
-    border-left:10px solid var(--rose);
-  }
-  .tour-arrow.arrow-left{
-    border-top:10px solid transparent;
-    border-bottom:10px solid transparent;
-    border-right:10px solid var(--rose);
-  }
-  .tour-actions{
-    display:flex; gap:8px; align-items:center;
-  }
-  .tour-next-btn{
-    background:var(--rose);
-    color:var(--ink);
-    border:none;
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:600;
-    font-size:13px;
-    padding:8px 18px;
-    border-radius:7px;
-    cursor:pointer;
-    transition:background .15s;
-  }
-  .tour-next-btn:hover{ background:#e5a810; }
-  .tour-skip-btn{
-    background:none;
-    border:1px solid rgba(var(--on-ink-rgb),0.2);
-    color:var(--text-dim);
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    padding:7px 12px;
-    border-radius:7px;
-    cursor:pointer;
-    transition:border-color .15s;
-  }
-  .tour-skip-btn:hover{ border-color:var(--rose); color:var(--rose); }
-  .tour-dots{
-    display:flex; gap:5px; margin-left:auto; margin-right:8px;
-  }
-  .tour-dot{
-    width:7px; height:7px;
-    border-radius:50%;
-    background:rgba(var(--on-ink-rgb),0.2);
-    transition:background .2s;
-  }
-  .tour-dot.active{ background:var(--rose); }
-  .tour-dot.done{ background:rgba(var(--on-ink-rgb),0.5); }
   .theme-btn{
     font-family:'IBM Plex Mono', monospace;
     font-size:11px;
@@ -529,7 +384,7 @@
   .track-tier-btn:hover{ border-color:rgba(var(--on-paper-rgb),0.3); }
   .track-tier-btn.selected{ border-color:var(--selected-glow); box-shadow:0 0 0 1px var(--selected-glow); }
   .track-tier-btn.tier-S{ color:var(--teal); }
-  .track-tier-btn.tier-★{ color:var(--gold); }
+  .track-tier-btn.tier-â˜…{ color:var(--gold); }
   .track-tier-btn.tier-A{ color:var(--rose); }
   .track-tier-btn.tier-B{ color:var(--paper); }
   .track-tier-btn.tier-C{ color:var(--ink); opacity:0.7; }
@@ -787,7 +642,7 @@
     border:1px solid rgba(var(--on-paper-rgb),0.15);
   }
   .tier-board-badge.tier-S{ background:var(--teal); border-color:var(--teal); }
-  .tier-board-badge.tier-★{ background:var(--gold); border-color:var(--gold); }
+  .tier-board-badge.tier-â˜…{ background:var(--gold); border-color:var(--gold); }
   .tier-board-badge.tier-A{ background:var(--rose); border-color:var(--rose); }
   .tier-board-badge.tier-B{ background:var(--paper); border-color:var(--paper); }
   .tier-board-badge.tier-C{ background:#7a7468; border-color:#7a7468; }
@@ -976,7 +831,7 @@
     border:1px solid rgba(var(--on-paper-rgb),0.15);
   }
   .tier-badge.tier-S{ background:var(--teal); border-color:var(--teal); }
-  .tier-badge.tier-★{ background:var(--gold); border-color:var(--gold); }
+  .tier-badge.tier-â˜…{ background:var(--gold); border-color:var(--gold); }
   .tier-badge.tier-A{ background:var(--rose); color:var(--on-ink); border-color:var(--rose); }
   .tier-badge.tier-B{ background:var(--paper); color:var(--on-ink); border-color:var(--paper); }
   .tier-badge.tier-C{ background:#7a7468; color:var(--on-ink); border-color:#7a7468; }
@@ -1146,7 +1001,7 @@
   }
   .tier-picker button:hover{ transform:translateY(-1px); }
   .tier-picker button.selected.tier-S{ background:var(--teal); border-color:var(--teal); }
-  .tier-picker button.selected.tier-★{ background:var(--gold); border-color:var(--gold); }
+  .tier-picker button.selected.tier-â˜…{ background:var(--gold); border-color:var(--gold); }
   .tier-picker button.selected.tier-A{ background:var(--rose); border-color:var(--rose); color:var(--on-ink); }
   .tier-picker button.selected.tier-B{ background:var(--paper); border-color:var(--paper); color:var(--on-ink); }
   .tier-picker button.selected.tier-C{ background:#7a7468; border-color:#7a7468; color:var(--on-ink); }
@@ -1657,7 +1512,7 @@
     color: rgba(var(--on-paper-rgb),0.5);
     flex-shrink:0;
   }
-  .profile-photo-fallback::before{ content:'♪'; }
+  .profile-photo-fallback::before{ content:'â™ª'; }
   .profile-username{
     font-family:'Fraunces', serif;
     font-weight:700;
@@ -1725,7 +1580,7 @@
     color:var(--on-ink);
     flex-shrink:0;
   }
-  .friend-avatar-fallback::before{ content:'♪'; }
+  .friend-avatar-fallback::before{ content:'â™ª'; }
   .friend-name{
     font-family:'Fraunces', serif;
     font-weight:700;
@@ -1851,7 +1706,7 @@
 
   /* FRIEND LEADERBOARD */
   .leaderboard-row .drow-fallback{ font-size:19px; background:rgba(var(--on-paper-rgb),0.06); }
-  .drow-fallback.is-pfp::before{ content:'♪'; }
+  .drow-fallback.is-pfp::before{ content:'â™ª'; }
 
   .profile-songs-label{
     font-family:'IBM Plex Mono', monospace;
@@ -2618,7 +2473,7 @@
       <h1 class="auth-title"><span class="side-a">tonicfm</span>Sign in to your cataloguex</h1>
       <p class="auth-sub">Your entries are saved to your account, so you can pick up on any device.</p>
       <div class="field"><label>Email</label><input id="auth-email" type="email" autocomplete="email" placeholder="you@example.com"></div>
-      <div class="field"><label>Password</label><input id="auth-password" type="password" autocomplete="current-password" placeholder="••••••••"></div>
+      <div class="field"><label>Password</label><input id="auth-password" type="password" autocomplete="current-password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"></div>
       <button type="button" class="forgot-link" id="forgotPasswordLink">Forgot password?</button>
       <div id="auth-consent-row" style="display:none; margin:2px 0 14px; font-size:12px; line-height:1.5; color:var(--text-dim);">
         <label style="display:flex; align-items:flex-start; gap:8px; cursor:pointer;">
@@ -2652,8 +2507,8 @@
   <div class="auth-card">
     <h1 class="auth-title"><span class="side-a">tonicfm</span>Set a new password</h1>
     <p class="auth-sub">Choose a new password for your account.</p>
-    <div class="field"><label>New password</label><input id="recovery-password" type="password" autocomplete="new-password" placeholder="••••••••"></div>
-    <div class="field"><label>Confirm password</label><input id="recovery-password-2" type="password" autocomplete="new-password" placeholder="••••••••"></div>
+    <div class="field"><label>New password</label><input id="recovery-password" type="password" autocomplete="new-password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"></div>
+    <div class="field"><label>Confirm password</label><input id="recovery-password-2" type="password" autocomplete="new-password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"></div>
     <div id="recovery-error" class="auth-error" style="display:none;"></div>
     <div id="recovery-message" class="auth-message" style="display:none;"></div>
     <button class="add-btn auth-submit" id="recoverySubmitBtn">Set new password</button>
@@ -2670,7 +2525,7 @@
     </p>
     <p style="font-size:13px; margin:0 0 18px;">
       <a href="terms.html" target="_blank" rel="noopener" style="color:var(--teal); font-weight:600;">Read the Terms of Service</a>
-      &nbsp;·&nbsp;
+      &nbsp;Â·&nbsp;
       <a href="privacy.html" target="_blank" rel="noopener" style="color:var(--teal); font-weight:600;">Read the Privacy Policy</a>
     </p>
     <label style="display:flex; align-items:flex-start; gap:8px; cursor:pointer; font-size:13px; margin-bottom:18px;">
@@ -2690,22 +2545,21 @@
   <header>
     <div class="header-brand">
       <img class="brand-logo js-logo" alt="tonicfm">
-      <h1><span class="side-a">SIDE A � PERSONAL MIXTAPE</span>Your Music Cataloguex</h1>
+      <h1><span class="side-a">SIDE A ï¿½ PERSONAL MIXTAPE</span>Your Music Cataloguex</h1>
     </div>
     <div class="stats" id="stats"></div>
     <div class="header-actions">
-      <button class="theme-btn" id="notifBtn">🔔<span class="msg-btn-badge" id="notifBadge" style="display:none;"></span></button>
-      <button class="theme-btn" id="messagesBtn">💬 Messages<span class="msg-btn-badge" id="msgBtnBadge" style="display:none;"></span></button>
-      <button class="theme-btn" id="feedBtn">📰 Feed</button>
-      <button class="theme-btn" id="sotdBtn">🎵 Song of the Day</button>
-      <button class="theme-btn" id="leaderboardBtn">🏆 Leaderboards</button>
-      <button class="theme-btn" id="statsBtn">📊 Stats</button>
-      <button class="theme-btn" id="editStickersBtn">🎨 Stickers</button>
-      <button class="theme-btn" id="discoverBtn">🔎 Friends</button>
-      <button class="theme-btn" id="themeBtn">🎨 Theme</button>
-      <a href="songdb.html" class="theme-btn" style="text-decoration:none;">📀 Song Database</a>
+      <button class="theme-btn" id="notifBtn">ðŸ””<span class="msg-btn-badge" id="notifBadge" style="display:none;"></span></button>
+      <button class="theme-btn" id="messagesBtn">ðŸ’¬ Messages<span class="msg-btn-badge" id="msgBtnBadge" style="display:none;"></span></button>
+      <button class="theme-btn" id="feedBtn">ðŸ“° Feed</button>
+      <button class="theme-btn" id="sotdBtn">ðŸŽµ Song of the Day</button>
+      <button class="theme-btn" id="leaderboardBtn">ðŸ† Leaderboards</button>
+      <button class="theme-btn" id="statsBtn">ðŸ“Š Stats</button>
+      <button class="theme-btn" id="editStickersBtn">ðŸŽ¨ Stickers</button>
+      <button class="theme-btn" id="discoverBtn">ðŸ”Ž Friends</button>
+      <button class="theme-btn" id="themeBtn">ðŸŽ¨ Theme</button>
+      <a href="songdb.html" class="theme-btn" style="text-decoration:none;">ðŸ“€ Song Database</a>
       <button class="avatar-btn" id="myProfileBtn" title="My profile"><span id="myAvatarContent">?</span></button>
-      <button class="walkthrough-btn" id="walkthroughBtn" title="Watch a quick site walkthrough">▶ Site Walkthrough</button>
       <button class="logout-btn" id="logoutBtn">Log out</button>
     </div>
   </header>
@@ -2716,32 +2570,32 @@
   </div>
 
   <div class="controls">
-    <input type="text" id="search" placeholder="Search title, artist, or album…">
+    <input type="text" id="search" placeholder="Search title, artist, or albumâ€¦">
     <select id="filterGenre"><option value="">All genres</option></select>
     <select id="filterMood"><option value="">All moods/tags</option></select>
     <select id="sortBy">
       <option value="pinned">Pinned first</option>
-      <option value="rating-desc">Tier (★ to C)</option>
-      <option value="rating-asc">Tier (C to ★)</option>
+      <option value="rating-desc">Tier (â˜… to C)</option>
+      <option value="rating-asc">Tier (C to â˜…)</option>
       <option value="year-desc">Year (newest)</option>
       <option value="year-asc">Year (oldest)</option>
-      <option value="title">Title (A–Z)</option>
+      <option value="title">Title (Aâ€“Z)</option>
     </select>
     <button class="add-btn secondary" id="toggleArchive">View archive</button>
-    <button class="add-btn secondary" id="toggleTierBoard">🏆 Tier board</button>
-    <button class="add-btn secondary" id="toggleWishlist">✍ Songs I Wish I Wrote</button>
-    <button class="add-btn secondary" id="toggleTimeline">🕰 Timeline</button>
+    <button class="add-btn secondary" id="toggleTierBoard">ðŸ† Tier board</button>
+    <button class="add-btn secondary" id="toggleWishlist">âœ Songs I Wish I Wrote</button>
+    <button class="add-btn secondary" id="toggleTimeline">ðŸ•° Timeline</button>
     <button class="add-btn secondary" id="openCluster">+ Create Stack</button>
     <button class="add-btn secondary" id="viewClustersBtn">View Stacks</button>
     <button class="add-btn" id="openAddMusic">+ Add Music</button>
-    <button class="add-btn secondary" id="removeExamplesBtn">✕ Remove examples</button>
-    <button class="add-btn secondary danger" id="resetCatalogueBtn" title="Reset your cataloguex back to the built-in examples">⚠ Reset cataloguex</button>
+    <button class="add-btn secondary" id="removeExamplesBtn">âœ• Remove examples</button>
+    <button class="add-btn secondary danger" id="resetCatalogueBtn" title="Reset your cataloguex back to the built-in examples">âš  Reset cataloguex</button>
     <button class="add-btn" id="openWish" style="display:none;">+ Add song</button>
   </div>
 
   <div class="people-section" id="peopleSection">
     <div class="people-header">
-      <span class="people-label">Songs that remind me of…</span>
+      <span class="people-label">Songs that remind me ofâ€¦</span>
       <button class="add-person-btn" id="addPersonBtn">+ Add person</button>
     </div>
     <div class="people-row" id="peopleRow"></div>
@@ -2749,12 +2603,12 @@
 
   <div class="cluster-bar" id="clusterBar" style="display:none;">
     <span id="clusterBarText"></span>
-    <button id="clearClusterFilter">✕ Exit stack view</button>
+    <button id="clearClusterFilter">âœ• Exit stack view</button>
   </div>
 
   <div class="cluster-bar" id="remindsBar" style="display:none;">
     <span id="remindsBarText"></span>
-    <button id="clearRemindsFilter">✕ Exit</button>
+    <button id="clearRemindsFilter">âœ• Exit</button>
   </div>
 
   <div class="grid" id="grid"></div>
@@ -2765,7 +2619,7 @@
   </div>
   <div class="tier-board-toolbar" id="tierBoardToolbar" style="display:none;">
     <span>Your tier board</span>
-    <button class="add-btn secondary" id="shareMyTierBoardBtn">↗ Share board</button>
+    <button class="add-btn secondary" id="shareMyTierBoardBtn">â†— Share board</button>
   </div>
   <div class="tier-board" id="tierBoard" style="display:none;"></div>
   <div class="empty" id="tierBoardEmptyState" style="display:none;">
@@ -2784,7 +2638,7 @@
   <header>
     <div class="header-brand">
       <img class="brand-logo js-logo" alt="tonicfm">
-      <button type="button" class="back-btn" id="friendBackBtn">← Back to my cataloguex</button>
+      <button type="button" class="back-btn" id="friendBackBtn">â† Back to my cataloguex</button>
     </div>
   </header>
 
@@ -2796,10 +2650,10 @@
       <p class="friend-bio" id="friendBio"></p>
     </div>
     <div class="friend-banner-actions">
-      <button type="button" id="friendTierBoardBtn">🏆 Tier board</button>
-      <button type="button" id="friendCompareBtn">⚖️ Compare</button>
-      <button type="button" id="friendShareBtn">🃏 Share card</button>
-      <button type="button" id="friendShareTierBoardBtn">🏆 Share board</button>
+      <button type="button" id="friendTierBoardBtn">ðŸ† Tier board</button>
+      <button type="button" id="friendCompareBtn">âš–ï¸ Compare</button>
+      <button type="button" id="friendShareBtn">ðŸƒ Share card</button>
+      <button type="button" id="friendShareTierBoardBtn">ðŸ† Share board</button>
       <button type="button" id="friendAddBtn">+ Add friend</button>
     </div>
   </div>
@@ -2842,7 +2696,7 @@
 
 <div class="overlay" id="compareOverlay">
   <div class="modal" style="max-width:680px;">
-    <h3>⚖️ Taste Comparison</h3>
+    <h3>âš–ï¸ Taste Comparison</h3>
     <div id="compareContent"></div>
     <div class="modal-actions">
       <button class="btn-cancel" id="compareCloseBtn">Close</button>
@@ -2872,7 +2726,7 @@
     </div>
     <div class="field">
       <label>Search for a Song</label>
-      <input type="text" id="f-song-search" placeholder="Search song title or artist…" autocomplete="off">
+      <input type="text" id="f-song-search" placeholder="Search song title or artistâ€¦" autocomplete="off">
       <div class="discover-list" id="songSearchResults" style="display:none; margin-top:6px;"></div>
     </div>
     <div class="field"><label>Title</label><input id="f-title" type="text"></div>
@@ -2885,7 +2739,7 @@
       <div class="field"><label>Genres (comma-separated)</label><input id="f-genre" type="text" placeholder="e.g. Rock, Funk/Soul"></div>
     </div>
     <div class="field"><label>Mood / tags (comma-separated)</label><input id="f-tags" type="text" placeholder="nostalgic, road trip, late night"></div>
-    <div class="field"><label>Borrowed from / Where I Heard It</label><input id="f-credit" type="text" placeholder="who showed you this, where you first heard it…"></div>
+    <div class="field"><label>Borrowed from / Where I Heard It</label><input id="f-credit" type="text" placeholder="who showed you this, where you first heard itâ€¦"></div>
     <div class="field">
       <label>Tier</label>
       <div class="tier-picker" id="tierPicker"></div>
@@ -2894,7 +2748,7 @@
     <div class="field">
       <label>Reminds me of</label>
       <div class="reminds-picker" id="f-reminds-picker"></div>
-      <p class="reminds-hint" id="f-reminds-hint" style="display:none;">Add people in the "Songs that remind me of…" section first.</p>
+      <p class="reminds-hint" id="f-reminds-hint" style="display:none;">Add people in the "Songs that remind me ofâ€¦" section first.</p>
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" id="cancelBtn">Cancel</button>
@@ -2903,34 +2757,13 @@
   </div>
 </div>
 
-<div class="walkthrough-overlay" id="walkthroughOverlay">
-  <button class="walkthrough-close" id="walkthroughCloseBtn">✕ Close</button>
-  <div class="walkthrough-inner">
-    <iframe id="walkthroughVideo" src="https://www.youtube.com/embed/Lm3btFkdEZw" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-  </div>
-</div>
-
-<div class="tour-backdrop" id="tourBackdrop"></div>
-<div class="tour-highlight" id="tourHighlight" style="display:none;"></div>
-<div class="tour-arrow" id="tourArrow" style="display:none;"></div>
-<div class="tour-tooltip" id="tourTooltip" style="display:none;">
-  <span class="tour-step-label" id="tourStepLabel"></span>
-  <h4 id="tourTitle"></h4>
-  <p id="tourDesc"></p>
-  <div class="tour-actions">
-    <button class="tour-next-btn" id="tourNextBtn">Next</button>
-    <button class="tour-skip-btn" id="tourSkipBtn">Skip tour</button>
-    <div class="tour-dots" id="tourDots"></div>
-  </div>
-</div>
-
 <div class="overlay" id="statsOverlay">
   <div class="modal stats-modal">
-    <h3>📊 Cataloguex stats</h3>
+    <h3>ðŸ“Š Cataloguex stats</h3>
     <div class="stats-totals">
       <div class="stat-total"><span id="statSongCount">0</span><label>songs</label></div>
       <div class="stat-total"><span id="statArtistCount">0</span><label>artists</label></div>
-      <div class="stat-total"><span id="statFavCount">0</span><label>pinned ♥</label></div>
+      <div class="stat-total"><span id="statFavCount">0</span><label>pinned â™¥</label></div>
     </div>
     <div class="stat-section">
       <p class="stat-label">Tier distribution</p>
@@ -2950,16 +2783,16 @@
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" id="statsCloseBtn">Close</button>
-      <button class="btn-save" id="exportBackupBtn">📦 Export Backup</button>
-      <button class="btn-save" id="yearReviewBtn">📅 Year in Review</button>
-      <button class="btn-save" id="exportAnalyticsBtn" style="display:none;">📊 Export Usage Data</button>
+      <button class="btn-save" id="exportBackupBtn">ðŸ“¦ Export Backup</button>
+      <button class="btn-save" id="yearReviewBtn">ðŸ“… Year in Review</button>
+      <button class="btn-save" id="exportAnalyticsBtn" style="display:none;">ðŸ“Š Export Usage Data</button>
     </div>
   </div>
 </div>
 
 <div class="overlay" id="yearReviewOverlay">
   <div class="modal yr-modal">
-    <h3 id="yrTitle">📅 Year in Review</h3>
+    <h3 id="yrTitle">ðŸ“… Year in Review</h3>
     <div id="yrBody"></div>
     <div class="modal-actions">
       <button class="btn-cancel" id="yrCloseBtn">Close</button>
@@ -2969,7 +2802,7 @@
 
 <div class="overlay" id="notifOverlay">
   <div class="modal notif-modal">
-    <h3>🔔 Notifications</h3>
+    <h3>ðŸ”” Notifications</h3>
     <div class="notif-list" id="notifList"></div>
     <div class="modal-actions">
       <button class="btn-cancel" id="notifMarkReadBtn">Mark all read</button>
@@ -2980,7 +2813,7 @@
 
 <div class="overlay" id="feedOverlay">
   <div class="modal feed-modal">
-    <p class="mixtape-sub">Songs from your friends and you — click any song to add it to your cataloguex.</p>
+    <p class="mixtape-sub">Songs from your friends and you â€” click any song to add it to your cataloguex.</p>
     <div class="mixtape-period">
       <button type="button" class="mixtape-period-btn active" id="mixtapeWeekBtn">This week</button>
       <button type="button" class="mixtape-period-btn" id="mixtapeMonthBtn">This month</button>
@@ -2995,7 +2828,7 @@
 
 <div class="overlay" id="dupOverlay">
   <div class="modal dup-modal">
-    <h3 id="dupTitle">⚠️ Already in your catalogue</h3>
+    <h3 id="dupTitle">âš ï¸ Already in your catalogue</h3>
     <div id="dupBody"></div>
     <div class="modal-actions">
       <button class="btn-cancel" id="dupCancelBtn">Cancel</button>
@@ -3007,11 +2840,11 @@
 <div class="overlay" id="shareOverlay">
   <div class="modal share-modal">
     <h3 id="shareTitle">My cataloguex card</h3>
-    <p class="share-sub" id="shareSub">A shareable snapshot of top-tier songs — ready to post anywhere.</p>
+    <p class="share-sub" id="shareSub">A shareable snapshot of top-tier songs â€” ready to post anywhere.</p>
     <div class="share-preview-wrap"><canvas id="shareCanvas" width="1080" height="1350"></canvas></div>
     <div class="share-actions">
-      <button class="btn-save" id="shareDownloadBtn">⬇ Download PNG</button>
-      <button class="btn-save" id="shareCopyBtn">📋 Copy image</button>
+      <button class="btn-save" id="shareDownloadBtn">â¬‡ Download PNG</button>
+      <button class="btn-save" id="shareCopyBtn">ðŸ“‹ Copy image</button>
     </div>
     <p class="share-note" id="shareNote">Tip: share it in a story, group chat, or wherever you swap music.</p>
     <div class="modal-actions">
@@ -3033,7 +2866,7 @@
     </div>
     <div class="field" id="mf-spotify-search-field" style="display:none;">
       <label>Search for an Album</label>
-      <input type="text" id="mf-album-search" placeholder="Search album title or artist…" autocomplete="off">
+      <input type="text" id="mf-album-search" placeholder="Search album title or artistâ€¦" autocomplete="off">
       <div class="discover-list" id="albumSearchResults" style="display:none; margin-top:6px;"></div>
     </div>
     <div class="two-col" id="mf-artist-field">
@@ -3045,12 +2878,12 @@
       <div class="field"><label>Genres (comma-separated)</label><input id="mf-genre" type="text" placeholder="e.g. Rock, Funk/Soul"></div>
     </div>
     <div class="field" id="mf-tags-field"><label>Mood / tags (comma-separated)</label><input id="mf-tags" type="text" placeholder="nostalgic, road trip, late night"></div>
-    <div class="field"><label>Borrowed from / Where I Heard It</label><input id="mf-credit" type="text" placeholder="who showed you this, where you first heard it…"></div>
+    <div class="field"><label>Borrowed from / Where I Heard It</label><input id="mf-credit" type="text" placeholder="who showed you this, where you first heard itâ€¦"></div>
     <div class="field"><label id="multiWhyLabel">What connects these</label><textarea id="mf-why"></textarea></div>
     <div class="field">
       <label>Reminds me of</label>
       <div class="reminds-picker" id="mf-reminds-picker"></div>
-      <p class="reminds-hint" id="mf-reminds-hint" style="display:none;">Add people in the "Songs that remind me of…" section first.</p>
+      <p class="reminds-hint" id="mf-reminds-hint" style="display:none;">Add people in the "Songs that remind me ofâ€¦" section first.</p>
     </div>
     <div class="field">
       <label id="multiTitlesLabel">Titles</label>
@@ -3067,11 +2900,11 @@
 <div class="overlay" id="clusterOverlay">
   <div class="modal">
     <h3>New Linked Stack</h3>
-    <p class="multi-hint">A stack is a group of songs that belong together — a mood, a theme, a moment. Search your saved songs and add them to build your stack.</p>
-    <div class="field"><label>Stack name</label><input type="text" id="cluster-name" placeholder="e.g. Late night drives, Songs about the ocean…"></div>
+    <p class="multi-hint">A stack is a group of songs that belong together â€” a mood, a theme, a moment. Search your saved songs and add them to build your stack.</p>
+    <div class="field"><label>Stack name</label><input type="text" id="cluster-name" placeholder="e.g. Late night drives, Songs about the oceanâ€¦"></div>
     <div class="field">
       <label>Search your songs</label>
-      <input type="text" id="cluster-search" placeholder="Search by title or artist…" autocomplete="off">
+      <input type="text" id="cluster-search" placeholder="Search by title or artistâ€¦" autocomplete="off">
       <div class="discover-list" id="clusterSearchResults" style="display:none; margin-top:6px;"></div>
     </div>
     <div class="field">
@@ -3086,7 +2919,7 @@
       </label>
       <p class="profile-empty-note" id="collabHint" style="display:none;">Invite friends to add songs to this stack. Everyone's songs show up together.</p>
       <div id="collabFriendsWrap" style="display:none; margin-top:8px;">
-        <input type="text" id="collabFriendsSearch" placeholder="Search friends…" autocomplete="off">
+        <input type="text" id="collabFriendsSearch" placeholder="Search friendsâ€¦" autocomplete="off">
         <div class="discover-list" id="collabFriendsResults" style="margin-top:4px;"></div>
         <div class="cluster-selected-list" id="collabSelectedList"></div>
       </div>
@@ -3120,9 +2953,9 @@
     </div>
     <div class="field">
       <label>Add a friend by username</label>
-      <input type="text" id="friend-username-search" placeholder="Search by username…" autocomplete="off">
+      <input type="text" id="friend-username-search" placeholder="Search by usernameâ€¦" autocomplete="off">
     </div>
-    <p class="profile-empty-note" id="discoverBlockedNote" style="display:none;">🔒 Friend requests are turned off for this account — you can't add or accept friends right now.</p>
+    <p class="profile-empty-note" id="discoverBlockedNote" style="display:none;">ðŸ”’ Friend requests are turned off for this account â€” you can't add or accept friends right now.</p>
     <p class="theme-section-label" id="discoverListLabel">People on tonicfm</p>
     <div class="discover-list" id="discoverList"></div>
     <div class="modal-actions">
@@ -3134,9 +2967,9 @@
 <div class="overlay" id="leaderboardOverlay">
   <div class="modal">
     <h3>Leaderboards</h3>
-    <p class="theme-section-label">🏆 Top SOTD Reactor</p>
+    <p class="theme-section-label">ðŸ† Top SOTD Reactor</p>
     <div class="discover-list" id="leaderboardList"></div>
-    <p class="theme-section-label">🎧 Friend leaderboard</p>
+    <p class="theme-section-label">ðŸŽ§ Friend leaderboard</p>
     <div class="discover-list" id="leaderboardFriendList"></div>
     <div class="modal-actions">
       <button class="btn-cancel" id="leaderboardCloseBtn">Close</button>
@@ -3146,8 +2979,8 @@
 
 <div class="overlay" id="sotdScheduleOverlay">
   <div class="modal" style="max-width:640px;">
-    <h3>📅 Schedule Song of the Day</h3>
-    <p class="theme-section-label">Set the song of the day for the next 7 days — only you can see this.</p>
+    <h3>ðŸ“… Schedule Song of the Day</h3>
+    <p class="theme-section-label">Set the song of the day for the next 7 days â€” only you can see this.</p>
     <div id="sotdScheduleList"></div>
     <div class="modal-actions">
       <button class="btn-cancel" id="sotdScheduleCloseBtn">Close</button>
@@ -3157,11 +2990,11 @@
 
 <div class="overlay" id="sotdHistoryOverlay">
   <div class="modal sotd-history-modal">
-    <h3>🎵 Previous Songs of the Day</h3>
+    <h3>ðŸŽµ Previous Songs of the Day</h3>
     <div class="sotd-history-filters">
       <div class="field">
         <label>Search by song or artist</label>
-        <input type="text" id="sotdHistorySearch" placeholder="Title or artist…" autocomplete="off">
+        <input type="text" id="sotdHistorySearch" placeholder="Title or artistâ€¦" autocomplete="off">
       </div>
       <div class="field">
         <label>From date</label>
@@ -3195,7 +3028,7 @@
     <p class="profile-sotd-count" id="otherProfileSotdCount" style="display:none;"></p>
     <div class="profile-actions">
       <button type="button" id="otherProfileFriendBtn">+ Add friend</button>
-      <button type="button" id="otherProfileCatalogueBtn" style="display:none;">View cataloguex →</button>
+      <button type="button" id="otherProfileCatalogueBtn" style="display:none;">View cataloguex â†’</button>
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" id="otherProfileCloseBtn">Close</button>
@@ -3217,12 +3050,12 @@
         </div>
       </div>
     </div>
-    <div class="field"><label>Name</label><input id="p-name" type="text" placeholder="e.g. Mom, Sarah…"></div>
+    <div class="field"><label>Name</label><input id="p-name" type="text" placeholder="e.g. Mom, Sarahâ€¦"></div>
     <div class="field">
       <label>Link to a friend (optional)</label>
-      <input type="text" id="p-friend-search" placeholder="Search friends by username…" autocomplete="off">
-      <div class="discover-list person-friend-list" id="p-friend-list"><p class="profile-empty-note">Loading friends…</p></div>
-      <div class="reminds-hint">Linked friends get a teal “friend” tag so they stand out from other people.</div>
+      <input type="text" id="p-friend-search" placeholder="Search friends by usernameâ€¦" autocomplete="off">
+      <div class="discover-list person-friend-list" id="p-friend-list"><p class="profile-empty-note">Loading friendsâ€¦</p></div>
+      <div class="reminds-hint">Linked friends get a teal â€œfriendâ€ tag so they stand out from other people.</div>
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" id="personCancelBtn">Cancel</button>
@@ -3233,7 +3066,7 @@
 
 <div class="overlay" id="stickerWipOverlay">
   <div class="modal" style="max-width:400px;text-align:center;">
-    <h3>🎨 Stickers — Work in Progress</h3>
+    <h3>ðŸŽ¨ Stickers â€” Work in Progress</h3>
     <p style="font-size:13px;color:rgba(var(--on-paper-rgb),0.75);line-height:1.6;margin:12px 0;">The sticker system is still being built. Some features may be buggy or change soon. Thanks for being patient!</p>
     <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;color:rgba(var(--on-paper-rgb),0.6);cursor:pointer;margin:8px 0 16px;">
       <input type="checkbox" id="stickerWipDismiss" style="width:auto;"> Don't show this again
@@ -3295,7 +3128,7 @@
     <h3 id="wishModalTitle">Add a song you wish you wrote</h3>
     <div class="field" id="wishSearchField">
       <label>Search your saved songs</label>
-      <input type="text" id="w-search" placeholder="Start typing a title or artist…" autocomplete="off">
+      <input type="text" id="w-search" placeholder="Start typing a title or artistâ€¦" autocomplete="off">
       <div class="discover-list" id="wishSearchResults" style="display:none; margin-top:6px;"></div>
     </div>
     <div class="field">
@@ -3312,7 +3145,7 @@
     </div>
     <div class="field"><label>Year</label><input id="w-year" type="text" inputmode="numeric"></div>
     <div class="field"><label>Lyric snippet</label><textarea id="w-lyric" class="lyric-input" placeholder="a line or verse"></textarea></div>
-    <div class="field"><label>What you wish you'd written</label><textarea id="w-why" placeholder="the hook, the twist, the line that gets you…"></textarea></div>
+    <div class="field"><label>What you wish you'd written</label><textarea id="w-why" placeholder="the hook, the twist, the line that gets youâ€¦"></textarea></div>
     <div class="modal-actions">
       <button class="btn-cancel" id="wishCancelBtn">Cancel</button>
       <button class="btn-save" id="wishSaveBtn">Save</button>
@@ -3367,7 +3200,7 @@
     </div>
 
     <div class="theme-save-row">
-      <input type="text" id="theme-save-name" placeholder="Name this color combo…">
+      <input type="text" id="theme-save-name" placeholder="Name this color comboâ€¦">
       <button type="button" class="add-btn secondary" id="themeSaveBtn">Save as theme</button>
     </div>
 
@@ -3397,13 +3230,13 @@
     </div>
     <p class="profile-sotd-count" id="myProfileSotdCount" style="display:none;"></p>
     <div class="profile-actions">
-      <button type="button" id="myShareCardBtn">🃏 Share card</button>
-      <button type="button" id="shareProfileBtn">🔗 Share profile link</button>
-      <button type="button" id="openLinkedToMeBtn" style="display:none;">💌 Songs Linked to Me</button>
+      <button type="button" id="myShareCardBtn">ðŸƒ Share card</button>
+      <button type="button" id="shareProfileBtn">ðŸ”— Share profile link</button>
+      <button type="button" id="openLinkedToMeBtn" style="display:none;">ðŸ’Œ Songs Linked to Me</button>
       <button type="button" id="openEditProfileBtn">Edit profile</button>
       <button type="button" id="openChangePasswordBtn">Change password</button>
-      <button type="button" id="exportDataBtn" style="margin-top:8px; border:1px solid var(--teal); color:var(--teal); background:none; padding:8px 14px; border-radius:6px; cursor:pointer; font-size:13px;">📦 Export my data</button>
-      <button type="button" id="deleteAccountBtn" style="margin-top:6px; border:1px solid var(--rose); color:var(--rose); background:none; padding:8px 14px; border-radius:6px; cursor:pointer; font-size:13px;">🗑 Delete my account</button>
+      <button type="button" id="exportDataBtn" style="margin-top:8px; border:1px solid var(--teal); color:var(--teal); background:none; padding:8px 14px; border-radius:6px; cursor:pointer; font-size:13px;">ðŸ“¦ Export my data</button>
+      <button type="button" id="deleteAccountBtn" style="margin-top:6px; border:1px solid var(--rose); color:var(--rose); background:none; padding:8px 14px; border-radius:6px; cursor:pointer; font-size:13px;">ðŸ—‘ Delete my account</button>
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" id="myProfileCloseBtn">Close</button>
@@ -3413,8 +3246,8 @@
 
 <div class="overlay" id="linkedToMeOverlay">
   <div class="modal feed-modal">
-    <h3>💌 Songs Linked to Me</h3>
-    <p class="mixtape-sub">Songs your friends tagged as reminding them of you, under "Songs that remind me of…".</p>
+    <h3>ðŸ’Œ Songs Linked to Me</h3>
+    <p class="mixtape-sub">Songs your friends tagged as reminding them of you, under "Songs that remind me ofâ€¦".</p>
     <p class="mixtape-count" id="linkedToMeCount"></p>
     <div class="feed-list" id="linkedToMeList"></div>
     <div class="modal-actions">
@@ -3438,7 +3271,7 @@
       </div>
     </div>
     <div class="field"><label>Username</label><input id="ep-username" type="text" placeholder="e.g. mixtape_maria" autocomplete="off"></div>
-    <div class="field"><label>Bio</label><textarea id="ep-bio" placeholder="Tell other listeners a little about you…"></textarea></div>
+    <div class="field"><label>Bio</label><textarea id="ep-bio" placeholder="Tell other listeners a little about youâ€¦"></textarea></div>
     <div id="ep-error" class="auth-error" style="display:none;"></div>
     <div class="modal-actions">
       <button class="btn-cancel" id="editProfileCancelBtn">Cancel</button>
@@ -3463,7 +3296,7 @@
       </div>
     </div>
     <div class="field"><label>Username</label><input id="ob-username" type="text" placeholder="e.g. mixtape_maria" autocomplete="off"></div>
-    <div class="field"><label>Bio (optional)</label><textarea id="ob-bio" placeholder="Tell other listeners a little about you…"></textarea></div>
+    <div class="field"><label>Bio (optional)</label><textarea id="ob-bio" placeholder="Tell other listeners a little about youâ€¦"></textarea></div>
     <div id="ob-error" class="auth-error" style="display:none;"></div>
     <div class="modal-actions">
       <button class="btn-save" id="onboardingSaveBtn">Save and continue</button>
@@ -3474,8 +3307,8 @@
 <div class="overlay" id="passwordOverlay">
   <div class="modal">
     <h3>Change password</h3>
-    <div class="field"><label>New password</label><input id="cp-password" type="password" autocomplete="new-password" placeholder="••••••••"></div>
-    <div class="field"><label>Confirm password</label><input id="cp-password-2" type="password" autocomplete="new-password" placeholder="••••••••"></div>
+    <div class="field"><label>New password</label><input id="cp-password" type="password" autocomplete="new-password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"></div>
+    <div class="field"><label>Confirm password</label><input id="cp-password-2" type="password" autocomplete="new-password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"></div>
     <div id="cp-error" class="auth-error" style="display:none;"></div>
     <div id="cp-message" class="auth-message" style="display:none;"></div>
     <div class="modal-actions">
@@ -3488,8 +3321,8 @@
 <div class="overlay" id="messagesOverlay">
   <div class="modal messages-modal">
     <div class="messages-head">
-      <h3>💬 Messages</h3>
-      <button class="messages-head-close" id="messagesCloseBtn" title="Close">✕</button>
+      <h3>ðŸ’¬ Messages</h3>
+      <button class="messages-head-close" id="messagesCloseBtn" title="Close">âœ•</button>
     </div>
     <div class="messages-layout">
       <div class="msg-friend-list" id="msgFriendList"></div>
@@ -3499,8 +3332,8 @@
         <div id="msgPendingSongWrap" style="display:none;"></div>
         <div id="msgError" class="msg-error" style="display:none;"></div>
         <div class="msg-composer">
-          <button type="button" class="msg-song-btn" id="msgSongBtn" title="Attach a song recommendation">🎵</button>
-          <textarea id="msgInput" placeholder="Send a message…" rows="1"></textarea>
+          <button type="button" class="msg-song-btn" id="msgSongBtn" title="Attach a song recommendation">ðŸŽµ</button>
+          <textarea id="msgInput" placeholder="Send a messageâ€¦" rows="1"></textarea>
           <button type="button" class="msg-send-btn" id="msgSendBtn">Send</button>
         </div>
       </div>
@@ -3510,10 +3343,10 @@
 
 <div class="overlay" id="msgSongOverlay">
   <div class="modal">
-    <h3>🎵 Pick a song recommendation</h3>
+    <h3>ðŸŽµ Pick a song recommendation</h3>
     <div class="field">
       <label>Search for a Song</label>
-      <input type="text" id="msgSongSearch" placeholder="Search by title, artist, or album…" autocomplete="off">
+      <input type="text" id="msgSongSearch" placeholder="Search by title, artist, or albumâ€¦" autocomplete="off">
     </div>
     <div class="msg-song-results" id="msgSongResults"><p class="msg-empty">Search to find a song to recommend.</p></div>
     <div class="modal-actions">
@@ -3541,7 +3374,7 @@
     <h3>Import Playlist</h3>
     <div class="field">
       <label>Playlist URL (Spotify, Apple Music, or Tidal)</label>
-      <input type="text" id="spotify-url-input" placeholder="Paste a Spotify, Apple Music, or Tidal playlist URL…" autocomplete="off">
+      <input type="text" id="spotify-url-input" placeholder="Paste a Spotify, Apple Music, or Tidal playlist URLâ€¦" autocomplete="off">
     </div>
     <div id="spotifyImportResults" style="display:none; margin-top:12px;">
       <div id="spotifyPlaylistInfo" style="display:flex; gap:12px; align-items:center; margin-bottom:12px;"></div>
@@ -3564,7 +3397,7 @@ const LOGO_DATA_URI = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA4IAAADICAY
 document.querySelectorAll('.js-logo').forEach(img => img.src = LOGO_DATA_URI);
 
 // Accounts locked out of adding/accepting friends.
-// List the account's username (or user id) here — that ONE account can't add
+// List the account's username (or user id) here â€” that ONE account can't add
 // friends or accept requests anymore, everywhere it's logged in. Everyone else
 // is unaffected. Example: const FRIENDS_BLOCKED = ['bob_plays_too_loud'];
 const FRIENDS_BLOCKED = ['wcballer'];
@@ -3610,8 +3443,8 @@ let currentCoverArt = null;
 let currentMultiCoverArt = null;
 let currentWishCoverArt = null;
 let currentPersonPhoto = null;
-const TIERS = ['★','S','A','B','C'];
-const TIER_RANK = { '★':6, S:5, A:4, B:3, C:2 };
+const TIERS = ['â˜…','S','A','B','C'];
+const TIER_RANK = { 'â˜…':6, S:5, A:4, B:3, C:2 };
 function tierRank(t){ return TIER_RANK[t] || 0; }
 
 function save(){
@@ -3778,7 +3611,7 @@ function renderThemePresets(){
     btn.type = 'button';
     btn.className = 'theme-preset-btn custom';
     const c = theme.colors;
-    btn.innerHTML = `<span class="theme-preset-swatch"><span style="background:${c.ink}"></span><span style="background:${c.gold}"></span><span style="background:${c.rose}"></span><span style="background:${c.teal}"></span></span>${escapeHtml(theme.name)}<span class="theme-preset-x" data-delete-theme="${theme.id}" title="Delete this theme">×</span>`;
+    btn.innerHTML = `<span class="theme-preset-swatch"><span style="background:${c.ink}"></span><span style="background:${c.gold}"></span><span style="background:${c.rose}"></span><span style="background:${c.teal}"></span></span>${escapeHtml(theme.name)}<span class="theme-preset-x" data-delete-theme="${theme.id}" title="Delete this theme">Ã—</span>`;
     btn.addEventListener('click', (e)=>{
       if(e.target.closest('[data-delete-theme]')) return;
       applyTheme(theme.colors);
@@ -3941,7 +3774,7 @@ function renderRemindsPicker(prefix, selectedIds){
     const imgOrFallback = photo
       ? `<img src="${photo}">`
       : `<span class="rc-fallback">${escapeHtml((p.name||'?').charAt(0).toUpperCase())}</span>`;
-    const friendMark = lp ? `<span class="rc-linked" title="Actual friend on tonicfm">✓</span>` : '';
+    const friendMark = lp ? `<span class="rc-linked" title="Actual friend on tonicfm">âœ“</span>` : '';
     label.innerHTML = `<input type="checkbox" value="${escapeAttr(p.id)}" ${selectedIds.includes(p.id)?'checked':''}> ${imgOrFallback} ${escapeHtml(p.name)}${friendMark}`;
     label.querySelector('input').addEventListener('change', e=>{
       label.classList.toggle('selected', e.target.checked);
@@ -3971,8 +3804,8 @@ function renderPeople(){
     const tip = lp ? 'Songs that remind me of @' + lp.username + ' (friend on tonicfm)' : 'Songs that remind me of ' + escapeAttr(p.name);
     return `
     <button type="button" class="person-card ${remindsFilterId===p.id?'active':''}${isExample?' example':''}${lp?' linked':''}" data-person="${p.id}" title="${tip}">
-      <span class="person-edit" data-edit-person="${p.id}" title="Edit person">✎</span>
-      <span class="person-remove" data-remove-person="${p.id}" title="Remove person">×</span>
+      <span class="person-edit" data-edit-person="${p.id}" title="Edit person">âœŽ</span>
+      <span class="person-remove" data-remove-person="${p.id}" title="Remove person">Ã—</span>
       ${photo ? `<img class="person-photo" src="${photo}">` : `<span class="person-photo-fallback">${escapeHtml((p.name||'?').charAt(0).toUpperCase())}</span>`}
       <span class="person-name">${escapeHtml(p.name)}</span>
       ${lp ? `<span class="person-username">@${escapeHtml(lp.username)}</span>` : ''}
@@ -4019,7 +3852,7 @@ function formatAddedDate(ts){
   if(isNaN(d.getTime())) return '';
   const date = d.toLocaleDateString(undefined,{ month:'short', day:'numeric', year:'numeric' });
   const time = d.toLocaleTimeString(undefined,{ hour:'numeric', minute:'2-digit' });
-  return `${date} · ${time}`;
+  return `${date} Â· ${time}`;
 }
 
 /* ---- tier board: S-C rows of cover art, deduped, no unrated row ---- */
@@ -4057,14 +3890,14 @@ function tierBoardItemHtml(s, editable){
 `
     : `<div class="tier-board-cover-fallback">${escapeHtml(initial)}</div>`;
   return `
-    <div class="tier-board-item" ${editable ? `data-id="${s.id}"` : ''} title="${escapeAttr(s.title||'Untitled')} · ${escapeAttr(formatArtists(s.artists))}">
+    <div class="tier-board-item" ${editable ? `data-id="${s.id}"` : ''} title="${escapeAttr(s.title||'Untitled')} Â· ${escapeAttr(formatArtists(s.artists))}">
       ${cover}
     </div>
   `;
 }
 function buildTierBoardHtml(list, editable){
   const active = dedupeSongsForBoard((list||[]).filter(s=>!s.archived));
-  const byTier = { '★':[], S:[], A:[], B:[], C:[] };
+  const byTier = { 'â˜…':[], S:[], A:[], B:[], C:[] };
   active.forEach(s=>{ if(byTier[s.tier]) byTier[s.tier].push(s); });
   return TIERS.map(t=>{
     const items = byTier[t];
@@ -4132,25 +3965,25 @@ function songCardHtml(s, clusterCounts){
   return `
       <div class="card ${s.archived?'archived':''}${showEx?' example-card':''}" data-id="${s.id}">
         ${showEx ? '<span class="example-badge">EXAMPLE</span>' : ''}
-        <button class="pin-btn ${s.tier==='★'?'pinned':''}" data-action="pin" title="${s.tier==='★'?'Remove from obsessed':'Add to obsessed'}">${s.tier==='★'?'♥':'♡'}</button>
+        <button class="pin-btn ${s.tier==='â˜…'?'pinned':''}" data-action="pin" title="${s.tier==='â˜…'?'Remove from obsessed':'Add to obsessed'}">${s.tier==='â˜…'?'â™¥':'â™¡'}</button>
         <div class="card-top">
           ${s.coverArt ? `<img class="cover-thumb" src="${escapeAttr(s.coverArt)}" loading="lazy" decoding="async">` : ''}
           <div class="title-stack">
             ${s.archived ? '<span class="archived-badge">ARCHIVED</span>' : ''}
             <p class="track-title">${escapeHtml(s.title||'Untitled')}</p>
-            <p class="track-artist">${escapeHtml(formatArtists(s.artists))}${s.album ? ' · '+escapeHtml(s.album) : ''}</p>
+            <p class="track-artist">${escapeHtml(formatArtists(s.artists))}${s.album ? ' Â· '+escapeHtml(s.album) : ''}</p>
           </div>
         </div>
         <div class="meta-row">
           ${s.year ? `<span>${escapeHtml(s.year)}</span>` : (showEx ? `<span class="ex">e.g. 2016</span>` : '')}
-          ${(s.genres&&s.genres.length) ? `<span class="meta-genres">· ${s.genres.map(g=>escapeHtml(g)).join(', ')}</span>` : (showEx ? `<span class="ex">· e.g. Rock, Funk/Soul</span>` : '')}
+          ${(s.genres&&s.genres.length) ? `<span class="meta-genres">Â· ${s.genres.map(g=>escapeHtml(g)).join(', ')}</span>` : (showEx ? `<span class="ex">Â· e.g. Rock, Funk/Soul</span>` : '')}
         </div>
         <div class="tier-row">${renderTierBadge(s.tier)}</div>
         <div class="preview-row">
-          <button type="button" class="preview-btn" data-preview="${escapeAttr(s.id)}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>
+          <button type="button" class="preview-btn" data-preview="${escapeAttr(s.id)}" title="Play a 30-second preview" aria-label="Play 30-second preview">â–¶</button>
           <span class="preview-hint">30-sec preview</span>
         </div>
-        ${(s.clusterId && clusterCounts[s.clusterId] > 1) ? `<span class="link-badge" data-cluster="${s.clusterId}">🔗 ${clusterCounts[s.clusterId]} linked</span>` : ''}
+        ${(s.clusterId && clusterCounts[s.clusterId] > 1) ? `<span class="link-badge" data-cluster="${s.clusterId}">ðŸ”— ${clusterCounts[s.clusterId]} linked</span>` : ''}
         ${(s.tags&&s.tags.length) ? `<div class="tags">${s.tags.map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>` : (showEx ? `<div class="tags">${['nostalgic','road trip','late night'].map(t=>`<span class="tag ex-tag">e.g. ${t}</span>`).join('')}</div>` : '')}
         ${s.why ? `<p class="why">${escapeHtml(s.why)}</p>` : (showEx ? `<p class="why ex">e.g. the bassline just doesn't let go</p>` : '')}
         ${s.credit ? `<p class="credit-note"><b>Borrowed from / Where I Heard It:</b> ${escapeHtml(s.credit)}</p>` : ''}
@@ -4160,20 +3993,20 @@ function songCardHtml(s, clusterCounts){
           const lp = linkedProfile(p);
           const photo = (lp && lp.photo) ? lp.photo : p.photo;
           const tip = lp ? 'Friend @' + escapeAttr(lp.username) + ' on tonicfm' : 'Songs that remind me of ' + escapeAttr(p.name);
-          return `<span class="reminds-badge${lp?' linked':''}" data-person="${p.id}" title="${tip}">${photo?`<img src="${photo}" loading="lazy" decoding="async">`:''}${escapeHtml(p.name)}${lp?' <span class="rc-linked">✓</span>':''}<button type="button" class="reminds-badge-x" data-remove-reminder="${s.id}|${p.id}" title="Remove ${escapeAttr(p.name)} from this song">×</button></span>`;
+          return `<span class="reminds-badge${lp?' linked':''}" data-person="${p.id}" title="${tip}">${photo?`<img src="${photo}" loading="lazy" decoding="async">`:''}${escapeHtml(p.name)}${lp?' <span class="rc-linked">âœ“</span>':''}<button type="button" class="reminds-badge-x" data-remove-reminder="${s.id}|${p.id}" title="Remove ${escapeAttr(p.name)} from this song">Ã—</button></span>`;
         }).join('')}</div>` : (showEx ? `<div class="reminds-badges"><span class="reminds-badge ex">e.g. Mom</span><span class="reminds-badge ex">e.g. a college roommate</span></div>` : '')}
         <div class="card-actions">
-          ${!showEx && geniusLyricsUrl(s.title, s.artists) ? `<a href="${escapeAttr(geniusLyricsUrl(s.title, s.artists))}" target="_blank" rel="noopener" title="Open lyrics on Genius">LYRICS ↗</a>` : ''}
+          ${!showEx && geniusLyricsUrl(s.title, s.artists) ? `<a href="${escapeAttr(geniusLyricsUrl(s.title, s.artists))}" target="_blank" rel="noopener" title="Open lyrics on Genius">LYRICS â†—</a>` : ''}
           <button data-action="edit">EDIT</button>
           <button data-action="archive">${s.archived ? 'UNARCHIVE' : 'ARCHIVE'}</button>
           <button data-action="delete" class="del">DELETE</button>
-          ${!showEx ? `<button data-action="share" class="share-card-btn" title="Generate a shareable card for this song">↗ SHARE</button>` : ''}
+          ${!showEx ? `<button data-action="share" class="share-card-btn" title="Generate a shareable card for this song">â†— SHARE</button>` : ''}
         </div>
-        ${s.createdAt && !showEx ? `<p class="card-date">🕒 Added ${escapeHtml(formatAddedDate(s.createdAt))}</p>` : ''}
-        ${(!showEx && s.edits && s.edits.length) ? `<button class="edits-toggle" onclick="this.nextElementSibling.classList.toggle('open')">${s.edits.length} edit${s.edits.length!==1?'s':''} — view log</button><div class="edits-log">${s.edits.slice().reverse().map(e=>{
+        ${s.createdAt && !showEx ? `<p class="card-date">ðŸ•’ Added ${escapeHtml(formatAddedDate(s.createdAt))}</p>` : ''}
+        ${(!showEx && s.edits && s.edits.length) ? `<button class="edits-toggle" onclick="this.nextElementSibling.classList.toggle('open')">${s.edits.length} edit${s.edits.length!==1?'s':''} â€” view log</button><div class="edits-log">${s.edits.slice().reverse().map(e=>{
           const ts = new Date(e.at).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'}) + ' at ' + new Date(e.at).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
           const valStr = v=> Array.isArray(v) ? (v.length ? v.join(', ') : 'none') : (v || 'none');
-          return `<div class="edits-entry"><div class="edits-entry-time">${ts}</div>${e.changes.map(c=>`<div class="edits-entry-change"><span class="edits-entry-field">${escapeHtml(c.field)}</span><span class="edits-entry-old">${escapeHtml(valStr(c.old))}</span><span class="edits-entry-arrow">→</span><span class="edits-entry-new">${escapeHtml(valStr(c.now))}</span></div>`).join('')}</div>`;
+          return `<div class="edits-entry"><div class="edits-entry-time">${ts}</div>${e.changes.map(c=>`<div class="edits-entry-change"><span class="edits-entry-field">${escapeHtml(c.field)}</span><span class="edits-entry-old">${escapeHtml(valStr(c.old))}</span><span class="edits-entry-arrow">â†’</span><span class="edits-entry-new">${escapeHtml(valStr(c.now))}</span></div>`).join('')}</div>`;
         }).join('')}</div>` : ''}
       </div>
     `;
@@ -4214,7 +4047,7 @@ function timelineItemHtml(s){
         ${cover}
         <div class="timeline-body">
           <p class="timeline-title">${escapeHtml(s.title||'Untitled')}</p>
-          <p class="timeline-artist">${escapeHtml(formatArtists(s.artists))}${s.album ? ' · '+escapeHtml(s.album) : ''}</p>
+          <p class="timeline-artist">${escapeHtml(formatArtists(s.artists))}${s.album ? ' Â· '+escapeHtml(s.album) : ''}</p>
           <div class="timeline-meta">
             ${renderTierBadge(s.tier)}
             ${(s.genres&&s.genres.length) ? `<span>${s.genres.map(g=>escapeHtml(g)).join(', ')}</span>` : ''}
@@ -4274,7 +4107,7 @@ document.getElementById('timeline').addEventListener('click', e=>{
 });
 
 /* ---- stats page ---- */
-const TIER_CHART_COLORS = { '★':'#b4b9f3', S:'#272d82', A:'#fd9f1c', B:'#eedd95', C:'#7a7468' };
+const TIER_CHART_COLORS = { 'â˜…':'#b4b9f3', S:'#272d82', A:'#fd9f1c', B:'#eedd95', C:'#7a7468' };
 function statChartCanvas(id){
   const c = document.getElementById(id);
   const dpr = window.devicePixelRatio || 1;
@@ -4286,7 +4119,7 @@ function statChartCanvas(id){
   return { ctx, w, h };
 }
 function drawTierChart(){
-  const counts = { '★':0, S:0, A:0, B:0, C:0, unrated:0 };
+  const counts = { 'â˜…':0, S:0, A:0, B:0, C:0, unrated:0 };
   songs.forEach(s=>{
     if(s.archived) return;
     if(s.tier && Object.prototype.hasOwnProperty.call(counts, s.tier)) counts[s.tier]++;
@@ -4355,7 +4188,7 @@ function drawGenreChart(){
     ctx.fillRect(170, ly-9, 10, 10);
     ctx.fillStyle = canvasPaperColor(0.8);
     ctx.font = '10px "IBM Plex Mono", monospace';
-    ctx.fillText(`${e[0]} · ${e[1]} (${Math.round(e[1]/total*100)}%)`, 186, ly);
+    ctx.fillText(`${e[0]} Â· ${e[1]} (${Math.round(e[1]/total*100)}%)`, 186, ly);
     ly += 17;
   });
   ctx.fillStyle = 'rgba(var(--on-paper-rgb),0.68)';
@@ -4413,13 +4246,13 @@ function renderStatTags(){
   const entries = Object.entries(map).sort((a,b)=>b[1]-a[1]).slice(0,14);
   document.getElementById('statTags').innerHTML = entries.length
     ? entries.map(([t,n])=>`<span class="tag">${escapeHtml(t)}<b>${n}</b></span>`).join('')
-    : '<span class="stat-chart-note">Add tags like “nostalgic” or “road trip” to your songs to see them here.</span>';
+    : '<span class="stat-chart-note">Add tags like â€œnostalgicâ€ or â€œroad tripâ€ to your songs to see them here.</span>';
 }
 function openStats(){
   const active = songs.filter(s=>!s.archived);
   document.getElementById('statSongCount').textContent = active.length;
   document.getElementById('statArtistCount').textContent = new Set(active.flatMap(s=>s.artists||[]).map(a=>String(a).trim().toLowerCase())).size;
-  document.getElementById('statFavCount').textContent = active.filter(s=>s.tier==='★').length;
+  document.getElementById('statFavCount').textContent = active.filter(s=>s.tier==='â˜…').length;
   drawTierChart();
   drawGenreChart();
   drawMonthChart();
@@ -4462,11 +4295,11 @@ document.getElementById('exportBackupBtn').addEventListener('click', ()=>{
 /* ---- YEAR IN REVIEW ---- */
 function openYearReview(){
   const year = new Date().getFullYear();
-  document.getElementById('yrTitle').textContent = `📅 ${year} Year in Review`;
+  document.getElementById('yrTitle').textContent = `ðŸ“… ${year} Year in Review`;
   const yearSongs = songs.filter(s=> s.createdAt && new Date(s.createdAt).getFullYear() === year && !s.archived);
   const total = yearSongs.length;
-  const pinned = yearSongs.filter(s=>s.tier==='★').length;
-  const tiers = { '★':0, S:0, A:0, B:0, C:0 };
+  const pinned = yearSongs.filter(s=>s.tier==='â˜…').length;
+  const tiers = { 'â˜…':0, S:0, A:0, B:0, C:0 };
   yearSongs.forEach(s=>{ if(s.tier && tiers[s.tier] !== undefined) tiers[s.tier]++; });
   const genreCount = {};
   yearSongs.forEach(s=> (s.genres||[]).forEach(g=>{ genreCount[g] = (genreCount[g]||0)+1; }));
@@ -4489,16 +4322,16 @@ function openYearReview(){
     html += `<div class="yr-hero"><div class="yr-hero-num">${total}</div><div class="yr-hero-label">songs added in ${year}</div></div>`;
     html += `<div class="yr-section"><div class="yr-stat-grid">`;
     html += `<div class="yr-stat-card"><div class="yr-stat-num">${Object.keys(artistCount).length}</div><div class="yr-stat-label">artists explored</div></div>`;
-    html += `<div class="yr-stat-card"><div class="yr-stat-num">${pinned}</div><div class="yr-stat-label">pinned ♥</div></div>`;
+    html += `<div class="yr-stat-card"><div class="yr-stat-num">${pinned}</div><div class="yr-stat-label">pinned â™¥</div></div>`;
     html += `<div class="yr-stat-card"><div class="yr-stat-num">${yearSongs.filter(s=>s.tier==='S').length}</div><div class="yr-stat-label">S-tier tracks</div></div>`;
     html += `<div class="yr-stat-card"><div class="yr-stat-num">${yearSongs.filter(s=>s.edits && s.edits.length).length}</div><div class="yr-stat-label">songs re-edited</div></div>`;
     html += `</div></div>`;
 
     html += `<div class="yr-section"><div class="yr-section-title">Tier breakdown</div>`;
-    ['★','S','A','B','C'].forEach(t=>{
+    ['â˜…','S','A','B','C'].forEach(t=>{
       const count = tiers[t];
       const pct = total ? Math.round((count/total)*100) : 0;
-      const colors = { '★':'var(--gold)', S:'var(--gold)', A:'var(--teal)', B:'var(--on-paper)', C:'rgba(var(--on-paper-rgb),0.5)' };
+      const colors = { 'â˜…':'var(--gold)', S:'var(--gold)', A:'var(--teal)', B:'var(--on-paper)', C:'rgba(var(--on-paper-rgb),0.5)' };
       html += `<div class="yr-bar-row"><span class="yr-bar-label">${t}</span><div class="yr-bar-track"><div class="yr-bar-fill" style="width:${pct}%;background:${colors[t]}"></div></div><span class="yr-bar-count">${count}</span></div>`;
     });
     html += `</div>`;
@@ -4535,7 +4368,7 @@ function openYearReview(){
       html += `</div></div>`;
     }
 
-    const topSongs = yearSongs.filter(s=>s.tier && (s.tier==='★'||s.tier==='S'||s.tier==='A')).sort((a,b)=>(b.tier==='★'?1:0)-(a.tier==='★'?1:0) || ({'★':0,S:1,A:2,B:3,C:4}[a.tier]||9)-({'★':0,S:1,A:2,B:3,C:4}[b.tier]||9)).slice(0,10);
+    const topSongs = yearSongs.filter(s=>s.tier && (s.tier==='â˜…'||s.tier==='S'||s.tier==='A')).sort((a,b)=>(b.tier==='â˜…'?1:0)-(a.tier==='â˜…'?1:0) || ({'â˜…':0,S:1,A:2,B:3,C:4}[a.tier]||9)-({'â˜…':0,S:1,A:2,B:3,C:4}[b.tier]||9)).slice(0,10);
     if(topSongs.length){
       html += `<div class="yr-section"><div class="yr-section-title">Highlights of ${year}</div><ul class="yr-song-list">`;
       topSongs.forEach((s,i)=>{
@@ -4615,7 +4448,7 @@ function mixtapeItemHtml(s, who){
         ${cover}
         <div class="mixtape-body">
           <p class="mixtape-title">${escapeHtml(s.title||'Untitled')}</p>
-          <p class="mixtape-artist">${escapeHtml(formatArtists(s.artists))}${s.album ? ' · '+escapeHtml(s.album) : ''}</p>
+          <p class="mixtape-artist">${escapeHtml(formatArtists(s.artists))}${s.album ? ' Â· '+escapeHtml(s.album) : ''}</p>
         </div>
         <div class="mixtape-side">
           ${from}
@@ -4657,12 +4490,12 @@ function openAddFromData(data){
 
 /* ---- shareable cataloguex card ---- */
 function shareTopSongs(list){
-  const rank = { '★':0, S:1, A:2, B:3, C:4 };
+  const rank = { 'â˜…':0, S:1, A:2, B:3, C:4 };
   return (list||[]).filter(s=>!s.archived).sort((a,b)=>{
     const ra = Object.prototype.hasOwnProperty.call(rank, a.tier) ? rank[a.tier] : 5;
     const rb = Object.prototype.hasOwnProperty.call(rank, b.tier) ? rank[b.tier] : 5;
     if(ra !== rb) return ra - rb;
-    return (b.tier==='★'?1:0) - (a.tier==='★'?1:0);
+    return (b.tier==='â˜…'?1:0) - (a.tier==='â˜…'?1:0);
   }).slice(0, 8);
 }
 function loadCardImage(src){
@@ -4697,8 +4530,8 @@ function cardTruncate(ctx, str, maxW, font){
   ctx.font = font;
   if(ctx.measureText(str).width <= maxW) return str;
   let t = String(str);
-  while(t.length > 1 && ctx.measureText(t + '…').width > maxW) t = t.slice(0,-1);
-  return t + '…';
+  while(t.length > 1 && ctx.measureText(t + 'â€¦').width > maxW) t = t.slice(0,-1);
+  return t + 'â€¦';
 }
 let shareState = null;
 async function drawShareCard(opts){
@@ -4775,20 +4608,20 @@ async function drawShareCard(opts){
     ctx.font = '500 21px "Space Grotesk", sans-serif';
     ctx.fillText(cardTruncate(ctx, formatArtists(s.artists), tw, ctx.font), tx, y + 52);
     const tier = s.tier || '';
-    const chipCol = { '★':'#b4b9f3', S:'#272d82', A:'#fd9f1c', B:'#eedd95', C:'#7a7468' }[tier] || '#eedd95';
+    const chipCol = { 'â˜…':'#b4b9f3', S:'#272d82', A:'#fd9f1c', B:'#eedd95', C:'#7a7468' }[tier] || '#eedd95';
     ctx.fillStyle = chipCol;
     cardRoundRect(ctx, tx, y + 64, 46, 30, 8);
     ctx.fill();
     ctx.fillStyle = '#11131b';
     ctx.font = '700 18px "IBM Plex Mono", monospace';
     ctx.textAlign = 'center';
-    ctx.fillText(tier || '—', tx + 23, y + 85);
+    ctx.fillText(tier || 'â€”', tx + 23, y + 85);
     ctx.textAlign = 'left';
   });
   const active = (opts.list || []).filter(s=>!s.archived);
   const artists = new Set(active.flatMap(s=>s.artists||[]).map(a=>String(a).trim().toLowerCase()));
-  const starred = active.filter(s=>s.tier==='★').length;
-  const statsLine = `${active.length} SONGS  ·  ${artists.size} ARTISTS  ·  ${starred} STARRED`;
+  const starred = active.filter(s=>s.tier==='â˜…').length;
+  const statsLine = `${active.length} SONGS  Â·  ${artists.size} ARTISTS  Â·  ${starred} STARRED`;
   const t = loadTheme();
   ctx.fillStyle = t.paper || 'rgba(238,221,149,0.85)';
   ctx.font = '500 24px "Space Grotesk", sans-serif';
@@ -4877,26 +4710,26 @@ async function drawSongShareCard(opts){
   ctx.fillStyle = t.paper ? t.paper + 'D9' : 'rgba(238,221,149,0.85)';
   ctx.font = '500 34px "Space Grotesk", sans-serif';
   ctx.fillText(cardTruncate(ctx, formatArtists(s.artists), W - 176, ctx.font), W/2, coverY + coverS + 146);
-  const detailBits = [s.album, s.year].filter(Boolean).join(' · ');
+  const detailBits = [s.album, s.year].filter(Boolean).join(' Â· ');
   if(detailBits){
     ctx.fillStyle = t.paper ? t.paper + '99' : 'rgba(238,221,149,0.6)';
     ctx.font = '500 26px "Space Grotesk", sans-serif';
     ctx.fillText(cardTruncate(ctx, detailBits, W - 176, ctx.font), W/2, coverY + coverS + 194);
   }
   if(s.genres && s.genres.length){
-    const genresStr = s.genres.slice(0,3).join('  ·  ');
+    const genresStr = s.genres.slice(0,3).join('  Â·  ');
     ctx.fillStyle = t.gold || 'rgba(180,185,243,0.9)';
     ctx.font = '600 22px "IBM Plex Mono", monospace';
     ctx.fillText(cardTruncate(ctx, genresStr, W - 176, ctx.font), W/2, coverY + coverS + 240);
   }
   const tier = s.tier || '';
-  const chipCol = { S:'#272d82', A:'#fd9f1c', B:'#eedd95', C:'#7a7468', '★': t.gold || '#b4b9f3' }[tier] || '#eedd95';
+  const chipCol = { S:'#272d82', A:'#fd9f1c', B:'#eedd95', C:'#7a7468', 'â˜…': t.gold || '#b4b9f3' }[tier] || '#eedd95';
   ctx.fillStyle = chipCol;
   cardRoundRect(ctx, W/2 - 44, coverY + coverS + 262, 88, 48, 12);
   ctx.fill();
   ctx.fillStyle = t.ink || '#11131b';
   ctx.font = '700 26px "IBM Plex Mono", monospace';
-  ctx.fillText(tier || '—', W/2, coverY + coverS + 295);
+  ctx.fillText(tier || 'â€”', W/2, coverY + coverS + 295);
   if(s.why){
     const lines = cardWrapText(ctx, '\u201c' + s.why + '\u201d', W - 260, 'italic 500 28px Georgia, serif');
     ctx.fillStyle = t.paper ? t.paper + 'BF' : 'rgba(238,221,149,0.75)';
@@ -4912,9 +4745,9 @@ async function drawSongShareCard(opts){
 async function drawTierShareCard(opts){
   const W = 1080, PAD = 88, BADGE_W = 60, BADGE_H = 48, COVER_S = 80, COVER_GAP = 14, ROW_GAP = 18;
   const active = dedupeSongsForBoard((opts.list || []).filter(s=>!s.archived));
-  const byTier = { '★':[], S:[], A:[], B:[], C:[] };
+  const byTier = { 'â˜…':[], S:[], A:[], B:[], C:[] };
   active.forEach(s=>{ if(byTier[s.tier]) byTier[s.tier].push(s); });
-  const tiers = ['★','S','A','B','C'];
+  const tiers = ['â˜…','S','A','B','C'];
   const coversPerRow = Math.floor((W - PAD*2 - BADGE_W - COVER_GAP*2) / (COVER_S + COVER_GAP));
   let totalRows = 0;
   tiers.forEach(t=>{ totalRows += Math.max(1, Math.ceil(byTier[t].length / coversPerRow)); });
@@ -4928,8 +4761,8 @@ async function drawTierShareCard(opts){
   ctx.fillStyle = t.paper ? t.paper + 'B3' : 'rgba(238,221,149,0.7)';
   ctx.font = '500 30px "Space Grotesk", sans-serif';
   ctx.fillText('TIER BOARD', PAD, titleY);
-  const tierColors = { '★': t.gold || '#b4b9f3', S: t.teal || '#272d82', A: t.rose || '#fd9f1c', B: t.paper || '#eedd95', C: '#7a7468' };
-  const tierTextColors = { '★': t.ink || '#12141c', S: t.paper || '#eedd95', A: t.ink || '#12141c', B: t.ink || '#12141c', C: t.ink || '#12141c' };
+  const tierColors = { 'â˜…': t.gold || '#b4b9f3', S: t.teal || '#272d82', A: t.rose || '#fd9f1c', B: t.paper || '#eedd95', C: '#7a7468' };
+  const tierTextColors = { 'â˜…': t.ink || '#12141c', S: t.paper || '#eedd95', A: t.ink || '#12141c', B: t.ink || '#12141c', C: t.ink || '#12141c' };
   const allSongs = tiers.flatMap(t=>byTier[t]);
   const imgs = await Promise.all(allSongs.map(s=>loadCardImage(s.coverArt)));
   const imgMap = {};
@@ -4990,7 +4823,7 @@ async function drawTierShareCard(opts){
     }
   });
   const artists = new Set(active.flatMap(s=>s.artists||[]).map(a=>String(a).trim().toLowerCase()));
-  const statsLine = `${active.length} SONGS  ·  ${artists.size} ARTISTS  ·  ${active.filter(s=>s.tier==='★').length} STARRED`;
+  const statsLine = `${active.length} SONGS  Â·  ${artists.size} ARTISTS  Â·  ${active.filter(s=>s.tier==='â˜…').length} STARRED`;
   ctx.fillStyle = 'rgba(238,221,149,0.85)';
   ctx.font = '500 24px "Space Grotesk", sans-serif';
   ctx.textAlign = 'center';
@@ -5006,7 +4839,7 @@ async function openShareCard(opts){
   let title = 'My cataloguex card', sub = 'A shareable snapshot of your top-tier picks.';
   if(opts.mode === 'song'){
     title = (opts.song && opts.song.title) || 'Song card';
-    sub = 'A shareable card for this song — post it anywhere.';
+    sub = 'A shareable card for this song â€” post it anywhere.';
   } else if(opts.mode === 'tier'){
     title = opts.friendName ? `@${opts.username}'s tier board` : 'My tier board';
     sub = opts.friendName
@@ -5018,13 +4851,13 @@ async function openShareCard(opts){
   }
   document.getElementById('shareTitle').textContent = title;
   document.getElementById('shareSub').textContent = sub;
-  document.getElementById('shareNote').textContent = 'Generating…';
+  document.getElementById('shareNote').textContent = 'Generatingâ€¦';
   document.getElementById('shareOverlay').classList.add('open');
   try{
     await drawShareCard(opts);
     document.getElementById('shareNote').textContent = 'Tip: share it in a story, group chat, or wherever you swap music.';
   }catch(err){
-    document.getElementById('shareNote').textContent = 'Could not generate the card — try again.';
+    document.getElementById('shareNote').textContent = 'Could not generate the card â€” try again.';
     console.error('Share card error:', err);
   }
 }
@@ -5060,7 +4893,7 @@ document.getElementById('shareDownloadBtn').addEventListener('click', async ()=>
   const cv = document.getElementById('shareCanvas');
   const note = document.getElementById('shareNote');
   try{
-    note.textContent = 'Preparing image…';
+    note.textContent = 'Preparing imageâ€¦';
     const baseName = 'cataloguex-card-' + (String(shareState.username||'you').replace(/[^a-z0-9]/gi,'').toLowerCase() || 'you');
     let picker = null;
     if(window.showSaveFilePicker){
@@ -5080,7 +4913,7 @@ document.getElementById('shareDownloadBtn').addEventListener('click', async ()=>
       const writable = await picker.createWritable();
       await writable.write(blob);
       await writable.close();
-      note.textContent = 'Saved — ' + picker.name + '.';
+      note.textContent = 'Saved â€” ' + picker.name + '.';
     }else{
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -5090,11 +4923,11 @@ document.getElementById('shareDownloadBtn').addEventListener('click', async ()=>
       a.click();
       document.body.removeChild(a);
       setTimeout(()=>URL.revokeObjectURL(url), 1500);
-      note.textContent = 'Downloaded — check your Downloads folder.';
+      note.textContent = 'Downloaded â€” check your Downloads folder.';
     }
   }catch(err){
     console.error('PNG download failed:', err);
-    note.textContent = 'Download failed — some cover art blocks export. Try Copy image instead.';
+    note.textContent = 'Download failed â€” some cover art blocks export. Try Copy image instead.';
   }
 });
 document.getElementById('shareCopyBtn').addEventListener('click', async ()=>{
@@ -5105,7 +4938,7 @@ document.getElementById('shareCopyBtn').addEventListener('click', async ()=>{
     await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
     document.getElementById('shareNote').textContent = 'Copied! Paste it anywhere.';
   }catch(err){
-    document.getElementById('shareNote').textContent = 'Copy isn\u2019t supported in this browser — use Download instead.';
+    document.getElementById('shareNote').textContent = 'Copy isn\u2019t supported in this browser â€” use Download instead.';
   }
 });
 
@@ -5118,18 +4951,18 @@ function setPreviewBtnState(id, state){
     btn.classList.remove('loading','playing','none');
     if(state === 'loading'){
       btn.classList.add('loading');
-      btn.textContent = '…';
-      btn.title = 'Finding a preview…';
+      btn.textContent = 'â€¦';
+      btn.title = 'Finding a previewâ€¦';
     } else if(state === 'playing'){
       btn.classList.add('playing');
-      btn.textContent = '⏸';
+      btn.textContent = 'â¸';
       btn.title = 'Pause preview';
     } else if(state === 'none'){
       btn.classList.add('none');
-      btn.textContent = '—';
+      btn.textContent = 'â€”';
       btn.title = 'No preview available';
     } else {
-      btn.textContent = '▶';
+      btn.textContent = 'â–¶';
       btn.title = 'Play a 30-second preview';
     }
   });
@@ -5279,7 +5112,7 @@ function render(){
   });
 
   list.sort((a,b)=>{
-    if(sortBy === 'pinned') return (b.tier==='★'?1:0) - (a.tier==='★'?1:0) || (tierRank(b.tier) - tierRank(a.tier));
+    if(sortBy === 'pinned') return (b.tier==='â˜…'?1:0) - (a.tier==='â˜…'?1:0) || (tierRank(b.tier) - tierRank(a.tier));
     if(sortBy === 'rating-desc') return tierRank(b.tier) - tierRank(a.tier);
     if(sortBy === 'rating-asc') return tierRank(a.tier) - tierRank(b.tier);
     if(sortBy === 'year-desc') return (parseInt(b.year)||0) - (parseInt(a.year)||0);
@@ -5316,7 +5149,7 @@ function render(){
   if(clusterFilterId){
     clusterBar.style.display = 'flex';
     const clusterName = (list.find(s=>s.clusterName)||{}).clusterName;
-    document.getElementById('clusterBarText').textContent = `Viewing "${clusterName || 'Untitled stack'}" · ${list.length} song${list.length!==1?'s':''}`;
+    document.getElementById('clusterBarText').textContent = `Viewing "${clusterName || 'Untitled stack'}" Â· ${list.length} song${list.length!==1?'s':''}`;
   } else {
     clusterBar.style.display = 'none';
   }
@@ -5325,7 +5158,7 @@ function render(){
   if(remindsFilterId){
     const p = people.find(pp=>pp.id===remindsFilterId);
     remindsBar.style.display = 'flex';
-    document.getElementById('remindsBarText').textContent = `Songs that remind me of ${p?p.name:'…'} · ${list.length} song${list.length!==1?'s':''}`;
+    document.getElementById('remindsBarText').textContent = `Songs that remind me of ${p?p.name:'â€¦'} Â· ${list.length} song${list.length!==1?'s':''}`;
   } else {
     remindsBar.style.display = 'none';
   }
@@ -5333,7 +5166,7 @@ function render(){
   const active = songs.filter(s=>!s.archived);
   const archivedCount = songs.filter(s=>s.archived).length;
   const sCount = active.filter(s=>s.tier==='S').length;
-  document.getElementById('stats').innerHTML = `<b>${myFriendsCount}</b> friend${myFriendsCount!==1?'s':''} &nbsp;·&nbsp; <b>${active.length}</b> songs logged &nbsp;·&nbsp; <b>${sCount}</b> S-tier &nbsp;·&nbsp; <b>${active.filter(s=>s.tier==='★').length}</b> favorites &nbsp;·&nbsp; <b>${archivedCount}</b> archived`;
+  document.getElementById('stats').innerHTML = `<b>${myFriendsCount}</b> friend${myFriendsCount!==1?'s':''} &nbsp;Â·&nbsp; <b>${active.length}</b> songs logged &nbsp;Â·&nbsp; <b>${sCount}</b> S-tier &nbsp;Â·&nbsp; <b>${active.filter(s=>s.tier==='â˜…').length}</b> favorites &nbsp;Â·&nbsp; <b>${archivedCount}</b> archived`;
 
   populateFilters();
   renderStickerSections();
@@ -5364,7 +5197,7 @@ function renderWishlistGrid(){
           ${s.coverArt ? `<img class="cover-thumb" src="${escapeAttr(s.coverArt)}">` : ''}
           <div class="title-stack">
             <p class="track-title">${escapeHtml(s.title||'Untitled')}</p>
-            <p class="track-artist">${escapeHtml(formatArtists(s.artists))}${s.album ? ' · '+escapeHtml(s.album) : ''}</p>
+            <p class="track-artist">${escapeHtml(formatArtists(s.artists))}${s.album ? ' Â· '+escapeHtml(s.album) : ''}</p>
           </div>
         </div>
         <div class="meta-row">${s.year ? `<span>${escapeHtml(s.year)}</span>`:''}</div>
@@ -5442,8 +5275,8 @@ function showDupModal(duplicates, onConfirm){
   const body = document.getElementById('dupBody');
   const showCount = Math.min(duplicates.length, 50);
   document.getElementById('dupTitle').textContent = duplicates.length === 1
-    ? '⚠️ Already in your catalogue'
-    : `⚠️ ${duplicates.length} songs already in your catalogue`;
+    ? 'âš ï¸ Already in your catalogue'
+    : `âš ï¸ ${duplicates.length} songs already in your catalogue`;
   body.innerHTML = '<p class="dup-body">' + (duplicates.length === 1
     ? 'This song is already in your catalogue. Add it again?'
     : `${duplicates.length} songs are already in your catalogue. Add them again?`) + '</p>' +
@@ -5452,7 +5285,7 @@ function showDupModal(duplicates, onConfirm){
         ? `<img src="${escapeAttr(s.coverArt)}" alt="">`
         : `<div class="dup-song-fallback">${escapeHtml((s.title||'?').charAt(0).toUpperCase())}</div>`;
       return `<div class="dup-song">${cover}<div class="dup-song-info"><div class="dup-song-title">${escapeHtml(s.title||'')}</div><div class="dup-song-artist">${escapeHtml(formatArtists(s.artists))}</div></div></div>`;
-    }).join('') + (duplicates.length > showCount ? `<p class="dup-body" style="opacity:0.6">…and ${duplicates.length - showCount} more</p>` : '');
+    }).join('') + (duplicates.length > showCount ? `<p class="dup-body" style="opacity:0.6">â€¦and ${duplicates.length - showCount} more</p>` : '');
   document.getElementById('dupOverlay').classList.add('open');
   const confirmBtn = document.getElementById('dupConfirmBtn');
   const cancelBtn = document.getElementById('dupCancelBtn');
@@ -5551,10 +5384,10 @@ function openMultiModal(mode){
   const isAlbum = mode === 'album';
   document.getElementById('multiModalTitle').textContent = isAlbum ? 'New Album' : 'New Linked Stack';
   document.getElementById('multiHint').textContent = isAlbum
-    ? 'Search Apple Music to pull in tracks, art, and per-track artists automatically — or add tracks manually below. Each track becomes its own entry in your cataloguex.'
-    : 'These fields apply to every song below — good for tracks that just remind you of each other.';
+    ? 'Search Apple Music to pull in tracks, art, and per-track artists automatically â€” or add tracks manually below. Each track becomes its own entry in your cataloguex.'
+    : 'These fields apply to every song below â€” good for tracks that just remind you of each other.';
   document.getElementById('multiAlbumLabel').textContent = isAlbum ? 'Album' : 'Album (optional)';
-  document.getElementById('multiArtistLabel').textContent = isAlbum ? 'Primary artist (fills tracks below — edit each track to add features)' : 'Artist(s)';
+  document.getElementById('multiArtistLabel').textContent = isAlbum ? 'Primary artist (fills tracks below â€” edit each track to add features)' : 'Artist(s)';
   document.getElementById('multiWhyLabel').textContent = isAlbum ? 'Thoughts on the album' : 'What connects these';
   document.getElementById('multiTitlesLabel').textContent = isAlbum ? 'Tracks' : 'Song titles';
   document.getElementById('mf-spotify-search-field').style.display = isAlbum ? '' : 'none';
@@ -5594,7 +5427,7 @@ function addTitleBoxRow(focus, prefill){
   const removeBtn = document.createElement('button');
   removeBtn.type = 'button';
   removeBtn.className = 'remove-title';
-  removeBtn.textContent = '×';
+  removeBtn.textContent = 'Ã—';
   removeBtn.addEventListener('click', ()=>{
     if(container.children.length > 1) row.remove();
   });
@@ -5616,7 +5449,7 @@ function addTitleBoxRow(focus, prefill){
     const artistInput = document.createElement('input');
     artistInput.type = 'text';
     artistInput.className = 'track-box-artist';
-    artistInput.placeholder = 'Artist(s) for this track — e.g. Artist One, Artist Two (feat. …)';
+    artistInput.placeholder = 'Artist(s) for this track â€” e.g. Artist One, Artist Two (feat. â€¦)';
     if(prefill && prefill.artist) artistInput.value = prefill.artist;
     const tagsInput = document.createElement('input');
     tagsInput.type = 'text';
@@ -5633,7 +5466,7 @@ function addTitleBoxRow(focus, prefill){
     tierLabel.textContent = 'Tier:';
     tierRow.appendChild(tierLabel);
     let trackTier = (prefill && prefill.tier) ? prefill.tier : null;
-    ['★','S','A','B','C'].forEach(t=>{
+    ['â˜…','S','A','B','C'].forEach(t=>{
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'track-tier-btn tier-' + t + (trackTier===t ? ' selected' : '');
@@ -5685,7 +5518,7 @@ function handleMultiSave(){
   const clusterId = uid();
   const albumTitle = document.getElementById('mf-album').value.trim();
   const albumArtist = document.getElementById('mf-artist').value.trim();
-  const albumName = isAlbum ? ((albumTitle || 'Untitled') + (albumArtist ? ' — ' + albumArtist : '')) : null;
+  const albumName = isAlbum ? ((albumTitle || 'Untitled') + (albumArtist ? ' â€” ' + albumArtist : '')) : null;
   const now = Date.now();
   let newSongs;
   if(isAlbum){
@@ -5796,7 +5629,7 @@ document.getElementById('grid').addEventListener('click', e=>{
   const action = btn.dataset.action;
   if(action === 'pin'){
     trackEvent('pin_song');
-    song.tier = (song.tier === '★') ? '' : '★';
+    song.tier = (song.tier === 'â˜…') ? '' : 'â˜…';
     save(); render();
     if(document.getElementById('feedOverlay').classList.contains('open')) loadFeed();
   } else if(action === 'archive'){
@@ -5826,13 +5659,13 @@ function updateViewUI(){
   const wishBtn = document.getElementById('toggleWishlist');
   const tierBtn = document.getElementById('toggleTierBoard');
   const timeBtn = document.getElementById('toggleTimeline');
-  archBtn.textContent = showArchived ? '← Back to cataloguex' : 'View archive';
+  archBtn.textContent = showArchived ? 'â† Back to cataloguex' : 'View archive';
   archBtn.classList.toggle('active', showArchived);
-  wishBtn.textContent = viewingWishlist ? '← Back to cataloguex' : '✍ Songs I Wish I Wrote';
+  wishBtn.textContent = viewingWishlist ? 'â† Back to cataloguex' : 'âœ Songs I Wish I Wrote';
   wishBtn.classList.toggle('active', viewingWishlist);
-  tierBtn.textContent = viewingTierBoard ? '← Back to cataloguex' : '🏆 Tier board';
+  tierBtn.textContent = viewingTierBoard ? 'â† Back to cataloguex' : 'ðŸ† Tier board';
   tierBtn.classList.toggle('active', viewingTierBoard);
-  timeBtn.textContent = viewingTimeline ? '← Back to cataloguex' : '🕰 Timeline';
+  timeBtn.textContent = viewingTimeline ? 'â† Back to cataloguex' : 'ðŸ•° Timeline';
   timeBtn.classList.toggle('active', viewingTimeline);
 
   const otherMode = showArchived || viewingWishlist;
@@ -5930,14 +5763,14 @@ function startImportProgressTimer(){
       const etaSec = Math.round(remaining * rate);
       etaStr = fmtTime(etaSec) + ' remaining';
     } else {
-      etaStr = 'calculating…';
+      etaStr = 'calculatingâ€¦';
     }
     const elapsedStr = fmtTime(elapsed);
     let cdStr = '';
     if(importProgressState.cooldownEnd && Date.now() < importProgressState.cooldownEnd){
-      cdStr = ' · cooling down ' + Math.ceil((importProgressState.cooldownEnd - Date.now()) / 1000) + 's';
+      cdStr = ' Â· cooling down ' + Math.ceil((importProgressState.cooldownEnd - Date.now()) / 1000) + 's';
     }
-    const msg = importProgressState.label + ` ${done}/${total}${cdStr} · ~${etaStr} (${elapsedStr} elapsed)`;
+    const msg = importProgressState.label + ` ${done}/${total}${cdStr} Â· ~${etaStr} (${elapsedStr} elapsed)`;
     if(importProgressState.statusEl){ importProgressState.statusEl.textContent = msg; }
     else if(importProgressState.listEl){ importProgressState.listEl.innerHTML = `<p class="profile-empty-note">${msg}</p>`; }
   }, 5000);
@@ -6009,7 +5842,7 @@ async function fetchViaProxy(url){
       }
     }catch(e){ }
   }
-  throw new Error('Could not fetch the playlist page. The proxy services may be down — try again in a moment.');
+  throw new Error('Could not fetch the playlist page. The proxy services may be down â€” try again in a moment.');
 }
 
 function detectPlaylistService(url){
@@ -6103,7 +5936,7 @@ async function loadTidalPlaylist(url){
   const totalApiCalls = totalPages * 2;
   const initialEtaSec = totalApiCalls * 2;
   const initialEtaStr = fmtTime(initialEtaSec);
-  if(listEl) listEl.innerHTML = `<p class="profile-empty-note">Loading ${totalItems} tracks from Tidal… ~${fmtTime(totalPages * 2)} estimated</p><div style="font-size:11px;opacity:0.6;padding:4px 0;font-family:IBM Plex Mono,monospace;">Total import time: ~${initialEtaStr}</div>`;
+  if(listEl) listEl.innerHTML = `<p class="profile-empty-note">Loading ${totalItems} tracks from Tidalâ€¦ ~${fmtTime(totalPages * 2)} estimated</p><div style="font-size:11px;opacity:0.6;padding:4px 0;font-family:IBM Plex Mono,monospace;">Total import time: ~${initialEtaStr}</div>`;
 
   const tidalStartTime = Date.now();
   const tidalProgressHtml = (main, extra)=>{
@@ -6122,7 +5955,7 @@ async function loadTidalPlaylist(url){
           const pagesDone = page || 0;
           const pagesRemaining = totalPages - pagesDone + 1;
           const totalRemaining = (pagesRemaining + totalPages) * 2 + retryAfter;
-          if(listEl) listEl.innerHTML = tidalProgressHtml(`Rate limited — waiting ${retryAfter}s…`, `Total import time: ~${fmtTime(Math.round(elapsed + totalRemaining))}`);
+          if(listEl) listEl.innerHTML = tidalProgressHtml(`Rate limited â€” waiting ${retryAfter}sâ€¦`, `Total import time: ~${fmtTime(Math.round(elapsed + totalRemaining))}`);
           await new Promise(r => setTimeout(r, retryAfter * 1000));
           delay = Math.min(5000, delay + 1000);
           continue;
@@ -6156,7 +5989,7 @@ async function loadTidalPlaylist(url){
       const totalRemaining = (remainingPages + totalPages) * 2;
       const totalEta = fmtTime(Math.round(elapsed + totalRemaining));
       listEl.innerHTML = tidalProgressHtml(
-        `Loading tracks from Tidal… ${trackIds.length}/${totalItems} · ~${fmtTime(etaSec)} remaining (${fmtTime(Math.round(elapsed))} elapsed)`,
+        `Loading tracks from Tidalâ€¦ ${trackIds.length}/${totalItems} Â· ~${fmtTime(etaSec)} remaining (${fmtTime(Math.round(elapsed))} elapsed)`,
         `Total import time: ~${totalEta}`
       );
     }
@@ -6171,7 +6004,7 @@ async function loadTidalPlaylist(url){
   if(trackIds.length === 0) throw new Error('No tracks found in this Tidal playlist.');
   const detailTotalBatches = Math.ceil(trackIds.length / 20);
   const detailStartTime = Date.now();
-  if(listEl) listEl.innerHTML = `<p class="profile-empty-note">Fetching track details… 0/${trackIds.length}</p>`;
+  if(listEl) listEl.innerHTML = `<p class="profile-empty-note">Fetching track detailsâ€¦ 0/${trackIds.length}</p>`;
 
   const tracks = [];
   for(let i = 0; i < trackIds.length; i += 20){
@@ -6223,7 +6056,7 @@ async function loadTidalPlaylist(url){
       const totalElapsed = (Date.now() - tidalStartTime) / 1000;
       const totalRemaining = remainingBatches * 2;
       listEl.innerHTML = tidalProgressHtml(
-        `Fetching track details… ${tracks.length}/${trackIds.length} · ~${fmtTime(etaSec)} remaining (${fmtTime(Math.round(elapsed))} elapsed)`,
+        `Fetching track detailsâ€¦ ${tracks.length}/${trackIds.length} Â· ~${fmtTime(etaSec)} remaining (${fmtTime(Math.round(elapsed))} elapsed)`,
         `Total import time: ~${fmtTime(Math.round(totalElapsed + totalRemaining))}`
       );
     }
@@ -6257,7 +6090,7 @@ async function loadPlaylist(url){
   playlistImportUrl = url;
   playlistImportInProgress = true;
   const serviceLabel = service === 'spotify' ? 'Spotify' : service === 'apple' ? 'Apple Music' : 'Tidal';
-  listEl.innerHTML = `<p class="profile-empty-note">Connecting to ${serviceLabel}…</p>`;
+  listEl.innerHTML = `<p class="profile-empty-note">Connecting to ${serviceLabel}â€¦</p>`;
   resultsEl.style.display = 'block';
   const oldStatus = document.getElementById('plEnrichStatus');
   if(oldStatus) oldStatus.remove();
@@ -6320,7 +6153,7 @@ async function loadPlaylist(url){
       ${coverArt ? `<img src="${escapeAttr(coverArt)}" style="width:48px;height:48px;border-radius:6px;object-fit:cover;">` : ''}
       <div>
         <div style="font-weight:700; font-size:15px;">${escapeHtml(playlistName)}</div>
-        <div style="font-size:12px; opacity:0.7;">${tracks.length} tracks · ${serviceLabel}</div>
+        <div style="font-size:12px; opacity:0.7;">${tracks.length} tracks Â· ${serviceLabel}</div>
       </div>`;
     renderPlaylistTrackList(listEl, tracks);
     confirmBtn.disabled = false;
@@ -6346,7 +6179,7 @@ function renderPlaylistTrackList(listEl, tracks){
         : `<span class="drow-fallback" style="font-size:11px;">${i+1}</span>`}
       <span style="flex:1;">
         <span class="drow-name">${escapeHtml(t.title)}</span><br>
-        <span class="drow-bio">${escapeHtml((t.artists||[]).join(', '))}${t.album ? ' · ' + escapeHtml(t.album) : ''}</span>
+        <span class="drow-bio">${escapeHtml((t.artists||[]).join(', '))}${t.album ? ' Â· ' + escapeHtml(t.album) : ''}</span>
       </span>
     </div>`;
   }
@@ -6363,8 +6196,8 @@ async function enrichTracksFromItunes(tracks, listEl, statusEl){
   const totalBatches = Math.ceil(tracks.length / BATCH_SIZE);
   const initialEtaSec = Math.round(totalBatches * (BATCH_DELAY / 1000) + totalBatches * 0.3);
   const initialEtaStr = fmtTime(initialEtaSec);
-  if(statusEl) statusEl.textContent = `Fetching cover art from iTunes… 0/${tracks.length} · ~${initialEtaStr} estimated`;
-  importProgressState = { active: true, label: 'Fetching cover art from iTunes…', done: 0, total: tracks.length, startTime, statusEl };
+  if(statusEl) statusEl.textContent = `Fetching cover art from iTunesâ€¦ 0/${tracks.length} Â· ~${initialEtaStr} estimated`;
+  importProgressState = { active: true, label: 'Fetching cover art from iTunesâ€¦', done: 0, total: tracks.length, startTime, statusEl };
   startImportProgressTimer();
   for(let batchNum = 0; batchNum < totalBatches; batchNum++){
     const i = batchNum * BATCH_SIZE;
@@ -6396,7 +6229,7 @@ async function enrichTracksFromItunes(tracks, listEl, statusEl){
       const etaSec = Math.round(remainingBatches * rate);
       const etaStr = fmtTime(etaSec);
       const elapsedStr = fmtTime(elapsed);
-      statusEl.textContent = `Fetching cover art from iTunes… ${done}/${tracks.length} · ~${etaStr} remaining (${elapsedStr} elapsed)`;
+      statusEl.textContent = `Fetching cover art from iTunesâ€¦ ${done}/${tracks.length} Â· ~${etaStr} remaining (${elapsedStr} elapsed)`;
     }
     if(importProgressState) importProgressState.done = done;
     if(listEl && done <= 200){
@@ -6410,7 +6243,7 @@ async function enrichTracksFromItunes(tracks, listEl, statusEl){
               <img src="${escapeAttr(t.coverArt)}" style="width:36px;height:36px;border-radius:5px;object-fit:cover;flex-shrink:0;">
               <span style="flex:1;">
                 <span class="drow-name">${escapeHtml(t.title)}</span><br>
-                <span class="drow-bio">${escapeHtml((t.artists||[]).join(', '))}${t.album ? ' · ' + escapeHtml(t.album) : ''}</span>
+                <span class="drow-bio">${escapeHtml((t.artists||[]).join(', '))}${t.album ? ' Â· ' + escapeHtml(t.album) : ''}</span>
               </span>
             </div>`;
           }
@@ -6593,8 +6426,8 @@ function renderClusterSelectedList(){
   hint.style.display = items.length ? 'none' : '';
   wrap.innerHTML = items.map(s=>`
     <div class="cluster-chip" data-song-id="${s.id}">
-      <span>${escapeHtml(s.title||'Untitled')}${(s.artists&&s.artists.length) ? ' — '+escapeHtml(s.artists.join(', ')) : ''}</span>
-      <button type="button" class="cluster-chip-x" data-remove="${s.id}" title="Remove">×</button>
+      <span>${escapeHtml(s.title||'Untitled')}${(s.artists&&s.artists.length) ? ' â€” '+escapeHtml(s.artists.join(', ')) : ''}</span>
+      <button type="button" class="cluster-chip-x" data-remove="${s.id}" title="Remove">Ã—</button>
     </div>
   `).join('');
 }
@@ -6687,7 +6520,7 @@ function renderCollabSelected(){
   wrap.innerHTML = collabSelectedFriendIds.map(fid=>{
     const p = allProfilesCache.find(x=>x.user_id===fid);
     const name = p ? p.username : 'friend';
-    return `<div class="cluster-chip"><span>@${escapeHtml(name)}</span><button type="button" class="cluster-chip-x" data-remove-collab="${fid}" title="Remove">×</button></div>`;
+    return `<div class="cluster-chip"><span>@${escapeHtml(name)}</span><button type="button" class="cluster-chip-x" data-remove-collab="${fid}" title="Remove">Ã—</button></div>`;
   }).join('');
 }
 document.getElementById('collabSelectedList').addEventListener('click', e=>{
@@ -6738,7 +6571,7 @@ function renderClustersList(){
     const name = (list.find(s=>s.clusterName)||{}).clusterName;
     const m = meta[id];
     const collabBadge = m && m.collaborators && m.collaborators.length > 1
-      ? `<span class="cnr-collab">🤝 ${m.collaborators.length} people</span>` : '';
+      ? `<span class="cnr-collab">ðŸ¤ ${m.collaborators.length} people</span>` : '';
     return `
       <div class="cluster-name-row-wrap">
         <button type="button" class="cluster-name-row" data-cluster-id="${id}">
@@ -6770,7 +6603,7 @@ async function renderClusterDetail(id){
   const renaming = (clusterRenameId === id);
   const isCollab = m && m.collaborators && m.collaborators.length > 1;
   wrap.innerHTML = `
-    <button type="button" class="cluster-back-btn" id="clusterBackBtn">← All stacks</button>
+    <button type="button" class="cluster-back-btn" id="clusterBackBtn">â† All stacks</button>
     <div class="cluster-group" data-cluster-id="${id}">
       ${renaming ? `
         <div class="cluster-group-head">
@@ -6781,7 +6614,7 @@ async function renderClusterDetail(id){
           </span>
         </div>` : `
         <div class="cluster-group-head">
-          <p class="cluster-group-name">${escapeHtml(name || 'Untitled stack')}${isCollab ? ' <span class="collab-badge">🤝 Collaborative</span>' : ''}</p>
+          <p class="cluster-group-name">${escapeHtml(name || 'Untitled stack')}${isCollab ? ' <span class="collab-badge">ðŸ¤ Collaborative</span>' : ''}</p>
           <span class="cluster-rename-actions">
             <button type="button" id="clusterRenameBtn" title="Rename this stack">Rename</button>
           </span>
@@ -6832,7 +6665,7 @@ function deleteCluster(id){
   const groups = getClusterGroups();
   const list = groups[id] || [];
   if(list.length === 0) return;
-  const ok = confirm(`Delete this stack of ${list.length} songs? The songs themselves will stay in your cataloguex — this only removes the link between them.`);
+  const ok = confirm(`Delete this stack of ${list.length} songs? The songs themselves will stay in your cataloguex â€” this only removes the link between them.`);
   if(!ok) return;
   list.forEach(s=>{ s.clusterId = null; s.clusterName = null; });
   save();
@@ -7052,7 +6885,7 @@ function renderDiscoverList(filter){
     const initial = p.username.charAt(0).toUpperCase();
     let btnLabel = '+ Add friend';
     let btnDisabled = isFriend || isRequested;
-    if(isFriend) btnLabel = 'Friends ✓';
+    if(isFriend) btnLabel = 'Friends âœ“';
     else if(isRequested) btnLabel = 'Requested';
     else if(myFriendsBlocked){ btnLabel = 'Off'; btnDisabled = true; }
     else if(targetBlocked){ btnLabel = "Can't add"; btnDisabled = true; }
@@ -7071,7 +6904,7 @@ document.getElementById('discoverBtn').addEventListener('click', async ()=>{
   trackEvent('open_friends');
   document.getElementById('discoverOverlay').classList.add('open');
   document.getElementById('friend-username-search').value = '';
-  document.getElementById('discoverList').innerHTML = '<p class="profile-empty-note">Loading…</p>';
+  document.getElementById('discoverList').innerHTML = '<p class="profile-empty-note">Loadingâ€¦</p>';
   document.getElementById('friendRequestsWrap').style.display = 'none';
   const [profiles, rows] = await Promise.all([fetchAllProfiles(), fetchMyFriendRows()]);
   allProfilesCache = profiles;
@@ -7088,7 +6921,7 @@ document.getElementById('discoverList').addEventListener('click', async e=>{
     if(btn.disabled) return;
     trackEvent('add_friend');
     btn.disabled = true;
-    btn.textContent = '…';
+    btn.textContent = 'â€¦';
     const ok = await sendFriendRequest(btn.dataset.addFriend);
     btn.textContent = ok ? 'Requested' : '+ Add friend';
     if(!ok) btn.disabled = false;
@@ -7122,7 +6955,7 @@ async function loadOtherProfileSotdCount(userId){
   if(!sotdEl) return;
   const stats = await loadSotdReactionStats(userId);
   if(!stats || stats.count === 0){ sotdEl.style.display = 'none'; return; }
-  sotdEl.textContent = '🎵 Reacted to ' + stats.count + (stats.count === 1 ? ' song' : ' songs') + ' of the day · 🔥 ' + stats.current + '-day streak' + (stats.best > stats.current ? ' (best ' + stats.best + ')' : '');
+  sotdEl.textContent = 'ðŸŽµ Reacted to ' + stats.count + (stats.count === 1 ? ' song' : ' songs') + ' of the day Â· ðŸ”¥ ' + stats.current + '-day streak' + (stats.best > stats.current ? ' (best ' + stats.best + ')' : '');
   sotdEl.style.display = '';
 }
 function updateOtherProfileFriendBtn(userId){
@@ -7162,7 +6995,7 @@ document.getElementById('otherProfileFriendBtn').addEventListener('click', async
   if(btn.disabled) return;
   const userId = btn.dataset.userId;
   btn.disabled = true;
-  btn.textContent = '…';
+  btn.textContent = 'â€¦';
   const ok = await sendFriendRequest(userId);
   updateOtherProfileFriendBtn(userId);
   renderDiscoverList(document.getElementById('friend-username-search').value);
@@ -7272,7 +7105,7 @@ async function fetchReadOnlyPeopleAndSongs(userId){
 /* ---- SONGS LINKED TO ME ----
    For each of my friends, check whether they've added a "person" linked to my
    account (people.userId === me). If so, surface any of their songs whose
-   remindsOf references that person — i.e. songs they said reminded them of me. */
+   remindsOf references that person â€” i.e. songs they said reminded them of me. */
 function linkedToMeCardHtml(entry){
   const s = entry.song;
   const p = entry.profile;
@@ -7297,7 +7130,7 @@ function linkedToMeCardHtml(entry){
         ${cover}
         <div class="feed-card-info">
           <div class="feed-card-title">${escapeHtml(s.title || 'Untitled')}</div>
-          <div class="feed-card-artist">${escapeHtml(formatArtists(s.artists))}${s.album ? ' · ' + escapeHtml(s.album) : ''}</div>
+          <div class="feed-card-artist">${escapeHtml(formatArtists(s.artists))}${s.album ? ' Â· ' + escapeHtml(s.album) : ''}</div>
           <div class="feed-card-tier">${tierBadge}</div>
           ${why}
           ${when}
@@ -7310,7 +7143,7 @@ async function loadLinkedToMe(){
   const list = document.getElementById('linkedToMeList');
   const countEl = document.getElementById('linkedToMeCount');
   if(!list || !currentUserId) return;
-  list.innerHTML = '<div class="feed-empty">Loading…</div>';
+  list.innerHTML = '<div class="feed-empty">Loadingâ€¦</div>';
   const friendIds = [...myFriendIds];
   const results = await Promise.all(friendIds.map(async id=>{
     try{
@@ -7329,7 +7162,7 @@ async function loadLinkedToMe(){
   const all = results.flat().sort((a,b)=>(b.song.createdAt||0)-(a.song.createdAt||0));
   if(countEl) countEl.textContent = all.length ? `${all.length} song${all.length===1?'':'s'} linked to you` : '';
   if(all.length === 0){
-    list.innerHTML = '<div class="feed-empty">Nothing yet. When a friend adds you under "Songs that remind me of…", it\'ll show up here.</div>';
+    list.innerHTML = '<div class="feed-empty">Nothing yet. When a friend adds you under "Songs that remind me ofâ€¦", it\'ll show up here.</div>';
     return;
   }
   list.innerHTML = all.map(e=>linkedToMeCardHtml(e)).join('');
@@ -7372,11 +7205,11 @@ function computeTasteMatch(mySongs, theirSongs){
   return { percent, sharedArtists, sharedTracks };
 }
 function tasteMatchLabel(percent){
-  if(percent>=70) return 'Soulmates 🎧';
-  if(percent>=45) return 'Kindred Spirits 🌊';
-  if(percent>=20) return 'Distant Cousins 🌱';
-  if(percent>0) return 'Different Wavelengths 🛸';
-  return 'Uncharted Territory 🗺️';
+  if(percent>=70) return 'Soulmates ðŸŽ§';
+  if(percent>=45) return 'Kindred Spirits ðŸŒŠ';
+  if(percent>=20) return 'Distant Cousins ðŸŒ±';
+  if(percent>0) return 'Different Wavelengths ðŸ›¸';
+  return 'Uncharted Territory ðŸ—ºï¸';
 }
 function renderTasteMatch(mySongs, theirSongs){
   const panel = document.getElementById('friendTasteMatch');
@@ -7395,7 +7228,7 @@ function renderTasteMatch(mySongs, theirSongs){
   const bits = [];
   if(sharedArtists.length) bits.push(`${sharedArtists.length} shared artist${sharedArtists.length===1?'':'s'}`);
   if(sharedTracks.length) bits.push(`${sharedTracks.length} identical track${sharedTracks.length===1?'':'s'}`);
-  document.getElementById('tmDetail').textContent = bits.length ? bits.join(' · ') : 'Not much overlap yet — go explore each other\u2019s taste!';
+  document.getElementById('tmDetail').textContent = bits.length ? bits.join(' Â· ') : 'Not much overlap yet â€” go explore each other\u2019s taste!';
   if(sharedTracks.length){
     favsWrap.style.display = 'block';
     favsList.innerHTML = sharedTracks.slice(0,10).map(s=>`
@@ -7415,10 +7248,10 @@ async function loadFriendLeaderboard(){
   if(!list) return;
   const friendIds = [...myFriendIds];
   if(friendIds.length < 1){
-    list.innerHTML = '<p class="profile-empty-note">Add a few friends and check back — this ranks your friend group!</p>';
+    list.innerHTML = '<p class="profile-empty-note">Add a few friends and check back â€” this ranks your friend group!</p>';
     return;
   }
-  list.innerHTML = '<p class="profile-empty-note">Crunching the numbers…</p>';
+  list.innerHTML = '<p class="profile-empty-note">Crunching the numbersâ€¦</p>';
   const friendResults = await Promise.all(friendIds.map(async id=>({ id, songs: (await fetchReadOnlySongs(id)) || [] })));
   const mySongs = songs.filter(s=>!s.archived);
   const allResults = [{ id: currentUserId, songs: mySongs }, ...friendResults];
@@ -7437,10 +7270,10 @@ async function loadFriendLeaderboard(){
   });
   const nameFor = id => { if(id === currentUserId) return 'you'; const p = allProfilesCache.find(x=>x.user_id===id); return p ? p.username : 'someone'; };
   const rows = [];
-  if(mostProlific) rows.push({ emoji:'🎧', title:'Most Prolific', name:nameFor(mostProlific.id), detail:`${mostProlific.songs.length} tracks catalogued` });
-  if(pickiest) rows.push({ emoji:'🔥', title:'Pickiest Curator', name:nameFor(pickiest.id), detail:`${Math.round(pickiest.ratio*100)}% S-tier picks` });
-  if(twin) rows.push({ emoji:'🧬', title:'Your Taste Twin', name:nameFor(twin.id), detail:`${twin.percent}% match with you` });
-  if(!rows.length){ list.innerHTML = '<p class="profile-empty-note">Not enough data yet — add a few tracks and check back!</p>'; return; }
+  if(mostProlific) rows.push({ emoji:'ðŸŽ§', title:'Most Prolific', name:nameFor(mostProlific.id), detail:`${mostProlific.songs.length} tracks catalogued` });
+  if(pickiest) rows.push({ emoji:'ðŸ”¥', title:'Pickiest Curator', name:nameFor(pickiest.id), detail:`${Math.round(pickiest.ratio*100)}% S-tier picks` });
+  if(twin) rows.push({ emoji:'ðŸ§¬', title:'Your Taste Twin', name:nameFor(twin.id), detail:`${twin.percent}% match with you` });
+  if(!rows.length){ list.innerHTML = '<p class="profile-empty-note">Not enough data yet â€” add a few tracks and check back!</p>'; return; }
   list.innerHTML = rows.map(r=>`
     <div class="discover-row leaderboard-row" style="cursor:default;">
       <span class="drow-fallback">${r.emoji}</span>
@@ -7454,7 +7287,7 @@ async function loadFriendLeaderboard(){
 async function loadLeaderboard(){
   const list = document.getElementById('leaderboardList');
   if(!list) return;
-  list.innerHTML = '<p class="profile-empty-note">Crunching the numbers…</p>';
+  list.innerHTML = '<p class="profile-empty-note">Crunching the numbersâ€¦</p>';
   const { data, error } = await sb.from('sotd_reactions').select('user_id');
   if(error || !data){
     list.innerHTML = '<p class="profile-empty-note">Could not load the leaderboard.</p>';
@@ -7464,14 +7297,14 @@ async function loadLeaderboard(){
   (data || []).forEach(r=>{ if(r && r.user_id) counts[r.user_id] = (counts[r.user_id] || 0) + 1; });
   const top = Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,1);
   if(top.length === 0){
-    list.innerHTML = '<p class="profile-empty-note">No SOTD reactions yet — be the first to react!</p>';
+    list.innerHTML = '<p class="profile-empty-note">No SOTD reactions yet â€” be the first to react!</p>';
     return;
   }
   const ids = top.map(e=>e[0]);
   const { data: profs } = await sb.from('profiles').select('user_id, username, photo').in('user_id', ids);
   const pmap = {};
   (profs || []).forEach(p=>{ pmap[p.user_id] = p; });
-  const medals = ['🥇'];
+  const medals = ['ðŸ¥‡'];
   list.innerHTML = top.map((entry, i)=>{
     const userId = entry[0], n = entry[1];
     const p = pmap[userId];
@@ -7521,22 +7354,22 @@ function renderFriendGrid(list){
         ${s.coverArt ? `<img class="cover-thumb" src="${escapeAttr(s.coverArt)}">` : ''}
         <div class="title-stack">
           <p class="track-title">${escapeHtml(s.title||'Untitled')}</p>
-          <p class="track-artist">${escapeHtml(formatArtists(s.artists))}${s.album ? ' · '+escapeHtml(s.album) : ''}</p>
+          <p class="track-artist">${escapeHtml(formatArtists(s.artists))}${s.album ? ' Â· '+escapeHtml(s.album) : ''}</p>
         </div>
       </div>
       <div class="meta-row">
         ${s.year ? `<span>${escapeHtml(s.year)}</span>` : ''}
-        ${(s.genres&&s.genres.length) ? `<span class="meta-genres">· ${s.genres.map(g=>escapeHtml(g)).join(', ')}</span>` : ''}
+        ${(s.genres&&s.genres.length) ? `<span class="meta-genres">Â· ${s.genres.map(g=>escapeHtml(g)).join(', ')}</span>` : ''}
       </div>
       <div class="tier-row">${renderTierBadge(s.tier)}</div>
       <div class="preview-row">
-        <button type="button" class="preview-btn" data-preview="${escapeAttr(s.id)}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>
+        <button type="button" class="preview-btn" data-preview="${escapeAttr(s.id)}" title="Play a 30-second preview" aria-label="Play 30-second preview">â–¶</button>
         <span class="preview-hint">30-sec preview</span>
       </div>
       ${(s.tags&&s.tags.length) ? `<div class="tags">${s.tags.map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>` : ''}
       ${s.why ? `<p class="why">${escapeHtml(s.why)}</p>` : ''}
       ${s.credit ? `<p class="credit-note"><b>Borrowed from / Where I Heard It:</b> ${escapeHtml(s.credit)}</p>` : ''}
-      ${geniusLyricsUrl(s.title, s.artists) ? `<a class="lyrics-link" href="${escapeAttr(geniusLyricsUrl(s.title, s.artists))}" target="_blank" rel="noopener" title="Open lyrics on Genius">LYRICS ↗</a>` : ''}
+      ${geniusLyricsUrl(s.title, s.artists) ? `<a class="lyrics-link" href="${escapeAttr(geniusLyricsUrl(s.title, s.artists))}" target="_blank" rel="noopener" title="Open lyrics on Genius">LYRICS â†—</a>` : ''}
     </div>
   `).join('');
 }
@@ -7550,7 +7383,7 @@ function updateFriendViewUI(){
   const grid = document.getElementById('friendGrid');
   const board = document.getElementById('friendTierBoard');
   const btn = document.getElementById('friendTierBoardBtn');
-  btn.textContent = viewingFriendTierBoard ? '← Back to grid' : '🏆 Tier board';
+  btn.textContent = viewingFriendTierBoard ? 'â† Back to grid' : 'ðŸ† Tier board';
   btn.classList.toggle('active', viewingFriendTierBoard);
   if(viewingFriendTierBoard){
     grid.style.display = 'none';
@@ -7604,9 +7437,9 @@ function renderCompareView(){
   const myGenres = new Set(); mySongs.forEach(s=>(s.genres||[]).forEach(g=>{ if(norm(g)) myGenres.add(norm(g)); }));
   const theirGenres = new Set(); theirSongs.forEach(s=>(s.genres||[]).forEach(g=>{ if(norm(g)) theirGenres.add(norm(g)); }));
   const sharedGenres = [...myGenres].filter(g=>theirGenres.has(g));
-  const myTierCounts = { '★':0,S:0,A:0,B:0,C:0 };
+  const myTierCounts = { 'â˜…':0,S:0,A:0,B:0,C:0 };
   mySongs.forEach(s=>{ if(s.tier && myTierCounts.hasOwnProperty(s.tier)) myTierCounts[s.tier]++; });
-  const theirTierCounts = { '★':0,S:0,A:0,B:0,C:0 };
+  const theirTierCounts = { 'â˜…':0,S:0,A:0,B:0,C:0 };
   theirSongs.forEach(s=>{ if(s.tier && theirTierCounts.hasOwnProperty(s.tier)) theirTierCounts[s.tier]++; });
   const myName = (myProfile && myProfile.username) || 'You';
   const theirName = (allProfilesCache.find(x=>x.user_id === (currentFriendSongs && currentFriendSongs.__ownerId)) || {}).username || 'Friend';
@@ -7628,8 +7461,8 @@ function renderCompareView(){
 
   const tierPfpHtml = (tier, photo, initial) => `
     <div class="cmp-tier-pick">
-      ${photo ? `<img class="cmp-tier-pick-pfp" src="${escapeAttr(photo)}">` : `<div class="cmp-tier-pick-fallback">♪</div>`}
-      <span class="tier-badge tier-${tier||'none'}">${tier||'—'}</span>
+      ${photo ? `<img class="cmp-tier-pick-pfp" src="${escapeAttr(photo)}">` : `<div class="cmp-tier-pick-fallback">â™ª</div>`}
+      <span class="tier-badge tier-${tier||'none'}">${tier||'â€”'}</span>
     </div>`;
 
   const readOnlyCardHtml = (s) => `
@@ -7638,12 +7471,12 @@ function renderCompareView(){
         ${s.coverArt ? `<img class="cover-thumb" src="${escapeAttr(s.coverArt)}">` : ''}
         <div class="title-stack">
           <p class="track-title">${escapeHtml(s.title||'Untitled')}</p>
-          <p class="track-artist">${escapeHtml(formatArtists(s.artists))}${s.album ? ' · '+escapeHtml(s.album) : ''}</p>
+          <p class="track-artist">${escapeHtml(formatArtists(s.artists))}${s.album ? ' Â· '+escapeHtml(s.album) : ''}</p>
         </div>
       </div>
       <div class="meta-row">
         ${s.year ? `<span>${escapeHtml(s.year)}</span>` : ''}
-        ${(s.genres&&s.genres.length) ? `<span> · ${s.genres.map(g=>escapeHtml(g)).join(', ')}</span>` : ''}
+        ${(s.genres&&s.genres.length) ? `<span> Â· ${s.genres.map(g=>escapeHtml(g)).join(', ')}</span>` : ''}
       </div>
       <div class="tier-row">${renderTierBadge(s.tier)}</div>
       ${(s.tags&&s.tags.length) ? `<div class="tags">${s.tags.map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>` : ''}
@@ -7652,26 +7485,26 @@ function renderCompareView(){
 
   const detailHeaderHtml = (photo, name, initial) => `
     <div class="cmp-detail-header">
-      ${photo ? `<img src="${escapeAttr(photo)}">` : `<div class="cmp-detail-header-fb">♪</div>`}
+      ${photo ? `<img src="${escapeAttr(photo)}">` : `<div class="cmp-detail-header-fb">â™ª</div>`}
       <span class="cmp-detail-header-name">@${escapeHtml(name)}</span>
     </div>`;
 
   content.innerHTML = `
     <div class="cmp-header">
       <div class="cmp-side">
-        ${myPhoto ? `<img class="cmp-side-avatar" src="${escapeAttr(myPhoto)}">` : `<div class="cmp-side-fallback">♪</div>`}
+        ${myPhoto ? `<img class="cmp-side-avatar" src="${escapeAttr(myPhoto)}">` : `<div class="cmp-side-fallback">â™ª</div>`}
         <div class="cmp-side-name">@${escapeHtml(myName)}</div>
         <div class="cmp-side-stats">${mySongs.length} songs</div>
       </div>
       <div class="cmp-vs">vs</div>
       <div class="cmp-side">
-        ${theirPhoto ? `<img class="cmp-side-avatar" src="${escapeAttr(theirPhoto)}">` : `<div class="cmp-side-fallback">♪</div>`}
+        ${theirPhoto ? `<img class="cmp-side-avatar" src="${escapeAttr(theirPhoto)}">` : `<div class="cmp-side-fallback">â™ª</div>`}
         <div class="cmp-side-name">@${escapeHtml(theirName)}</div>
         <div class="cmp-side-stats">${theirSongs.length} songs</div>
       </div>
     </div>
     <div class="cmp-section">
-      <div class="cmp-section-label">Overall match: ${match.percent}% — ${tasteMatchLabel(match.percent)}</div>
+      <div class="cmp-section-label">Overall match: ${match.percent}% â€” ${tasteMatchLabel(match.percent)}</div>
     </div>
     <div class="cmp-section">
       <div class="cmp-section-label">Artist overlap (${sharedArtists.length} shared)</div>
@@ -7686,7 +7519,7 @@ function renderCompareView(){
       </div>
     </div>` : ''}
     ${sharedPairs.length ? `<div class="cmp-section">
-      <div class="cmp-section-label">You both have (${sharedPairs.length}) — click to compare cards</div>
+      <div class="cmp-section-label">You both have (${sharedPairs.length}) â€” click to compare cards</div>
       <div class="cmp-shared-list">
         ${sharedPairs.map((p,i)=>`
           <div class="cmp-shared-track" data-cmp-idx="${i}">
@@ -7718,13 +7551,13 @@ function renderCompareView(){
     <div class="cmp-section">
       <div class="cmp-section-label">Only @${escapeHtml(myName)} listens to</div>
       <div class="cmp-chips">
-        ${myOnlyArtists.map(a=>`<span class="cmp-chip">${escapeHtml(a)}</span>`).join('') || '<span class="cmp-chip">—</span>'}
+        ${myOnlyArtists.map(a=>`<span class="cmp-chip">${escapeHtml(a)}</span>`).join('') || '<span class="cmp-chip">â€”</span>'}
       </div>
     </div>
     <div class="cmp-section">
       <div class="cmp-section-label">Only @${escapeHtml(theirName)} listens to</div>
       <div class="cmp-chips">
-        ${theirOnlyArtists.map(a=>`<span class="cmp-chip">${escapeHtml(a)}</span>`).join('') || '<span class="cmp-chip">—</span>'}
+        ${theirOnlyArtists.map(a=>`<span class="cmp-chip">${escapeHtml(a)}</span>`).join('') || '<span class="cmp-chip">â€”</span>'}
       </div>
     </div>`;
 
@@ -7776,7 +7609,7 @@ function updateFriendAddBtn(userId, p){
   btn.onclick = async ()=>{
     if(btn.disabled || myFriendsBlocked || targetBlocked) return;
     btn.disabled = true;
-    btn.textContent = '…';
+    btn.textContent = 'â€¦';
     const ok = await sendFriendRequest(userId);
     updateFriendAddBtn(userId, p);
     if(!ok) return;
@@ -7853,7 +7686,7 @@ async function openPublicCatalogue(username){
   document.getElementById('friendGrid').style.display = '';
   document.getElementById('friendTasteMatch').style.display = 'none';
   document.getElementById('friendSharedFavs').style.display = 'none';
-  document.getElementById('friendBackBtn').textContent = '← Sign in';
+  document.getElementById('friendBackBtn').textContent = 'â† Sign in';
 
   const p = await fetchProfileByUsername(username);
   if(!p){
@@ -7999,7 +7832,7 @@ function renderPFriendList(){
   const list = allProfilesCache.filter(p=>myFriendIds.has(p.user_id) && (!q || (p.username || '').toLowerCase().includes(q)));
   const wrap = document.getElementById('p-friend-list');
   if(list.length === 0){
-    wrap.innerHTML = q ? '<p class="profile-empty-note">No friends match that search.</p>' : '<p class="profile-empty-note">No friends yet — add some in Discover to link people to them.</p>';
+    wrap.innerHTML = q ? '<p class="profile-empty-note">No friends match that search.</p>' : '<p class="profile-empty-note">No friends yet â€” add some in Discover to link people to them.</p>';
     return;
   }
   wrap.innerHTML = list.map(f=>{
@@ -8009,7 +7842,7 @@ function renderPFriendList(){
       ${f.photo ? `<img src="${escapeAttr(f.photo)}">` : `<span class="drow-fallback is-pfp"></span>`}
       <span>
         <span class="drow-name">@${escapeHtml(f.username)}</span><br>
-        <span class="drow-bio">${sel ? 'Linked ✓' : 'Tap to link'}</span>
+        <span class="drow-bio">${sel ? 'Linked âœ“' : 'Tap to link'}</span>
       </span>
     </button>`;
   }).join('');
@@ -8130,7 +7963,7 @@ function renderStickerSections(){
 function renderStickerLayer(){
   const layer = document.getElementById('stickerLayer');
   if(!layer) return;
-  layer.innerHTML = stickers.filter(s=>s&&s.url).map((s,i)=>`<span class="sticker-drag" data-i="${i}" style="left:${clampNum(s.x,0,100)}%;top:${clampNum(s.y,0,100)}%;transform:translate(-50%,-50%) rotate(${clampNum(s.r||0,-45,45)}deg);"><button type="button" class="sticker-remove" data-rm="${i}" aria-label="Remove sticker">✕</button><img class="sticker-img" src="${escapeAttr(s.url)}" alt="sticker"></span>`).join('');
+  layer.innerHTML = stickers.filter(s=>s&&s.url).map((s,i)=>`<span class="sticker-drag" data-i="${i}" style="left:${clampNum(s.x,0,100)}%;top:${clampNum(s.y,0,100)}%;transform:translate(-50%,-50%) rotate(${clampNum(s.r||0,-45,45)}deg);"><button type="button" class="sticker-remove" data-rm="${i}" aria-label="Remove sticker">âœ•</button><img class="sticker-img" src="${escapeAttr(s.url)}" alt="sticker"></span>`).join('');
   [...layer.querySelectorAll('.sticker-drag')].forEach(attachStickerDrag);
   layer.querySelectorAll('.sticker-remove').forEach(btn=>{
     btn.addEventListener('click', e=>{
@@ -8641,7 +8474,7 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 window.sb = sb;
 
 let authMode = 'login'; // 'login' or 'signup'
-// Bump this string any time the Terms of Service / Privacy Policy materially change —
+// Bump this string any time the Terms of Service / Privacy Policy materially change â€”
 // it forces every user (even ones who already accepted an older version) to re-consent.
 const TERMS_VERSION = 'v2';
 
@@ -8650,7 +8483,7 @@ function hasAcceptedCurrentTerms(user){
   return meta.terms_version === TERMS_VERSION && !!meta.terms_accepted_at;
 }
 
-// Resolves once the current user has accepted the current Terms/Privacy Policy —
+// Resolves once the current user has accepted the current Terms/Privacy Policy â€”
 // either because they already had (resolves immediately), or because they just
 // clicked "Agree & Continue" in the blocking modal.
 function ensureTermsAccepted(user){
@@ -8672,7 +8505,7 @@ function ensureTermsAccepted(user){
         errorEl.style.display = '';
         return;
       }
-      acceptBtn.disabled = true; acceptBtn.textContent = '…';
+      acceptBtn.disabled = true; acceptBtn.textContent = 'â€¦';
       const { error } = await sb.auth.updateUser({
         data: { terms_accepted_at: new Date().toISOString(), terms_version: TERMS_VERSION }
       });
@@ -8752,7 +8585,7 @@ document.getElementById('auth-submit-btn').addEventListener('click', async ()=>{
     return;
   }
   const btn = document.getElementById('auth-submit-btn');
-  btn.disabled = true; btn.textContent = '…';
+  btn.disabled = true; btn.textContent = 'â€¦';
 
   try{
     if(authMode === 'login'){
@@ -8851,7 +8684,7 @@ document.getElementById('recoverySubmitBtn').addEventListener('click', async ()=
   if(pw1 !== pw2){ setRecoveryError('Passwords do not match.'); return; }
   const { error } = await sb.auth.updateUser({ password: pw1 });
   if(error){ setRecoveryError(error.message); return; }
-  setRecoveryMessage('Password updated! Loading your cataloguex…');
+  setRecoveryMessage('Password updated! Loading your cataloguexâ€¦');
   const { data: { session } } = await sb.auth.getSession();
   if(session && session.user) setTimeout(()=>loadAppForUser(session.user), 900);
 });
@@ -8952,7 +8785,7 @@ async function fetchMyProfile(userId){
     .maybeSingle();
   if(error){
     console.error('Error loading your profile (retrying without theme column):', error);
-    // theme column may not exist in this database yet — fall back so onboarding/login still works
+    // theme column may not exist in this database yet â€” fall back so onboarding/login still works
     const retry = await sb
       .from('profiles')
       .select('user_id, username, bio, photo')
@@ -8983,7 +8816,7 @@ function renderMyAvatar(){
   if(myProfile && myProfile.photo){
     el.innerHTML = `<img src="${myProfile.photo}">`;
   } else {
-    el.innerHTML = '♪';
+    el.innerHTML = 'â™ª';
   }
 }
 
@@ -9074,7 +8907,6 @@ async function loadAppForUser(user){
     openOnboarding();
   }
   updateRemoveExamplesBtn();
-  maybeStartTour();
 }
 
 /* ---- Apple Music / iTunes search (album + song lookup) ----
@@ -9108,9 +8940,9 @@ async function searchItunes(term, entity, limit){
   const url = 'https://itunes.apple.com/search?media=music&entity=' + entity + '&limit=' + (limit||8) + '&term=' + encodeURIComponent(term);
   const data = await itunesJsonp(url);
   const results = (data && data.results) || [];
-  // The iTunes API is notoriously inconsistent about honoring `entity` —
+  // The iTunes API is notoriously inconsistent about honoring `entity` â€”
   // it can slip music videos into song results or stray tracks into album
-  // results — so filter client-side to guarantee the right kind of result.
+  // results â€” so filter client-side to guarantee the right kind of result.
   if(entity === 'song'){
     return results.filter(r=>r.wrapperType==='track' && r.kind!=='music-video');
   }
@@ -9224,7 +9056,7 @@ async function renderAlbumSearchResults(query){
   const q = query.trim();
   if(!q){ wrap.style.display = 'none'; wrap.innerHTML = ''; return; }
   wrap.style.display = 'block';
-  wrap.innerHTML = '<p class="profile-empty-note">Searching…</p>';
+  wrap.innerHTML = '<p class="profile-empty-note">Searchingâ€¦</p>';
   let albums;
   try{
     albums = await searchItunes(q, 'album', 8);
@@ -9245,9 +9077,9 @@ async function renderAlbumSearchResults(query){
         ${a.artworkUrl100 ? `<img src="${a.artworkUrl100}">` : `<span class="drow-fallback">${escapeHtml((a.collectionName||'?').charAt(0).toUpperCase())}</span>`}
         <span>
           <span class="drow-name">${escapeHtml(a.collectionName||'Untitled')}</span><br>
-          <span class="drow-bio">${escapeHtml(a.artistName||'')}${a.releaseDate ? ' · '+a.releaseDate.slice(0,4) : ''}</span>
+          <span class="drow-bio">${escapeHtml(a.artistName||'')}${a.releaseDate ? ' Â· '+a.releaseDate.slice(0,4) : ''}</span>
         </span>
-        ${String(a.collectionId).indexOf('mbg-') !== 0 ? `<span class="preview-btn" data-preview="albs:${escapeAttr(a.collectionId)}" title="Play the first track as a 30-second preview" aria-label="Play a 30-second preview">▶</span>` : ''}
+        ${String(a.collectionId).indexOf('mbg-') !== 0 ? `<span class="preview-btn" data-preview="albs:${escapeAttr(a.collectionId)}" title="Play the first track as a 30-second preview" aria-label="Play a 30-second preview">â–¶</span>` : ''}
       </button>
     `).join('');
 }
@@ -9262,7 +9094,7 @@ window.albumPreviewSong = async function(id){
 };
 async function selectItunesAlbum(collectionId){
   const wrap = document.getElementById('albumSearchResults');
-  wrap.innerHTML = '<p class="profile-empty-note">Loading album…</p>';
+  wrap.innerHTML = '<p class="profile-empty-note">Loading albumâ€¦</p>';
   try{
     let albumInfo, tracks;
     if(String(collectionId).indexOf('mbg-') === 0){
@@ -9310,7 +9142,7 @@ async function renderSongSearchResults(query){
   const q = query.trim();
   if(!q){ wrap.style.display = 'none'; wrap.innerHTML = ''; return; }
   wrap.style.display = 'block';
-  wrap.innerHTML = '<p class="profile-empty-note">Searching…</p>';
+  wrap.innerHTML = '<p class="profile-empty-note">Searchingâ€¦</p>';
   let results;
   try{
     results = await searchItunes(q, 'song', 8);
@@ -9332,9 +9164,9 @@ async function renderSongSearchResults(query){
       ${t.artworkUrl100 ? `<img src="${t.artworkUrl100}">` : `<span class="drow-fallback">${escapeHtml((t.trackName||'?').charAt(0).toUpperCase())}</span>`}
       <span>
         <span class="drow-name">${escapeHtml(t.trackName||'Untitled')}</span><br>
-        <span class="drow-bio">${escapeHtml(t.artistName||'')}${t.collectionName ? ' · '+escapeHtml(t.collectionName) : ''}</span>
+        <span class="drow-bio">${escapeHtml(t.artistName||'')}${t.collectionName ? ' Â· '+escapeHtml(t.collectionName) : ''}</span>
       </span>
-      <span class="preview-btn" data-preview="songsearch:${i}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</span>
+      <span class="preview-btn" data-preview="songsearch:${i}" title="Play a 30-second preview" aria-label="Play 30-second preview">â–¶</span>
     </button>
   `).join('');
 }
@@ -9373,7 +9205,7 @@ document.getElementById('songSearchResults').addEventListener('click', e=>{
 
 document.getElementById('resetCatalogueBtn').addEventListener('click', ()=>{
   trackEvent('reset_catalogue');
-  const ok = confirm("Reset your cataloguex back to the built-in examples? This will delete every song and person you've added, along with all the details you've put in — tiers, notes, tags, and everything else. This can't be undone.");
+  const ok = confirm("Reset your cataloguex back to the built-in examples? This will delete every song and person you've added, along with all the details you've put in â€” tiers, notes, tags, and everything else. This can't be undone.");
   if(!ok) return;
   songs = [];
   people = [];
@@ -9454,7 +9286,7 @@ function renderMyProfileView(){
   loadMyProfileSotdCount();
 }
 function pinnedSongs(list){
-  return (list || []).filter(s=>s.tier === '★' && !s.archived);
+  return (list || []).filter(s=>s.tier === 'â˜…' && !s.archived);
 }
 function obsessedChipHtml(s){
   const cover = s.coverArt
@@ -9508,31 +9340,31 @@ function catalogueBadgeStats(list){
     total: all.length,
     sCount: all.filter(s=>s.tier==='S').length,
     aCount: all.filter(s=>s.tier==='A').length,
-    pinnedCount: all.filter(s=>s.tier==='★').length,
+    pinnedCount: all.filter(s=>s.tier==='â˜…').length,
     tiersFilled: TIERS.filter(t=>all.some(s=>s.tier===t)).length
   };
 }
 function badgeDefs(){
   return [
-    { id:'first-song',    icon:'🎧', label:'First song logged',      check:c=>c.total>=1 },
-    { id:'songs-10',      icon:'🔟', label:'10 songs logged',        check:c=>c.total>=10 },
-    { id:'songs-25',      icon:'📀', label:'25 songs logged',        check:c=>c.total>=25 },
-    { id:'songs-50',      icon:'🎶', label:'50 songs logged',        check:c=>c.total>=50 },
-    { id:'songs-100',     icon:'💿', label:'100 songs logged',       check:c=>c.total>=100 },
-    { id:'songs-250',     icon:'🥉', label:'250 songs logged',       check:c=>c.total>=250 },
-    { id:'songs-500',     icon:'🥈', label:'500 songs logged',       check:c=>c.total>=500 },
-    { id:'songs-1000',    icon:'🏆', label:'1000 songs logged',      check:c=>c.total>=1000 },
-    { id:'first-s-tier',  icon:'⭐', label:'First S-tier',            check:c=>c.sCount>=1 },
-    { id:'first-a-tier',  icon:'✨', label:'First A-tier',            check:c=>c.aCount>=1 },
-    { id:'first-favorite',icon:'💖', label:'First favorite',          check:c=>c.pinnedCount>=1 },
-    { id:'all-tiers',     icon:'🌈', label:'Filled every tier',       check:c=>c.tiersFilled===5 }
+    { id:'first-song',    icon:'ðŸŽ§', label:'First song logged',      check:c=>c.total>=1 },
+    { id:'songs-10',      icon:'ðŸ”Ÿ', label:'10 songs logged',        check:c=>c.total>=10 },
+    { id:'songs-25',      icon:'ðŸ“€', label:'25 songs logged',        check:c=>c.total>=25 },
+    { id:'songs-50',      icon:'ðŸŽ¶', label:'50 songs logged',        check:c=>c.total>=50 },
+    { id:'songs-100',     icon:'ðŸ’¿', label:'100 songs logged',       check:c=>c.total>=100 },
+    { id:'songs-250',     icon:'ðŸ¥‰', label:'250 songs logged',       check:c=>c.total>=250 },
+    { id:'songs-500',     icon:'ðŸ¥ˆ', label:'500 songs logged',       check:c=>c.total>=500 },
+    { id:'songs-1000',    icon:'ðŸ†', label:'1000 songs logged',      check:c=>c.total>=1000 },
+    { id:'first-s-tier',  icon:'â­', label:'First S-tier',            check:c=>c.sCount>=1 },
+    { id:'first-a-tier',  icon:'âœ¨', label:'First A-tier',            check:c=>c.aCount>=1 },
+    { id:'first-favorite',icon:'ðŸ’–', label:'First favorite',          check:c=>c.pinnedCount>=1 },
+    { id:'all-tiers',     icon:'ðŸŒˆ', label:'Filled every tier',       check:c=>c.tiersFilled===5 }
   ];
 }
 function badgeChipsHtml(list){
   const c = catalogueBadgeStats(list);
   return badgeDefs().map(b=>{
     const earned = b.check(c);
-    return `<span class="badge-chip${earned ? '' : ' locked'}" title="${escapeAttr(b.label)}${earned ? '' : ' — not yet earned'}">${b.icon} ${escapeHtml(b.label)}</span>`;
+    return `<span class="badge-chip${earned ? '' : ' locked'}" title="${escapeAttr(b.label)}${earned ? '' : ' â€” not yet earned'}">${b.icon} ${escapeHtml(b.label)}</span>`;
   }).join('');
 }
 function todayDateStr(){
@@ -9552,7 +9384,7 @@ async function loadMyProfileSotdCount(){
   if(!el || !sb || !currentUserId) return;
   const stats = await loadSotdReactionStats(currentUserId);
   if(!stats || stats.count === 0){ el.style.display = 'none'; return; }
-  el.textContent = '🎵 Reacted to ' + stats.count + (stats.count === 1 ? ' song' : ' songs') + ' of the day · 🔥 ' + stats.current + '-day streak' + (stats.best > stats.current ? ' (best ' + stats.best + ')' : '');
+  el.textContent = 'ðŸŽµ Reacted to ' + stats.count + (stats.count === 1 ? ' song' : ' songs') + ' of the day Â· ðŸ”¥ ' + stats.current + '-day streak' + (stats.best > stats.current ? ' (best ' + stats.best + ')' : '');
   el.style.display = '';
 }
 
@@ -9576,7 +9408,7 @@ document.getElementById('shareProfileBtn').addEventListener('click', ()=>{
     if(wrap){
       const el = document.createElement('div');
       el.className = 'toast';
-      el.innerHTML = '<span class="toast-icon">🔗</span><div class="toast-body"><b>Profile link copied to clipboard!</b></div>';
+      el.innerHTML = '<span class="toast-icon">ðŸ”—</span><div class="toast-body"><b>Profile link copied to clipboard!</b></div>';
       wrap.appendChild(el);
       setTimeout(()=>{ el.style.opacity='0'; el.style.transition='opacity 0.3s'; setTimeout(()=>el.remove(), 300); }, 3000);
     }
@@ -9664,7 +9496,7 @@ document.getElementById('editProfileSaveBtn').addEventListener('click', async ()
   if(!username){ errEl.textContent = 'Choose a username (letters, numbers, _ and . only).'; errEl.style.display=''; return; }
   const error = await upsertMyProfile({ username, bio, photo: currentEditProfilePhoto });
   if(error){
-    errEl.textContent = (error.code === '23505') ? 'That username is taken — try another.' : error.message;
+    errEl.textContent = (error.code === '23505') ? 'That username is taken â€” try another.' : error.message;
     errEl.style.display = '';
     return;
   }
@@ -9689,7 +9521,7 @@ document.getElementById('onboardingSaveBtn').addEventListener('click', async ()=
   if(!username){ errEl.textContent = 'Choose a username (letters, numbers, _ and . only).'; errEl.style.display=''; return; }
   const error = await upsertMyProfile({ username, bio, photo: currentOnboardingPhoto });
   if(error){
-    errEl.textContent = (error.code === '23505') ? 'That username is taken — try another.' : error.message;
+    errEl.textContent = (error.code === '23505') ? 'That username is taken â€” try another.' : error.message;
     errEl.style.display = '';
     return;
   }
@@ -9735,7 +9567,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
 
 <script>
 /* ================= FRIENDS-ONLY MESSAGING =================
-   Backend setup — run once in the Supabase dashboard (SQL Editor).
+   Backend setup â€” run once in the Supabase dashboard (SQL Editor).
    Safe to re-run anytime: it never drops the table (dropping it DELETES
    every message), and it drops policies before recreating them.
      create table if not exists public.messages (
@@ -9852,13 +9684,13 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
   }
   async function openMessagesModal(){
     document.getElementById('messagesOverlay').classList.add('open');
-    document.getElementById('msgFriendList').innerHTML = '<div class="msg-no-friends">Loading…</div>';
+    document.getElementById('msgFriendList').innerHTML = '<div class="msg-no-friends">Loadingâ€¦</div>';
     const now = new Date().toISOString();
     const rows = await fetchMyFriendRows();
     processFriendRows(rows);
     const ids = [...myFriendIds];
     if(ids.length === 0){
-      document.getElementById('msgFriendList').innerHTML = '<div class="msg-no-friends">No friends yet.<br>Add friends in 🔎 Discover to start messaging.</div>';
+      document.getElementById('msgFriendList').innerHTML = '<div class="msg-no-friends">No friends yet.<br>Add friends in ðŸ”Ž Discover to start messaging.</div>';
       document.getElementById('msgConvHeader').textContent = 'No friends yet';
       document.getElementById('msgThread').innerHTML = '';
       return;
@@ -9903,12 +9735,12 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
         <span class="msg-song-artist">${escapeHtml(song.artist || '')}</span>
         <span class="msg-song-album">${escapeHtml(song.album || '')}</span>
       </span>
-      <span class="preview-btn" data-preview="msg:${escapeAttr(msgId)}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</span>
+      <span class="preview-btn" data-preview="msg:${escapeAttr(msgId)}" title="Play a 30-second preview" aria-label="Play 30-second preview">â–¶</span>
     </a>`;
   }
   async function loadMsgThread(friendId){
     const thread = document.getElementById('msgThread');
-    thread.innerHTML = '<p class="msg-empty">Loading…</p>';
+    thread.innerHTML = '<p class="msg-empty">Loadingâ€¦</p>';
     const { data, error } = await sb
       .from('messages')
       .select('id, sender_id, content, song, created_at')
@@ -9918,7 +9750,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
     if(error){ console.error('Error loading messages:', error); thread.innerHTML = '<p class="msg-empty">Could not load messages.</p>'; showMsgError('Could not load your messages: ' + error.message); return; }
     showMsgError('');
     const msgs = (data || []).slice().reverse();
-    if(msgs.length === 0){ thread.innerHTML = '<p class="msg-empty">No messages yet — send a song recommendation!</p>'; return; }
+    if(msgs.length === 0){ thread.innerHTML = '<p class="msg-empty">No messages yet â€” send a song recommendation!</p>'; return; }
     msgThreadSongCache = {};
     msgs.forEach(m=>{ if(m.song) msgThreadSongCache[m.id] = m.song; });
     thread.innerHTML = msgs.map(renderMsgBubble).join('');
@@ -9936,7 +9768,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
         <div class="msg-pending-title">${escapeHtml(song.title || 'Unknown song')}</div>
         <div class="msg-pending-artist">${escapeHtml(song.artist || '')}</div>
       </div>
-      <button type="button" class="msg-pending-x" id="msgPendingX" title="Remove">✕</button>
+      <button type="button" class="msg-pending-x" id="msgPendingX" title="Remove">âœ•</button>
     </div>`;
     document.getElementById('msgPendingX').addEventListener('click', ()=>{ setMsgPendingSong(null); });
   }
@@ -9963,7 +9795,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
     btn.disabled = false;
     if(error){
       console.error('Error sending message:', error);
-      showMsgError('Could not send your message: ' + error.message + ' — the message was not saved.');
+      showMsgError('Could not send your message: ' + error.message + ' â€” the message was not saved.');
       return;
     }
     showMsgError('');
@@ -9980,7 +9812,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
   async function renderMsgSongResults(query){
     const wrap = document.getElementById('msgSongResults');
     if(!query.trim()){ wrap.innerHTML = '<p class="msg-empty">Search to find a song to recommend.</p>'; return; }
-    wrap.innerHTML = '<p class="msg-empty">Searching…</p>';
+    wrap.innerHTML = '<p class="msg-empty">Searchingâ€¦</p>';
     let results = [];
     try{ results = await searchItunes(query, 'song', 8); }catch(e){ results = []; }
     if(!results || results.length === 0){
@@ -9990,14 +9822,14 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
     if(msgSongResultsCache.length === 0){ wrap.innerHTML = '<p class="msg-empty">No songs found.</p>'; return; }
     wrap.innerHTML = msgSongResultsCache.map((r, i)=>{
       const cover = r.artworkUrl100 ? `<img src="${escapeAttr(upscaleArtwork(r.artworkUrl100))}" alt="">` : '';
-      const artist = r.collectionName ? `${escapeHtml(r.artistName || '')} · ${escapeHtml(r.collectionName)}` : escapeHtml(r.artistName || '');
+      const artist = r.collectionName ? `${escapeHtml(r.artistName || '')} Â· ${escapeHtml(r.collectionName)}` : escapeHtml(r.artistName || '');
       return `<button type="button" class="msg-song-result" data-msg-song-index="${i}">
         ${cover}
         <span class="msg-song-result-meta">
           <span class="msg-song-result-title">${escapeHtml(r.trackName || 'Unknown')}</span>
           <span class="msg-song-result-artist">${artist}</span>
         </span>
-        <span class="preview-btn" data-preview="msgrec:${i}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</span>
+        <span class="preview-btn" data-preview="msgrec:${i}" title="Play a 30-second preview" aria-label="Play 30-second preview">â–¶</span>
       </button>`;
     }).join('');
   }
@@ -10077,7 +9909,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
 <div class="sotd-dock" id="sotdDock" style="display:none;"></div>
 <script>
 /* ================= SONG OF THE DAY =================
-   Backend setup — run once in the Supabase dashboard (SQL Editor):
+   Backend setup â€” run once in the Supabase dashboard (SQL Editor):
 
      create table if not exists public.song_of_the_day (
        song_date date primary key,
@@ -10146,7 +9978,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
       create policy "feedr_delete" on public.feed_reactions for delete using (reactor_id = auth.uid());
 */
 (function(){
-  const SOTD_EMOJIS = ['👍','👎','❤️','🔥','😮','😂','😢','🎉','💯'];
+  const SOTD_EMOJIS = ['ðŸ‘','ðŸ‘Ž','â¤ï¸','ðŸ”¥','ðŸ˜®','ðŸ˜‚','ðŸ˜¢','ðŸŽ‰','ðŸ’¯'];
   const SOTD_RANDOM_TERMS = ['summer','love','forever','night','heart','dream','stars','golden','honey','waves','midnight','highway','shine','wild','city'];
   let sotdSong = null;
   let sotdPickedBy = null;
@@ -10244,7 +10076,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
     if(!wrap) return;
     const el = document.createElement('div');
     el.className = 'toast';
-    el.innerHTML = `<span class="toast-icon">🔥</span><div class="toast-body"><b>${escapeHtml(n.message || 'Someone reacted to the song of the day')}</b></div>`;
+    el.innerHTML = `<span class="toast-icon">ðŸ”¥</span><div class="toast-body"><b>${escapeHtml(n.message || 'Someone reacted to the song of the day')}</b></div>`;
     el.addEventListener('click', ()=>{
       if(el.parentNode) el.remove();
       if(!sotdOpen) sotdToggle();
@@ -10326,7 +10158,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
       if(!best) best = hits.find(r=> r.previewUrl && wantArtist && String(r.artistName||'').trim().toLowerCase() === wantArtist);
       if(!best) best = hits.find(r=> r.previewUrl);
       if(!best){
-        console.warn('SOTD migration: no Apple Music match for "' + (old.title || '?') + '" — leaving link as-is');
+        console.warn('SOTD migration: no Apple Music match for "' + (old.title || '?') + '" â€” leaving link as-is');
         continue;
       }
       const fresh = sotdMapItunes(best);
@@ -10335,7 +10167,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
       if(res.error){
         console.error('SOTD migration: error re-linking song of the day:', res.error);
       } else {
-        console.log('SOTD migration: re-linked ' + row.song_date + ' → ' + fresh.title + ' (Apple Music + preview)');
+        console.log('SOTD migration: re-linked ' + row.song_date + ' â†’ ' + fresh.title + ' (Apple Music + preview)');
       }
       await new Promise(r2 => setTimeout(r2, 1100));
     }
@@ -10377,7 +10209,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
     try{ song = await sotdRandomSong(); }catch(e){ song = null; }
     sotdLoading = false;
     if(!song){
-      renderSotdDock({ error: "Couldn't find a song right now — try again in a moment." });
+      renderSotdDock({ error: "Couldn't find a song right now â€” try again in a moment." });
       return;
     }
     const { error } = await sb.from('song_of_the_day').upsert(
@@ -10429,7 +10261,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
     if(extra && extra.picking){
       if(sotdOpen){
         dock.style.display = '';
-        dock.innerHTML = '<div class="sotd-empty">Picking today\'s song…</div>';
+        dock.innerHTML = '<div class="sotd-empty">Picking today\'s songâ€¦</div>';
       }
       return;
     }
@@ -10459,14 +10291,14 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
         </span>`;
       }).join('');
     } else {
-      reactionsHtml = '<span class="sotd-empty">No reactions yet — be the first!</span>';
+      reactionsHtml = '<span class="sotd-empty">No reactions yet â€” be the first!</span>';
     }
     const cover = sotdSong.cover
       ? `<img class="sotd-cover" src="${escapeAttr(sotdSong.cover)}" alt="">`
-      : `<span class="sotd-cover" style="display:flex;align-items:center;justify-content:center;font-size:20px;">🎵</span>`;
-    const link = sotdSong.url ? `<a class="sotd-link" href="${escapeAttr(sotdSong.url)}" target="_blank" rel="noopener">Open ↗</a>` : '';
+      : `<span class="sotd-cover" style="display:flex;align-items:center;justify-content:center;font-size:20px;">ðŸŽµ</span>`;
+    const link = sotdSong.url ? `<a class="sotd-link" href="${escapeAttr(sotdSong.url)}" target="_blank" rel="noopener">Open â†—</a>` : '';
     const streakHtml = (sotdCurrentStreak > 0 || sotdBestStreak > 0)
-      ? `<div class="sotd-streak${mine ? '' : ' at-risk'}" title="${mine ? 'Streak for reacting to the song of the day' : 'React today to keep your ' + sotdCurrentStreak + '-day streak going'}">🔥 <b>${sotdCurrentStreak}</b>-day streak${sotdBestStreak > sotdCurrentStreak ? ` <span class="sotd-streak-best">best ${sotdBestStreak}</span>` : ''}</div>`
+      ? `<div class="sotd-streak${mine ? '' : ' at-risk'}" title="${mine ? 'Streak for reacting to the song of the day' : 'React today to keep your ' + sotdCurrentStreak + '-day streak going'}">ðŸ”¥ <b>${sotdCurrentStreak}</b>-day streak${sotdBestStreak > sotdCurrentStreak ? ` <span class="sotd-streak-best">best ${sotdBestStreak}</span>` : ''}</div>`
       : '';
     dock.innerHTML = `
       <div class="sotd-dock-head">
@@ -10477,7 +10309,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
           <div class="sotd-artist">${escapeHtml(sotdSong.artist || '')}</div>
         </div>
         <div class="sotd-preview">
-          <button type="button" class="preview-btn" data-preview="sotd" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>
+          <button type="button" class="preview-btn" data-preview="sotd" title="Play a 30-second preview" aria-label="Play 30-second preview">â–¶</button>
           <span class="preview-hint">30-sec preview</span>
         </div>
         ${link}
@@ -10485,8 +10317,8 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
       ${streakHtml}
       <div class="sotd-emojis">${emojiHtml}</div>
       <div class="sotd-reactions"><span class="sotd-reactions-label">Reactions</span>${reactionsHtml}</div>
-      <button type="button" class="sotd-prev-btn" data-sotd-history>📜 Previous SOTDs</button>
-      ${(myProfile && myProfile.username === 'samannleblanc') ? '<button type="button" class="theme-btn sotd-schedule-inline-btn" data-sotd-schedule style="margin-top:10px;width:100%;">📅 Schedule Week</button>' : ''}`;
+      <button type="button" class="sotd-prev-btn" data-sotd-history>ðŸ“œ Previous SOTDs</button>
+      ${(myProfile && myProfile.username === 'samannleblanc') ? '<button type="button" class="theme-btn sotd-schedule-inline-btn" data-sotd-schedule style="margin-top:10px;width:100%;">ðŸ“… Schedule Week</button>' : ''}`;
     dock.style.display = sotdOpen ? '' : 'none';
   }
   function sotdToggle(){
@@ -10580,7 +10412,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
      const countEl = document.getElementById('sotdHistoryCount');
      if(!listEl) return;
      if(!sotdHistoryData){
-       listEl.innerHTML = '<div class="sotd-history-empty">Loading…</div>';
+       listEl.innerHTML = '<div class="sotd-history-empty">Loadingâ€¦</div>';
        countEl.textContent = '';
        return;
      }
@@ -10614,9 +10446,9 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
        const song = item.song || {};
        const cover = song.cover
          ? `<img class="sotd-history-cover" src="${escapeAttr(song.cover)}" alt="">`
-         : `<span class="sotd-history-cover-fallback">🎵</span>`;
+         : `<span class="sotd-history-cover-fallback">ðŸŽµ</span>`;
        const link = song.url
-         ? `<a class="sotd-history-link" href="${escapeAttr(song.url)}" target="_blank" rel="noopener">Open ↗</a>`
+         ? `<a class="sotd-history-link" href="${escapeAttr(song.url)}" target="_blank" rel="noopener">Open â†—</a>`
          : '';
        let reactionsHtml;
        if(item.reactions.length > 0){
@@ -10754,7 +10586,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
 /* ================= SONG OF THE DAY: WEEKLY SCHEDULER =================
    Admin-only tool (samannleblanc) to set the song of the day for the
    next 7 days ahead of time. Uses the same song_of_the_day table as
-   the main Song of the Day feature — no new backend setup needed. */
+   the main Song of the Day feature â€” no new backend setup needed. */
 (function(){
   let scheduleDays = [];       // [{date, song, pickedBy}]
   let searchState = {};        // date -> { term, results, loading, error }
@@ -10814,7 +10646,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
     const list = document.getElementById('sotdScheduleList');
     if(!list) return;
     if(opts && opts.loading){
-      list.innerHTML = '<div class="sotd-empty">Loading the weekly schedule…</div>';
+      list.innerHTML = '<div class="sotd-empty">Loading the weekly scheduleâ€¦</div>';
       return;
     }
     list.innerHTML = scheduleDays.map((day, idx)=>{
@@ -10822,7 +10654,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
       const song = day.song;
       const currentHtml = song
         ? `<div class="sotd-dock-head" style="margin-bottom:8px;">
-            ${song.cover ? `<img class="sotd-cover" src="${escapeAttr(song.cover)}" alt="">` : '<span class="sotd-cover" style="display:flex;align-items:center;justify-content:center;font-size:18px;">🎵</span>'}
+            ${song.cover ? `<img class="sotd-cover" src="${escapeAttr(song.cover)}" alt="">` : '<span class="sotd-cover" style="display:flex;align-items:center;justify-content:center;font-size:18px;">ðŸŽµ</span>'}
             <div class="sotd-meta">
               <div class="sotd-title">${escapeHtml(song.title || 'Unknown song')}</div>
               <div class="sotd-artist">${escapeHtml(song.artist || '')}</div>
@@ -10832,7 +10664,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
         : '<div class="sotd-empty" style="margin-bottom:8px;">No song set for this day yet.</div>';
       let resultsHtml = '';
       if(st.loading){
-        resultsHtml = '<div class="sotd-empty">Searching…</div>';
+        resultsHtml = '<div class="sotd-empty">Searchingâ€¦</div>';
       } else if(st.error){
         resultsHtml = `<div class="sotd-empty">${escapeHtml(st.error)}</div>`;
       } else if(st.results && st.results.length){
@@ -10851,7 +10683,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
         <label>${escapeHtml(schedDateLabel(day.date, idx))}</label>
         ${currentHtml}
         <div style="display:flex;gap:8px;">
-          <input type="text" placeholder="Search for a song…" data-sched-input="${day.date}" value="${escapeAttr(st.term || '')}">
+          <input type="text" placeholder="Search for a songâ€¦" data-sched-input="${day.date}" value="${escapeAttr(st.term || '')}">
           <button type="button" class="btn-save" data-sched-search="${day.date}" style="white-space:nowrap;">Search</button>
         </div>
         ${resultsHtml}
@@ -10869,10 +10701,10 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
       const results = await searchItunes(term, 'song', 6);
       searchState[date] = { term, results: results || [] };
       if(!results || results.length === 0){
-        searchState[date].error = 'No songs found — try a different search.';
+        searchState[date].error = 'No songs found â€” try a different search.';
       }
     }catch(e){
-      searchState[date] = { term, error: "Couldn't search right now — try again." };
+      searchState[date] = { term, error: "Couldn't search right now â€” try again." };
     }
     renderScheduler();
   }
@@ -10887,7 +10719,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
       { onConflict: 'song_date' }
     );
     if(error){
-      searchState[date] = { term: st.term, error: "Couldn't save that song — try again." };
+      searchState[date] = { term: st.term, error: "Couldn't save that song â€” try again." };
       renderScheduler();
       return;
     }
@@ -10947,7 +10779,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
 </script>
 <script>
 /* ---- NOTIFICATIONS FEED ---- */
-const NOTIF_ICONS = { sotd_reaction:'🔥', friend_request:'👤', friend_accept:'🤝', badge:'🏆', message:'💬', song_recommend:'🎵', feed_reaction:'✨' };
+const NOTIF_ICONS = { sotd_reaction:'ðŸ”¥', friend_request:'ðŸ‘¤', friend_accept:'ðŸ¤', badge:'ðŸ†', message:'ðŸ’¬', song_recommend:'ðŸŽµ', feed_reaction:'âœ¨' };
 let notifUnreadCount = 0;
 
 function notifTimeAgo(ts){
@@ -10988,7 +10820,7 @@ async function loadNotifications(){
     return;
   }
   list.innerHTML = data.map(n=>{
-    const icon = NOTIF_ICONS[n.type] || '🔔';
+    const icon = NOTIF_ICONS[n.type] || 'ðŸ””';
     const unreadCls = n.read_at ? '' : ' unread';
     const dot = n.read_at ? '' : '<span class="notif-dot"></span>';
     return `<div class="notif-item${unreadCls}" data-notif-id="${n.id}">
@@ -11033,7 +10865,7 @@ document.getElementById('notifOverlay').addEventListener('click', e=>{
 document.getElementById('notifMarkReadBtn').addEventListener('click', ()=>{ trackEvent('mark_all_read'); markAllNotifsRead(); });
 
 /* ---- FRIEND ACTIVITY FEED ---- */
-const FEED_REACTION_EMOJIS = ['🔥','❤️','🤯','😎','😭','💯'];
+const FEED_REACTION_EMOJIS = ['ðŸ”¥','â¤ï¸','ðŸ¤¯','ðŸ˜Ž','ðŸ˜­','ðŸ’¯'];
 function feedCardHtml(entry){
   const s = entry.song;
   const who = entry.who;
@@ -11078,7 +10910,7 @@ function feedCardHtml(entry){
         ${cover}
         <div class="feed-card-info">
           <div class="feed-card-title">${escapeHtml(s.title || 'Untitled')}</div>
-          <div class="feed-card-artist">${escapeHtml(formatArtists(s.artists))}${s.album ? ' · ' + escapeHtml(s.album) : ''}</div>
+          <div class="feed-card-artist">${escapeHtml(formatArtists(s.artists))}${s.album ? ' Â· ' + escapeHtml(s.album) : ''}</div>
           <div class="feed-card-tier">${tierBadge}</div>
           ${why}
           ${reminds}
@@ -11094,7 +10926,7 @@ async function loadFeed(){
   const list = document.getElementById('feedList');
   const countEl = document.getElementById('feedCount');
   if(!list) return;
-  list.innerHTML = '<div class="feed-empty">Loading…</div>';
+  list.innerHTML = '<div class="feed-empty">Loadingâ€¦</div>';
   const cutoff = Date.now() - mixtapeDays*86400000;
   const friendIds = [...myFriendIds];
   const results = await Promise.all(friendIds.slice(0,25).map(async id=>{
@@ -11128,7 +10960,7 @@ async function loadFeed(){
   }
   const windowLabel = mixtapeDays === 7 ? 'week' : 'month';
   const friendCount = results.flat().length;
-  const friendNote = friendCount === 0 ? ' · No friends have added songs yet' : ' · '+friendCount+' from '+friendIds.length+' friend'+(friendIds.length===1?'':'s');
+  const friendNote = friendCount === 0 ? ' Â· No friends have added songs yet' : ' Â· '+friendCount+' from '+friendIds.length+' friend'+(friendIds.length===1?'':'s');
   if(countEl) countEl.textContent = `${all.length} song${all.length===1?'':'s'} in the last ${windowLabel}${friendNote}`;
   if(all.length === 0){
     list.innerHTML = '<div class="feed-empty">Nothing new in the last ' + (mixtapeDays===7?'7 days':'30 days') + ' yet. Add some music or tell a friend to!</div>';
@@ -11229,20 +11061,6 @@ document.getElementById('feedCloseBtn').addEventListener('click', ()=>{
 document.getElementById('feedOverlay').addEventListener('click', e=>{
   if(e.target.id === 'feedOverlay') document.getElementById('feedOverlay').classList.remove('open');
 });
-document.getElementById('walkthroughBtn').addEventListener('click', ()=>{
-  trackEvent('open_walkthrough');
-  document.getElementById('walkthroughOverlay').classList.add('open');
-});
-document.getElementById('walkthroughCloseBtn').addEventListener('click', ()=>{
-  document.getElementById('walkthroughOverlay').classList.remove('open');
-  document.getElementById('walkthroughVideo').src = document.getElementById('walkthroughVideo').src;
-});
-document.getElementById('walkthroughOverlay').addEventListener('click', e=>{
-  if(e.target.id === 'walkthroughOverlay'){
-    e.currentTarget.classList.remove('open');
-    document.getElementById('walkthroughVideo').src = document.getElementById('walkthroughVideo').src;
-  }
-});
 
 /* ---- ANALYTICS CONSENT ---- */
 const ANALYTICS_CONSENT_KEY = 'tonic-analytics-consent';
@@ -11270,205 +11088,6 @@ if(getAnalyticsConsent() === 'rejected'){
   window.trackEvent = function(){};
 }
 
-/* ---- GUIDED TOUR ---- */
-const TOUR_KEY = 'tonic-tour-seen-v4';
-function tourSeen(){ return localStorage.getItem(TOUR_KEY); }
-function tourMarkSeen(){ localStorage.setItem(TOUR_KEY, '1'); }
-
-const TOUR_STEPS = [
-  {
-    target: '#openAddMusic',
-    title: 'Add your first song',
-    desc: 'Search Apple Music to pull in tracks, art, and artists — or add them manually. Every track becomes its own entry in your catalogue.',
-    position: 'bottom'
-  },
-  {
-    target: '#search',
-    title: 'Search your catalogue',
-    desc: 'Find any song in your collection by title, artist, or tag. Filters narrow it down fast.',
-    position: 'bottom'
-  },
-  {
-    target: '#toggleTierBoard',
-    title: 'Tier board',
-    desc: 'Rank every song into tiers — ★, S, A, B, or C. Drag and drop to organize your taste at a glance.',
-    position: 'bottom'
-  },
-  {
-    target: '.pin-btn',
-    title: 'Currently obsessed with',
-    desc: 'Tap the heart on any song to mark it as a current obsession. These show up front and center on your profile.',
-    position: 'left',
-    perCard: true
-  },
-  {
-    target: '#feedBtn',
-    title: 'The feed',
-    desc: 'See what your friends are adding. Click any song to add it straight to your own catalogue.',
-    position: 'bottom'
-  },
-  {
-    target: '#statsBtn',
-    title: 'Stats & charts',
-    desc: 'Visual breakdowns of your taste — tier distribution, top genres, songs added over time.',
-    position: 'bottom'
-  },
-  {
-    target: '#themeBtn',
-    title: 'Customize your theme',
-    desc: 'Pick from presets or build your own palette. Your theme shows up on your shared cards too.',
-    position: 'bottom'
-  },
-  {
-    target: '#toggleWishlist',
-    title: 'Songs I Wish I Wrote',
-    desc: 'A dedicated space for songs you love so much you wish you wrote them yourself.',
-    position: 'bottom'
-  }
-];
-
-let tourStepIndex = -1;
-const backdrop = document.getElementById('tourBackdrop');
-const highlight = document.getElementById('tourHighlight');
-const arrow = document.getElementById('tourArrow');
-const tooltip = document.getElementById('tourTooltip');
-const stepLabel = document.getElementById('tourStepLabel');
-const tourTitle = document.getElementById('tourTitle');
-const tourDesc = document.getElementById('tourDesc');
-const tourDots = document.getElementById('tourDots');
-
-function startTour(){
-  console.log('[TOUR] startTour called, steps:', TOUR_STEPS.length);
-  tourStepIndex = 0;
-  backdrop.classList.add('open');
-  renderTourDots();
-  showTourStep();
-}
-
-function endTour(){
-  backdrop.classList.remove('open');
-  highlight.style.display = 'none';
-  arrow.style.display = 'none';
-  tooltip.style.display = 'none';
-  tourMarkSeen();
-  trackEvent('complete_tour');
-}
-
-function renderTourDots(){
-  tourDots.innerHTML = TOUR_STEPS.map((_,i) =>
-    `<div class="tour-dot${i < tourStepIndex ? ' done' : ''}${i === tourStepIndex ? ' active' : ''}"></div>`
-  ).join('');
-}
-
-function showTourStep(){
-  if(tourStepIndex >= TOUR_STEPS.length){ endTour(); return; }
-  const step = TOUR_STEPS[tourStepIndex];
-
-  let el = null;
-  if(step.perCard){
-    const cards = document.querySelectorAll('.card');
-    if(cards.length === 0){ tourStepIndex++; showTourStep(); return; }
-    el = cards[0].querySelector(step.target);
-    if(!el){ el = cards[0].querySelector('.card-top'); }
-  } else {
-    el = document.querySelector(step.target);
-  }
-  if(!el){ tourStepIndex++; showTourStep(); return; }
-  const elRect = el.getBoundingClientRect();
-  if(elRect.width === 0 && elRect.height === 0){ tourStepIndex++; showTourStep(); return; }
-
-  const rect = el.getBoundingClientRect();
-  const pad = 8;
-
-  highlight.style.display = '';
-  highlight.style.left = (rect.left - pad) + 'px';
-  highlight.style.top = (rect.top - pad) + 'px';
-  highlight.style.width = (rect.width + pad*2) + 'px';
-  highlight.style.height = (rect.height + pad*2) + 'px';
-
-  stepLabel.textContent = 'Step ' + (tourStepIndex + 1) + ' of ' + TOUR_STEPS.length;
-  tourTitle.textContent = step.title;
-  tourDesc.textContent = step.desc;
-
-  const btn = document.getElementById('tourNextBtn');
-  btn.textContent = tourStepIndex === TOUR_STEPS.length - 1 ? 'Got it!' : 'Next';
-
-  tooltip.style.display = '';
-  arrow.style.display = '';
-
-  positionTooltip(rect, step.position);
-
-  renderTourDots();
-  trackEvent('tour_step', { step: tourStepIndex });
-}
-
-function positionTooltip(targetRect, pos){
-  const tw = Math.min(320, window.innerWidth - 40);
-  const gap = 14;
-
-  let tipTop, tipLeft, arrowTop, arrowLeft;
-  let arrowClass;
-
-  tooltip.style.width = tw + 'px';
-  tooltip.style.left = '0px';
-  tooltip.style.top = '0px';
-  const tipRect = tooltip.getBoundingClientRect();
-
-  if(pos === 'bottom'){
-    arrowClass = 'arrow-bottom';
-    tipTop = targetRect.bottom + gap + 12;
-    tipLeft = Math.max(20, Math.min(targetRect.left + targetRect.width/2 - tw/2, window.innerWidth - tw - 20));
-    arrowTop = targetRect.bottom + gap + 2;
-    arrowLeft = targetRect.left + targetRect.width/2 - 10;
-  } else if(pos === 'top'){
-    arrowClass = 'arrow-top';
-    tipTop = targetRect.top - gap - tipRect.height - 12;
-    tipLeft = Math.max(20, Math.min(targetRect.left + targetRect.width/2 - tw/2, window.innerWidth - tw - 20));
-    arrowTop = targetRect.top - gap - 10;
-    arrowLeft = targetRect.left + targetRect.width/2 - 10;
-  } else if(pos === 'left'){
-    arrowClass = 'arrow-left';
-    tipTop = Math.max(20, Math.min(targetRect.top + targetRect.height/2 - tipRect.height/2, window.innerHeight - tipRect.height - 20));
-    tipLeft = targetRect.left - tw - gap - 18;
-    arrowTop = targetRect.top + targetRect.height/2 - 10;
-    arrowLeft = targetRect.left - gap - 8;
-  } else {
-    arrowClass = 'arrow-right';
-    tipTop = Math.max(20, Math.min(targetRect.top + targetRect.height/2 - tipRect.height/2, window.innerHeight - tipRect.height - 20));
-    tipLeft = targetRect.right + gap + 8;
-    arrowTop = targetRect.top + targetRect.height/2 - 10;
-    arrowLeft = targetRect.right + gap - 2;
-  }
-
-  if(tipTop < 10) tipTop = 10;
-  if(tipLeft < 10) tipLeft = 10;
-
-  tooltip.style.left = tipLeft + 'px';
-  tooltip.style.top = tipTop + 'px';
-
-  arrow.className = 'tour-arrow ' + arrowClass;
-  arrow.style.left = arrowLeft + 'px';
-  arrow.style.top = arrowTop + 'px';
-}
-
-document.getElementById('tourNextBtn').addEventListener('click', ()=>{
-  tourStepIndex++;
-  showTourStep();
-});
-document.getElementById('tourSkipBtn').addEventListener('click', ()=>{
-  endTour();
-});
-backdrop.addEventListener('click', (e)=>{
-  e.stopPropagation();
-});
-
-function maybeStartTour(){
-  console.log('[TOUR] maybeStartTour called, currentUserId:', currentUserId, 'tourSeen:', tourSeen());
-  if(!currentUserId) return;
-  if(tourSeen()) return;
-  console.log('[TOUR] starting tour in 1200ms');
-  setTimeout(()=>{ startTour(); }, 1200);
-}
 </script>
 <audio id="previewAudio" preload="none"></audio>
 <div id="analyticsConsentBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; background:var(--ink); border-top:1px solid rgba(238,221,149,0.15); padding:16px 24px; z-index:9999; font-family:'Space Grotesk',sans-serif;">
