@@ -19,7 +19,7 @@
     --paper-2:#e0d08c;
     --gold:#b4b9f3;
     --rose:#fd9f1c;
-    --teal:#272d82;
+    --teal:#ad0505;
     --line: rgba(18,20,28,0.15);
     --text-on-ink: #eedd95;
     --text-dim: rgba(238,221,149,0.6);
@@ -1488,6 +1488,10 @@
   .avatar-btn:hover{ border-color:var(--rose); }
   .avatar-btn img{ width:100%; height:100%; object-fit:cover; }
   .header-actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .header-actions .theme-btn:nth-child(odd){ border-color:var(--gold); }
+  .header-actions .theme-btn:nth-child(even){ border-color:var(--rose); }
+  .header-actions .theme-btn:nth-child(odd):hover{ border-color:var(--rose); color:var(--rose); }
+  .header-actions .theme-btn:nth-child(even):hover{ border-color:var(--gold); color:var(--gold); }
 
   .profile-header{
     display:flex;
@@ -3467,14 +3471,15 @@ function saveWishlist(){
 /* =========================================================
    THEME CUSTOMIZATION
    ========================================================= */
-const DEFAULT_THEME = { ink:'#12141c', paper:'#eedd95', gold:'#b4b9f3', rose:'#fd9f1c', teal:'#272d82' };
+const DEFAULT_THEME = { ink:'#12141c', paper:'#eedd95', gold:'#b4b9f3', rose:'#fd9f1c', teal:'#ad0505' };
+
 const THEME_PRESETS = [
-  { name:'Tonic (default)', colors: DEFAULT_THEME },
+  { name:'Red Accent', colors: DEFAULT_THEME },
+  { name:'Side A Personal Mixtape', colors: { ink:'#12141c', paper:'#eedd95', gold:'#b4b9f3', rose:'#fd9f1c', teal:'#b4b9f3' } },
   { name:'Forest', colors: { ink:'#1a2420', paper:'#eef1e6', gold:'#c9a24b', rose:'#b5654a', teal:'#4f8f6a' } },
   { name:'Sunset', colors: { ink:'#2a1a2e', paper:'#fdf0e4', gold:'#f0973b', rose:'#e0526f', teal:'#7a5ea8' } },
   { name:'Mono', colors: { ink:'#181818', paper:'#f2f0ec', gold:'#9a9a9a', rose:'#c96b6b', teal:'#6b96a0' } }
 ];
-
 function hexToRgb(hex){
   const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return m ? { r:parseInt(m[1],16), g:parseInt(m[2],16), b:parseInt(m[3],16) } : { r:0,g:0,b:0 };
@@ -4106,7 +4111,7 @@ document.getElementById('timeline').addEventListener('click', e=>{
 });
 
 /* ---- stats page ---- */
-const TIER_CHART_COLORS = { '★':'#b4b9f3', S:'#272d82', A:'#fd9f1c', B:'#eedd95', C:'#7a7468' };
+const TIER_CHART_COLORS = { '★':'#b4b9f3', S:'#ad0505', A:'#fd9f1c', B:'#eedd95', C:'#7a7468' };
 function statChartCanvas(id){
   const c = document.getElementById(id);
   const dpr = window.devicePixelRatio || 1;
@@ -4163,7 +4168,7 @@ function drawGenreChart(){
   const { ctx, w, h } = statChartCanvas('statGenreChart');
   ctx.clearRect(0,0,w,h);
   const cx = 92, cy = 95, R = 70;
-  const palette = ['#b4b9f3','#272d82','#fd9f1c','#12141c','#8b5e3c','#6aa84f','#a05aa0','#eedd95','#4a90b8','#888'];
+  const palette = ['#b4b9f3','#ad0505','#fd9f1c','#12141c','#8b5e3c','#6aa84f','#a05aa0','#eedd95','#4a90b8','#888'];
   let angle = -Math.PI/2;
   slices.forEach((e,i)=>{
     const frac = e[1]/total;
@@ -4608,7 +4613,7 @@ async function drawShareCard(opts){
     ctx.font = '500 21px "Space Grotesk", sans-serif';
     ctx.fillText(cardTruncate(ctx, formatArtists(s.artists), tw, ctx.font), tx, y + 52);
     const tier = s.tier || '';
-    const chipCol = { '★':'#b4b9f3', S:'#272d82', A:'#fd9f1c', B:'#eedd95', C:'#7a7468' }[tier] || '#eedd95';
+        const chipCol = { '★':'#b4b9f3', S:'#ad0505', A:'#fd9f1c', B:'#eedd95', C:'#7a7468' }[tier] || '#eedd95';
     ctx.fillStyle = chipCol;
     cardRoundRect(ctx, tx, y + 64, 46, 30, 8);
     ctx.fill();
