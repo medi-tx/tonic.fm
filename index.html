@@ -1462,6 +1462,14 @@
     color:var(--sage);
     margin:0 0 10px;
   }
+  .cb-toggle-row{ display:flex; align-items:center; justify-content:space-between; margin:0 0 16px; padding:10px 12px; background:var(--paper-2); border-radius:8px; border:1px solid var(--border); }
+  .cb-toggle-label{ font-size:13px; font-weight:600; color:var(--on-paper); }
+  .cb-toggle{ position:relative; width:40px; height:22px; }
+  .cb-toggle input{ opacity:0; width:0; height:0; }
+  .cb-toggle-track{ position:absolute; inset:0; background:rgba(var(--on-paper-rgb),0.2); border-radius:11px; cursor:pointer; transition:background .2s; }
+  .cb-toggle-track::after{ content:''; position:absolute; top:3px; left:3px; width:16px; height:16px; background:var(--paper); border-radius:50%; transition:transform .2s; }
+  .cb-toggle input:checked+.cb-toggle-track{ background:var(--ink); }
+  .cb-toggle input:checked+.cb-toggle-track::after{ transform:translateX(18px); }
   .theme-preset-btn.custom{ position:relative; padding-right:26px; }
   .theme-preset-x{
     position:absolute;
@@ -3170,6 +3178,11 @@
     <h3>Customize colors</h3>
     <p class="multi-hint">Changes preview live. They're saved to this browser, so they'll stick around next time you visit.</p>
 
+    <div class="cb-toggle-row" id="cbToggleRow">
+      <span class="cb-toggle-label">Colorblind mode</span>
+      <label class="cb-toggle"><input type="checkbox" id="cbToggle"><span class="cb-toggle-track"></span></label>
+    </div>
+
     <p class="theme-section-label">Presets</p>
     <div class="theme-presets" id="themePresets"></div>
 
@@ -3619,6 +3632,27 @@ window.addEventListener('storage', e=>{
 
 document.addEventListener('DOMContentLoaded', ()=>{
   renderThemePresets();
+
+  const CB_THEME_KEY = 'song-journal-colorblind-theme';
+  const CB_PRESET = { ink:'#14151A', paper:'#F7F5F0', gold:'#F5F5F0', teal:'#C2C2C2', rose:'#8C8C8C', lilac:'#565656', sage:'#1A1A1A', paperElevated:'#FFFFFF', border:'rgba(200,200,200,0.5)' };
+  const cbToggle = document.getElementById('cbToggle');
+  const cbActive = localStorage.getItem(CB_THEME_KEY) === '1';
+  cbToggle.checked = cbActive;
+  if(cbActive) applyTheme(CB_PRESET);
+  cbToggle.addEventListener('change', ()=>{
+    if(cbToggle.checked){
+      localStorage.setItem(CB_THEME_KEY, '1');
+      localStorage.setItem(CB_THEME_KEY + '-prev', JSON.stringify(loadTheme()));
+      applyTheme(CB_PRESET);
+      saveTheme(CB_PRESET);
+    } else {
+      localStorage.removeItem(CB_THEME_KEY);
+      const prev = JSON.parse(localStorage.getItem(CB_THEME_KEY + '-prev') || 'null') || DEFAULT_THEME;
+      localStorage.removeItem(CB_THEME_KEY + '-prev');
+      applyTheme(prev);
+      saveTheme(prev);
+    }
+  });
 
   document.getElementById('themeBtn').addEventListener('click', ()=>{
     trackEvent('open_theme');
