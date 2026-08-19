@@ -3850,7 +3850,7 @@ function bindCoverInput(fileInputId, prefix, setter){
     if(!file) return;
     const reader = new FileReader();
     reader.onload = async ()=>{
-      const compressed = await compressImage(reader.result, 640, 0.75);
+      const compressed = await compressImage(reader.result, 150, 0.7);
       setter(compressed);
       setImagePreview(prefix, compressed);
     };
@@ -3974,7 +3974,7 @@ function geniusLyricsUrl(title, artists){
 }
 function coverKey(url){
   if(!url) return '';
-  return String(url).replace(/\d+x\d+bb(?=\.\w+$)/, '600x600bb');
+  return String(url).replace(/\d+x\d+bb(?=\.\w+$)/, '150x150bb');
 }
 function dedupeSongsForBoard(list){
   const seen = new Set();
@@ -6354,7 +6354,7 @@ async function enrichTracksFromItunes(tracks, listEl, statusEl){
           const hits = await itunesSearch(term, 'song', 1);
           if(hits && hits.length){
             const hit = hits[0];
-            if(hit.artworkUrl100) t.coverArt = hit.artworkUrl100.replace('100x100', '300x300');
+            if(hit.artworkUrl100) t.coverArt = hit.artworkUrl100.replace('100x100', '150x150');
             if(hit.collectionName && !t.album) t.album = hit.collectionName;
             if(hit.primaryGenreName) t.genres = [hit.primaryGenreName];
           }
@@ -6425,7 +6425,7 @@ function enrichImportedSongs(clusterId, serviceLabel){
           const hits = await itunesSearch(term, 'song', 1);
           if(hits && hits.length){
             const hit = hits[0];
-            if(hit.artworkUrl100) s.coverArt = hit.artworkUrl100.replace('100x100', '300x300');
+            if(hit.artworkUrl100) s.coverArt = hit.artworkUrl100.replace('100x100', '150x150');
             if(hit.collectionName && !s.album) s.album = hit.collectionName;
             if(hit.primaryGenreName && (!s.genres || s.genres.length === 0)) s.genres = [hit.primaryGenreName];
             if(hit.releaseDate && !s.year) s.year = parseInt(hit.releaseDate.slice(0,4), 10) || null;
@@ -9105,7 +9105,7 @@ async function lookupItunesAlbum(collectionId){
   return (data && data.results) || [];
 }
 function upscaleArtwork(url){
-  return url ? url.replace(/\d+x\d+bb(?=\.\w+$)/, '600x600bb') : null;
+  return url ? url.replace(/\d+x\d+bb(?=\.\w+$)/, '150x150bb') : null;
 }
 
 /* ---- MusicBrainz fallback (song + album lookup) ----
@@ -9119,7 +9119,7 @@ async function mbFetchJson(url){
 }
 async function mbReleaseCover(releaseId){
   try{
-    const res = await fetch('https://coverartarchive.org/release/' + releaseId + '/front-500');
+    const res = await fetch('https://coverartarchive.org/release/' + releaseId + '/front-250');
     if(res.ok) return res.url;
   }catch(e){}
   return null;
