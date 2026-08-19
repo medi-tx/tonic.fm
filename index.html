@@ -876,6 +876,7 @@
     padding:4px 0;
   }
   .card-actions button:hover{ color:var(--on-paper); text-decoration:underline; }
+  .card-actions button[data-action="edit"]{ color:var(--rose); }
   .card-actions .del:hover{ color:var(--rose); }
   .card-actions a{
     background:none;
@@ -2235,7 +2236,7 @@
   .edits-toggle{
     font-family:'IBM Plex Mono', monospace;
     font-size:10px; letter-spacing:1px; text-transform:uppercase;
-    color:rgba(var(--on-paper-rgb),0.45); background:none; border:none; cursor:pointer;
+    color:var(--rose); background:none; border:none; cursor:pointer;
     padding:2px 0 0; display:inline-block; margin-top:4px;
   }
   .edits-toggle:hover{ color:var(--on-paper); }
