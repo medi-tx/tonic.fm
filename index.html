@@ -294,8 +294,8 @@
     align-items:center;
     gap:14px;
     flex-wrap:wrap;
-    background:color-mix(in srgb, var(--lilac) 35%, var(--field-bg));
-    border:1px solid color-mix(in srgb, var(--lilac) 55%, var(--on-paper));
+    background:var(--field-bg);
+    border:1px solid rgba(var(--on-paper-rgb),0.12);
     border-radius:10px;
     padding:12px 18px;
     margin-bottom:12px;
@@ -535,10 +535,6 @@
     flex-wrap:wrap;
     margin-bottom:28px;
     align-items:center;
-    padding:10px 14px;
-    border-radius:10px;
-    background:color-mix(in srgb, var(--sage) 15%, var(--field-bg));
-    border:1px solid color-mix(in srgb, var(--sage) 30%, var(--on-paper));
   }
   input, select{
     font-family:'Space Grotesk', sans-serif;
@@ -588,11 +584,11 @@
   }
   .add-btn.danger:hover{ background:rgba(214,83,109,0.14); border-color:#d6536d; }
   .controls .add-btn.secondary{
-    background:color-mix(in srgb, var(--rose) 18%, var(--field-bg));
+    background:transparent;
     color:var(--on-paper);
-    border:1px solid color-mix(in srgb, var(--rose) 40%, var(--on-paper));
+    border:1px solid rgba(var(--on-paper-rgb),0.22);
   }
-  .controls .add-btn.secondary:hover{ background:color-mix(in srgb, var(--rose) 32%, var(--field-bg)); }
+  .controls .add-btn.secondary:hover{ background:rgba(var(--on-paper-rgb),0.08); }
   .controls .add-btn.secondary.active{
     background:var(--rose);
     color:var(--ink);
@@ -712,6 +708,7 @@
     display:flex;
     flex-direction:column;
     gap:10px;
+    border-top:3px solid var(--lilac);
     box-shadow:0 8px 20px rgba(0,0,0,0.25);
     transition: transform .18s ease, box-shadow .18s ease;
   }
@@ -847,7 +844,7 @@
     font-size:13.5px;
     line-height:1.5;
     color: rgba(var(--on-paper-rgb),0.95);
-    border-left:2px solid var(--teal);
+    border-left:2px solid var(--lilac);
     padding-left:10px;
     margin:4px 0 0;
     font-style:italic;
@@ -865,7 +862,7 @@
     gap:10px;
     margin-top:auto;
     padding-top:10px;
-    border-top:1px solid rgba(var(--on-paper-rgb),0.1);
+    border-top:1px solid var(--sage);
   }
   .card-actions button{
     background:none;
@@ -1455,7 +1452,7 @@
     font-size:11px;
     letter-spacing:1px;
     text-transform:uppercase;
-    color: rgba(var(--on-paper-rgb),0.78);
+    color:var(--sage);
     margin:0 0 10px;
   }
   .theme-preset-btn.custom{ position:relative; padding-right:26px; }
