@@ -17,7 +17,7 @@
     --ink-2:#2a2c33;
     --paper:#eedd95;
     --paper-2:#e0d08c;
-    --gold:#F4A300;
+    --gold:#eedd95;
     --rose:#2A9D8F;
     --teal:#E63946;
     --lilac:#8E44AD;
@@ -3471,10 +3471,10 @@ function saveWishlist(){
 /* =========================================================
    THEME CUSTOMIZATION
    ========================================================= */
-const DEFAULT_THEME = { ink:'#12141c', paper:'#eedd95', gold:'#F4A300', rose:'#2A9D8F', teal:'#E63946', lilac:'#8E44AD', sage:'#264653' };
+const DEFAULT_THEME = { ink:'#12141c', paper:'#eedd95', gold:'#eedd95', rose:'#2A9D8F', teal:'#E63946', lilac:'#8E44AD', sage:'#264653' };
 
 const THEME_PRESETS = [
-  { name:'timbre.fm', colors: DEFAULT_THEME },
+  { name:'timbre.fm (default)', colors: DEFAULT_THEME },
   { name:'Dark', colors: { ink:'#14151A', paper:'#1E2028', paperElevated:'#262933', border:'rgba(52,56,66,0.5)', gold:'#F4A300', teal:'#E63946', rose:'#2A9D8F', lilac:'#8E44AD', sage:'#264653' } },
   { name:'Light', colors: { ink:'#F7F5F0', paper:'#FFFFFF', paperElevated:'#FDFBF6', border:'#E5E1D8', gold:'#F4A300', teal:'#E63946', rose:'#2A9D8F', lilac:'#8E44AD', sage:'#264653' } },
   { name:'Euphoric', colors: { ink:'#1a0a2e', paper:'#fff8f0', paperElevated:'#ffe8ea', border:'#d6cdcdcc', gold:'#ff2fa0', teal:'#ff9e00', rose:'#ffd60a', lilac:'#7cff6b', sage:'#6bd8ff' } },
@@ -4208,7 +4208,7 @@ document.getElementById('timeline').addEventListener('click', e=>{
 });
 
 /* ---- stats page ---- */
-const TIER_CHART_COLORS = { '★':'#F4A300', S:'#E63946', A:'#2A9D8F', B:'#8E44AD', C:'#264653' };
+const TIER_CHART_COLORS = { '★':'#eedd95', S:'#E63946', A:'#2A9D8F', B:'#8E44AD', C:'#264653' };
 function statChartCanvas(id){
   const c = document.getElementById(id);
   const dpr = window.devicePixelRatio || 1;
@@ -4710,7 +4710,7 @@ async function drawShareCard(opts){
     ctx.font = '500 21px "Space Grotesk", sans-serif';
     ctx.fillText(cardTruncate(ctx, formatArtists(s.artists), tw, ctx.font), tx, y + 52);
     const tier = s.tier || '';
-        const chipCol = { '★':'#F4A300', S:'#E63946', A:'#2A9D8F', B:'#8E44AD', C:'#264653' }[tier] || '#8E44AD';
+        const chipCol = { '★':'#eedd95', S:'#E63946', A:'#2A9D8F', B:'#8E44AD', C:'#264653' }[tier] || '#8E44AD';
     ctx.fillStyle = chipCol;
     cardRoundRect(ctx, tx, y + 64, 46, 30, 8);
     ctx.fill();
@@ -4825,7 +4825,7 @@ async function drawSongShareCard(opts){
     ctx.fillText(cardTruncate(ctx, genresStr, W - 176, ctx.font), W/2, coverY + coverS + 240);
   }
   const tier = s.tier || '';
-  const chipCol = { S: t.teal || '#E63946', A: t.rose || '#2A9D8F', B: t.lilac || '#8E44AD', C: t.sage || '#264653', '★': t.gold || '#F4A300' }[tier] || t.paper || '#eedd95';
+  const chipCol = { S: t.teal || '#E63946', A: t.rose || '#2A9D8F', B: t.lilac || '#8E44AD', C: t.sage || '#264653', '★': t.gold || '#eedd95' }[tier] || t.paper || '#eedd95';
   ctx.fillStyle = chipCol;
   cardRoundRect(ctx, W/2 - 44, coverY + coverS + 262, 88, 48, 12);
   ctx.fill();
@@ -4863,7 +4863,7 @@ async function drawTierShareCard(opts){
   ctx.fillStyle = t.paper ? t.paper + 'B3' : 'rgba(238,221,149,0.7)';
   ctx.font = '500 30px "Space Grotesk", sans-serif';
   ctx.fillText('TIER BOARD', PAD, titleY);
-  const tierColors = { '★': t.gold || '#F4A300', S: t.teal || '#E63946', A: t.rose || '#2A9D8F', B: t.lilac || '#8E44AD', C: t.sage || '#264653' };
+  const tierColors = { '★': t.gold || '#eedd95', S: t.teal || '#E63946', A: t.rose || '#2A9D8F', B: t.lilac || '#8E44AD', C: t.sage || '#264653' };
   const tierTextColors = { '★': t.ink || '#12141c', S: t.paper || '#eedd95', A: t.ink || '#12141c', B: t.ink || '#12141c', C: t.ink || '#12141c' };
   const allSongs = tiers.flatMap(t=>byTier[t]);
   const imgs = await Promise.all(allSongs.map(s=>loadCardImage(s.coverArt)));
