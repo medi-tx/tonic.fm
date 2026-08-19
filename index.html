@@ -866,35 +866,36 @@
   }
   .card-actions button{
     background:none;
-    border:none;
+    border:1px solid rgba(var(--on-paper-rgb),0.2);
+    border-radius:4px;
     font-family:'IBM Plex Mono', monospace;
     font-size:11px;
     letter-spacing:0.5px;
     cursor:pointer;
     color: rgba(var(--on-paper-rgb),0.95);
     font-weight:600;
-    padding:4px 0;
+    padding:4px 8px;
   }
-  .card-actions button:hover{ color:var(--on-paper); text-decoration:underline; }
+  .card-actions button:hover{ border-color:var(--ink); border-bottom:2px solid var(--ink); }
   .card-actions button[data-action="edit"]{ color:var(--rose); }
   .card-actions button[data-action="archive"]{ color:var(--lilac); }
   .card-actions button[data-action="delete"]{ color:var(--sage); }
   .card-actions .del{ color:var(--sage); }
   .card-actions .del:hover{ color:var(--rose); }
   .card-actions .share-card-btn{ margin-left:auto; color:var(--teal); }
-  .card-actions a{ color:var(--gold); }
-  .card-actions a{
+  .card-actions a{ color:var(--gold);
     background:none;
-    border:none;
+    border:1px solid rgba(var(--on-paper-rgb),0.2);
+    border-radius:4px;
     font-family:'IBM Plex Mono', monospace;
     font-size:11px;
     letter-spacing:0.5px;
     cursor:pointer;
     font-weight:600;
-    padding:4px 0;
+    padding:4px 8px;
     text-decoration:none;
   }
-  .card-actions a:hover{ color:var(--on-paper); text-decoration:underline; }
+  .card-actions a:hover{ border-color:var(--ink); border-bottom:2px solid var(--ink); }
   .tier-board-toolbar{
     display:flex; align-items:center; justify-content:space-between; gap:12px;
     margin-bottom:14px;
