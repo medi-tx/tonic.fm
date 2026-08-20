@@ -3470,7 +3470,7 @@ function saveWishlist(){
 /* =========================================================
    THEME CUSTOMIZATION
    ========================================================= */
-const DEFAULT_THEME = { ink:'#12141c', paper:'#eedd95', gold:'#eedd95', rose:'#2A9D8F', teal:'#E63946', lilac:'#8E44AD', sage:'#264653' };
+const DEFAULT_THEME = { ink:'#12141c', paper:'#eedd95', gold:'#d5873f', rose:'#2A9D8F', teal:'#E63946', lilac:'#8E44AD', sage:'#264653' };
 
 const THEME_PRESETS = [
   { name:'timbre.fm (default)', colors: DEFAULT_THEME },
@@ -3525,7 +3525,7 @@ function applyTheme(theme){
   root.setProperty('--paper', t.paper);
   root.setProperty('--paper-2', shade(t.paper, -0.06));
   root.setProperty('--gold', t.gold);
-  root.setProperty('--star', '#d5873f');
+  root.setProperty('--star', t.gold);
   root.setProperty('--rose', t.rose);
   root.setProperty('--teal', t.teal);
   root.setProperty('--lilac', t.lilac || '#c9a0dc');
