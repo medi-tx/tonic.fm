@@ -5073,11 +5073,13 @@ async function fetchPreviewUrl(song){
   const term = [song.title, (song.artists||[])[0]].filter(Boolean).join(' ');
   let url = null;
   try{
-    const rows = await itunesSearch(term, 'song', 5) || [];
+    const rows = await itunesSearch(term, 'song', 10) || [];
     const wantTitle = String(song.title||'').trim().toLowerCase();
     const wantArtist = String((song.artists||[])[0]||'').trim().toLowerCase();
     let hit = rows.find(r=> r.previewUrl && String(r.trackName||'').trim().toLowerCase() === wantTitle);
     if(!hit) hit = rows.find(r=> r.previewUrl && wantArtist && String(r.artistName||'').trim().toLowerCase() === wantArtist);
+    if(!hit) hit = rows.find(r=> r.previewUrl && wantTitle && String(r.trackName||'').trim().toLowerCase().includes(wantTitle));
+    if(!hit) hit = rows.find(r=> r.previewUrl && wantArtist && wantArtist.split(' ').length > 1 && wantArtist.split(' ').some(w => w.length > 2 && String(r.artistName||'').toLowerCase().includes(w)));
     if(!hit) hit = rows.find(r=> r.previewUrl);
     if(hit) url = hit.previewUrl;
   }catch(err){
