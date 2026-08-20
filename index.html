@@ -9032,6 +9032,7 @@ async function loadAppForUser(user){
   songs = (remote && remote.songs) || [];
   // Sync localStorage to match Supabase (Supabase is source of truth)
   localStorage.setItem(STORAGE_KEY, JSON.stringify(songs));
+  prefetchPreviews(songs);
   people = (remote && remote.people) || [];
   wishlist = (remote && remote.wishlist) || [];
 
