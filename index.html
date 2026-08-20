@@ -5081,10 +5081,23 @@ async function fetchPreviewUrl(song){
 }
 function prefetchPreviews(songList){
   if(!songList || !songList.length) return;
+  let preloader = document.getElementById('previewPreloader');
+  if(!preloader){
+    preloader = document.createElement('audio');
+    preloader.id = 'previewPreloader';
+    preloader.preload = 'auto';
+    preloader.muted = true;
+    preloader.style.cssText = 'position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;left:-9999px;';
+    document.body.appendChild(preloader);
+  }
+  let chain = Promise.resolve();
   songList.forEach(s=>{
     if(s && s.id && !Object.prototype.hasOwnProperty.call(previewCache, s.id) && !s.previewUrl){
-      fetchPreviewUrl(s).then(url=>{
-        if(url) new Audio(url);
+      chain = chain.then(()=> fetchPreviewUrl(s)).then(url=>{
+        if(url){
+          preloader.src = url;
+          return preloader.play().catch(()=>{});
+        }
       }).catch(()=>{});
     }
   });
