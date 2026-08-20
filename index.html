@@ -1463,15 +1463,12 @@
     margin:0 0 10px;
   }
   .cb-row{ position:relative; margin:0 0 16px; }
-  .cb-btn{ width:100%; padding:10px 12px; background:var(--paper-2); border:1px solid var(--border); border-radius:8px; color:var(--on-paper); font-size:13px; font-weight:600; cursor:pointer; text-align:left; }
-  .cb-btn:hover{ border-color:var(--on-paper); }
-  .cb-list{ position:absolute; top:100%; left:0; right:0; margin-top:4px; background:var(--paper-elevated); border:1px solid var(--border); border-radius:8px; z-index:10; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,.25); }
-  .cb-item{ display:flex; align-items:center; gap:8px; width:100%; padding:10px 12px; background:none; border:none; border-bottom:1px solid var(--border); color:var(--on-paper); font-size:13px; cursor:pointer; text-align:left; }
-  .cb-item:last-child{ border-bottom:none; }
-  .cb-item:hover{ background:rgba(var(--on-paper-rgb),0.06); }
-  .cb-item.active{ font-weight:700; }
-  .cb-item .cb-swatch{ display:inline-flex; gap:2px; flex-shrink:0; }
-  .cb-item .cb-swatch span{ width:10px; height:10px; border-radius:50%; border:1px solid rgba(0,0,0,.15); }
+  .cb-toggle-row{ display:flex; align-items:center; justify-content:space-between; padding:8px 0; }
+  .cb-toggle-label{ font-size:13px; font-weight:600; color:var(--on-paper); }
+  .cb-toggle{ width:44px; height:24px; border-radius:12px; background:var(--border); border:none; cursor:pointer; position:relative; transition:background .2s; }
+  .cb-toggle::after{ content:''; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:var(--on-paper); transition:transform .2s; }
+  .cb-toggle[data-cb="on"]{ background:var(--teal); }
+  .cb-toggle[data-cb="on"]::after{ transform:translateX(20px); }
   .theme-color-grid{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px; }
   .theme-color-field{ display:flex; align-items:center; gap:8px; background:var(--paper-2); border:1px solid var(--border); border-radius:8px; padding:6px 10px; }
   .theme-color-field label{ font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--on-paper); opacity:.7; min-width:52px; }
@@ -3195,15 +3192,9 @@
     <h3>Customize colors</h3>
     <p class="multi-hint">Changes preview live. They're saved to this browser, so they'll stick around next time you visit.</p>
 
-    <div class="cb-row" id="cbRow">
-      <button type="button" class="cb-btn" id="cbBtn">♿ Colorblind</button>
-      <div class="cb-list" id="cbList" style="display:none;">
-        <button type="button" class="cb-item active" data-cb="off">Standard</button>
-        <button type="button" class="cb-item" data-cb="protanopia">Protanopia</button>
-        <button type="button" class="cb-item" data-cb="deuteranopia">Deuteranopia</button>
-        <button type="button" class="cb-item" data-cb="tritanopia">Tritanopia</button>
-        <button type="button" class="cb-item" data-cb="monochromacy">Monochromacy</button>
-      </div>
+    <div class="cb-toggle-row">
+      <label class="cb-toggle-label" for="cbToggle">♿ Colorblind friendly</label>
+      <button type="button" class="cb-toggle" id="cbToggle" role="switch" aria-checked="false" data-cb="off"></button>
     </div>
 
     <p class="theme-section-label">Presets</p>
@@ -3715,47 +3706,32 @@ document.addEventListener('DOMContentLoaded', ()=>{
   renderThemePresets();
 
   const CB_THEME_KEY = 'song-journal-colorblind-theme';
-  const CB_PRESETS = {
-    protanopia:   { ink:'#14151A', paper:'#F7F5F0', gold:'#F0E442', teal:'#0072B2', rose:'#E69F00', lilac:'#CC79A7', sage:'#333333', paperElevated:'#FFFFFF', border:'rgba(200,200,200,0.5)' },
-    deuteranopia: { ink:'#14151A', paper:'#F7F5F0', gold:'#0072B2', teal:'#F0E442', rose:'#E69F00', lilac:'#807DBA', sage:'#4D4D4D', paperElevated:'#FFFFFF', border:'rgba(200,200,200,0.5)' },
-    tritanopia:   { ink:'#14151A', paper:'#F7F5F0', gold:'#B3001B', teal:'#FF8FA3', rose:'#0B6E4F', lilac:'#7CCB9B', sage:'#262626', paperElevated:'#FFFFFF', border:'rgba(200,200,200,0.5)' },
-    monochromacy: { ink:'#14151A', paper:'#F7F5F0', gold:'#F5F5F0', teal:'#C2C2C2', rose:'#8C8C8C', lilac:'#565656', sage:'#1A1A1A', paperElevated:'#FFFFFF', border:'rgba(200,200,200,0.5)' }
-  };
-  const cbSaved = localStorage.getItem(CB_THEME_KEY);
-  function syncCbActive(key){
-    document.querySelectorAll('.cb-item').forEach(b=>{
-      b.classList.toggle('active', b.dataset.cb === key);
-    });
-    document.getElementById('cbBtn').textContent = key === 'off' ? '♿ Colorblind' : '♿ ' + key.charAt(0).toUpperCase() + key.slice(1);
+  const CB_PRESET = { ink:'#14151A', paper:'#F7F5F0', gold:'#F5F5F0', teal:'#C2C2C2', rose:'#8C8C8C', lilac:'#565656', sage:'#1A1A1A', paperElevated:'#FFFFFF', border:'rgba(200,200,200,0.5)' };
+  const cbToggle = document.getElementById('cbToggle');
+  function syncCbToggle(on){
+    cbToggle.dataset.cb = on ? 'on' : 'off';
+    cbToggle.setAttribute('aria-checked', on ? 'true' : 'false');
   }
-  syncCbActive(cbSaved || 'off');
-  if(cbSaved && CB_PRESETS[cbSaved]) applyTheme(CB_PRESETS[cbSaved]);
-  document.getElementById('cbBtn').addEventListener('click', e=>{
-    e.stopPropagation();
-    document.getElementById('cbList').style.display = document.getElementById('cbList').style.display === 'none' ? '' : 'none';
-  });
-  document.addEventListener('click', ()=>{ document.getElementById('cbList').style.display = 'none'; });
-  document.querySelectorAll('.cb-item').forEach(btn=>{
-    btn.addEventListener('click', e=>{
-      e.stopPropagation();
-      const key = btn.dataset.cb;
-      document.getElementById('cbList').style.display = 'none';
-      syncCbActive(key);
-      if(key === 'off'){
-        localStorage.removeItem(CB_THEME_KEY);
-        const prev = JSON.parse(localStorage.getItem(CB_THEME_KEY + '-prev') || 'null') || DEFAULT_THEME;
-        localStorage.removeItem(CB_THEME_KEY + '-prev');
-        applyTheme(prev);
-        saveTheme(prev);
-      } else {
-        localStorage.setItem(CB_THEME_KEY, key);
-        if(!localStorage.getItem(CB_THEME_KEY + '-prev')){
-          localStorage.setItem(CB_THEME_KEY + '-prev', JSON.stringify(loadTheme()));
-        }
-        applyTheme(CB_PRESETS[key]);
-        saveTheme(CB_PRESETS[key]);
+  const cbSaved = localStorage.getItem(CB_THEME_KEY) === 'on';
+  syncCbToggle(cbSaved);
+  if(cbSaved) applyTheme(CB_PRESET);
+  cbToggle.addEventListener('click', ()=>{
+    const on = cbToggle.dataset.cb !== 'on';
+    syncCbToggle(on);
+    if(on){
+      localStorage.setItem(CB_THEME_KEY, 'on');
+      if(!localStorage.getItem(CB_THEME_KEY + '-prev')){
+        localStorage.setItem(CB_THEME_KEY + '-prev', JSON.stringify(loadTheme()));
       }
-    });
+      applyTheme(CB_PRESET);
+      saveTheme(CB_PRESET);
+    } else {
+      localStorage.removeItem(CB_THEME_KEY);
+      const prev = JSON.parse(localStorage.getItem(CB_THEME_KEY + '-prev') || 'null') || DEFAULT_THEME;
+      localStorage.removeItem(CB_THEME_KEY + '-prev');
+      applyTheme(prev);
+      saveTheme(prev);
+    }
   });
 
   document.getElementById('themeBtn').addEventListener('click', ()=>{
