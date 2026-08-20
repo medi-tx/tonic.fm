@@ -3449,6 +3449,7 @@ let currentMultiTier = null;
 let clusterFilterId = null;
 let remindsFilterId = null;
 let currentCoverArt = null;
+let currentSongSource = null;
 let currentMultiCoverArt = null;
 let currentWishCoverArt = null;
 let currentPersonPhoto = null;
@@ -4086,10 +4087,10 @@ function songCardHtml(s, clusterCounts){
           ${(s.genres&&s.genres.length) ? `<span class="meta-genres">· ${s.genres.map(g=>escapeHtml(g)).join(', ')}</span>` : (showEx ? `<span class="ex">· e.g. Rock, Funk/Soul</span>` : '')}
         </div>
         <div class="tier-row">${renderTierBadge(s.tier)}</div>
-        <div class="preview-row">
+        ${s.source === 'itunes' ? `<div class="preview-row">
           <button type="button" class="preview-btn" data-preview="${escapeAttr(s.id)}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>
           <span class="preview-hint">30-sec preview</span>
-        </div>
+        </div>` : ''}
         ${(s.clusterId && clusterCounts[s.clusterId] > 1) ? `<span class="link-badge" data-cluster="${s.clusterId}">🔗 ${clusterCounts[s.clusterId]} linked</span>` : ''}
         ${(s.tags&&s.tags.length) ? `<div class="tags">${s.tags.map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>` : (showEx ? `<div class="tags">${['nostalgic','road trip','late night'].map(t=>`<span class="tag ex-tag">e.g. ${t}</span>`).join('')}</div>` : '')}
         ${s.why ? `<p class="why">${escapeHtml(s.why)}</p>` : (showEx ? `<p class="why ex">e.g. the bassline just doesn't let go</p>` : '')}
@@ -5368,6 +5369,7 @@ function openModal(song){
   document.getElementById('f-why').value = song?.why || '';
   document.getElementById('f-credit').value = song?.credit || '';
   currentCoverArt = song?.coverArt || null;
+  currentSongSource = song?.source || null;
   setImagePreview('f-cover', currentCoverArt);
   document.getElementById('f-song-search').value = '';
   document.getElementById('songSearchResults').style.display = 'none';
@@ -5452,7 +5454,8 @@ function handleSave(){
     credit: document.getElementById('f-credit').value.trim(),
     coverArt: currentCoverArt,
     remindsOf: getSelectedReminds('f'),
-    tier: currentTier
+    tier: currentTier,
+    source: currentSongSource
   };
   const doSave = ()=>{
     if(!data.coverArt && (data.title || data.artists.length)){
@@ -9321,6 +9324,7 @@ async function renderSongSearchResults(query){
 function selectItunesSong(trackId){
   const t = songSearchCache.find(r=>String(r.trackId)===String(trackId));
   if(!t) return;
+  currentSongSource = 'itunes';
   document.getElementById('f-title').value = t.trackName || '';
   document.getElementById('f-artist').value = t.artistName || '';
   document.getElementById('f-album').value = t.collectionName || '';
@@ -11031,7 +11035,7 @@ function feedCardHtml(entry){
   const tierBadge = s.tier ? renderTierBadge(s.tier) : '';
   const feedPreviewId = 'feed:' + (s.id || Math.random().toString(36).slice(2));
   feedSongCache[feedPreviewId] = { id: feedPreviewId, title: s.title || 'Untitled', artists: s.artists || [], previewUrl: s.previewUrl || '' };
-  const previewBtn = `<button type="button" class="preview-btn" data-preview="${escapeAttr(feedPreviewId)}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>`;
+  const previewBtn = s.source === 'itunes' ? `<button type="button" class="preview-btn" data-preview="${escapeAttr(feedPreviewId)}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>` : '';
   const why = s.why ? `<div class="feed-card-why">"${escapeHtml(s.why)}"</div>` : '';
   const reminds = (s.remindsOf && s.remindsOf.length)
     ? `<div class="feed-card-reminds">reminds me of <span>${s.remindsOf.map(id=>{
