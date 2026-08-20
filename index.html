@@ -5090,10 +5090,32 @@ async function fetchPreviewUrl(song){
   if(url && id === 'sotd' && typeof window.sotdPersistPreview === 'function') window.sotdPersistPreview(url);
   return url;
 }
+function prefetchPreviews(songList){
+  if(!songList || !songList.length) return;
+  songList.forEach(s=>{
+    if(s && s.id && !Object.prototype.hasOwnProperty.call(previewCache, s.id) && !s.previewUrl){
+      fetchPreviewUrl(s).catch(()=>{});
+    }
+  });
+}
 function stopPreview(){
   if(previewAudio && !previewAudio.paused) previewAudio.pause();
   if(previewAudio) previewAudio.removeAttribute('src');
   if(nowPlayingId){ setPreviewBtnState(nowPlayingId, 'idle'); nowPlayingId = null; }
+}
+function playPreviewNow(id, song){
+  if(!previewAudio) previewAudio = document.getElementById('previewAudio');
+  const cachedUrl = (Object.prototype.hasOwnProperty.call(previewCache, song.id)) ? previewCache[song.id] : (song.previewUrl || null);
+  if(!cachedUrl) return false;
+  if(nowPlayingId && nowPlayingId !== id){ stopPreview(); }
+  previewAudio.src = cachedUrl;
+  previewAudio.onended = ()=>{ setPreviewBtnState(id, 'idle'); nowPlayingId = null; };
+  previewAudio.onerror = ()=>{ setPreviewBtnState(id, 'none'); setTimeout(()=>{ if(nowPlayingId !== id) setPreviewBtnState(id, 'idle'); }, 1600); nowPlayingId = null; };
+  nowPlayingId = id;
+  setPreviewBtnState(id, 'playing');
+  previewAudio.play().catch(()=>{ setPreviewBtnState(id, 'idle'); nowPlayingId = null; });
+  trackEvent('preview_play');
+  return true;
 }
 async function togglePreview(id){
   if(!previewAudio) previewAudio = document.getElementById('previewAudio');
@@ -5122,24 +5144,7 @@ async function togglePreview(id){
   if(!song) return;
   if(nowPlayingId && nowPlayingId !== id) setPreviewBtnState(nowPlayingId, 'idle');
 
-  const cachedUrl = (Object.prototype.hasOwnProperty.call(previewCache, song.id)) ? previewCache[song.id] : (song.previewUrl || null);
-
-  if(cachedUrl){
-    if(nowPlayingId && nowPlayingId !== id){ stopPreview(); }
-    setPreviewBtnState(id, 'playing');
-    previewAudio.src = cachedUrl;
-    previewAudio.onended = ()=>{ setPreviewBtnState(id, 'idle'); nowPlayingId = null; };
-    previewAudio.onerror = ()=>{ setPreviewBtnState(id, 'none'); setTimeout(()=>{ if(nowPlayingId !== id) setPreviewBtnState(id, 'idle'); }, 1600); nowPlayingId = null; };
-    nowPlayingId = id;
-    try{
-      await playWhenReady(previewAudio);
-    }catch(err){
-      setPreviewBtnState(id, 'idle');
-      nowPlayingId = null;
-    }
-    trackEvent('preview_play');
-    return;
-  }
+  if(playPreviewNow(id, song)) return;
 
   setPreviewBtnState(id, 'loading');
   const url = await fetchPreviewUrl(song);
@@ -5171,7 +5176,20 @@ document.addEventListener('click', e=>{
   if(btn){
     e.stopPropagation();
     e.preventDefault();
-    togglePreview(btn.dataset.preview);
+    const id = btn.dataset.preview;
+    if(!previewAudio) previewAudio = document.getElementById('previewAudio');
+    let song = null;
+    if(id === 'sotd' && typeof window.sotdPreviewSong === 'function') song = window.sotdPreviewSong();
+    if(!song && String(id).indexOf('msgrec:') === 0 && typeof window.msgPreviewSong === 'function') song = window.msgPreviewSong(id);
+    if(!song && String(id).indexOf('msg:') === 0 && typeof window.msgThreadPreviewSong === 'function') song = window.msgThreadPreviewSong(id.slice(4));
+    if(!song && String(id).indexOf('songsearch:') === 0){
+      const t = songSearchCache[parseInt(id.slice(11), 10)];
+      if(t) song = { id, title: t.trackName || 'Unknown song', artists: [t.artistName || ''], previewUrl: t.previewUrl || '' };
+    }
+    if(!song && String(id).indexOf('feed:') === 0) song = feedSongCache[id];
+    if(!song) song = songs.find(s=>s.id === id) || (currentFriendSongs||[]).find(s=>s.id === id);
+    if(song && playPreviewNow(id, song)) return;
+    togglePreview(id);
   }
 });
 document.addEventListener('keydown', e=>{
@@ -5268,6 +5286,7 @@ function render(){
     currentClusterCounts = clusterCounts;
     renderedCount = 0;
     renderNextGridBatch();
+    prefetchPreviews(list.slice(0, 10));
   }
 
   const clusterBar = document.getElementById('clusterBar');
