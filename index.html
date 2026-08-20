@@ -5035,16 +5035,16 @@ let previewAudio = null;
 let nowPlayingId = null;
 let audioUnlocked = false;
 const feedSongCache = {};
-function unlockAudio(){
-  if(audioUnlocked) return;
-  try{
-    const a = new Audio();
-    a.src = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';
-    a.play().then(()=>{ audioUnlocked = true; a.remove(); }).catch(()=>{ a.remove(); });
-  }catch(e){}
+function playWhenReady(el){
+  return new Promise(resolve=>{
+    if(el.readyState >= 3) resolve(el.play());
+    else{
+      const onReady = ()=>{ el.removeEventListener('canplay', onReady); resolve(el.play()); };
+      el.addEventListener('canplay', onReady);
+      setTimeout(()=>{ el.removeEventListener('canplay', onReady); resolve(el.play()); }, 3000);
+    }
+  });
 }
-document.addEventListener('touchend', unlockAudio, { passive: true });
-document.addEventListener('click', unlockAudio);
 function setPreviewBtnState(id, state){
   document.querySelectorAll('[data-preview="' + CSS.escape(String(id)) + '"]').forEach(btn=>{
     btn.classList.remove('loading','playing','none');
@@ -5132,7 +5132,7 @@ async function togglePreview(id){
     previewAudio.onerror = ()=>{ setPreviewBtnState(id, 'none'); setTimeout(()=>{ if(nowPlayingId !== id) setPreviewBtnState(id, 'idle'); }, 1600); nowPlayingId = null; };
     nowPlayingId = id;
     try{
-      await previewAudio.play();
+      await playWhenReady(previewAudio);
     }catch(err){
       setPreviewBtnState(id, 'idle');
       nowPlayingId = null;
@@ -5158,7 +5158,7 @@ async function togglePreview(id){
   };
   nowPlayingId = id;
   try{
-    await previewAudio.play();
+    await playWhenReady(previewAudio);
     setPreviewBtnState(id, 'playing');
   }catch(err){
     setPreviewBtnState(id, 'idle');
@@ -11231,7 +11231,7 @@ if(getAnalyticsConsent() === 'rejected'){
 }
 
 </script>
-<audio id="previewAudio" preload="none" playsinline webkit-playsinline></audio>
+<audio id="previewAudio" preload="auto" playsinline webkit-playsinline></audio>
 <div id="analyticsConsentBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; background:var(--ink); border-top:1px solid rgba(238,221,149,0.15); padding:16px 24px; z-index:9999; font-family:'Space Grotesk',sans-serif;">
   <div style="max-width:720px; margin:0 auto; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
     <span style="flex:1; min-width:200px; font-size:13px; color:rgba(238,221,149,0.82); line-height:1.5;">
