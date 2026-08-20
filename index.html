@@ -5083,7 +5083,9 @@ function prefetchPreviews(songList){
   if(!songList || !songList.length) return;
   songList.forEach(s=>{
     if(s && s.id && !Object.prototype.hasOwnProperty.call(previewCache, s.id) && !s.previewUrl){
-      fetchPreviewUrl(s).catch(()=>{});
+      fetchPreviewUrl(s).then(url=>{
+        if(url) new Audio(url);
+      }).catch(()=>{});
     }
   });
 }
