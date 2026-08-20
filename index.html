@@ -5075,32 +5075,22 @@ async function fetchPreviewUrl(song){
   }catch(err){
     url = null;
   }
-  previewCache[id] = url;
+  if(url) previewCache[id] = url;
   if(url && id === 'sotd' && typeof window.sotdPersistPreview === 'function') window.sotdPersistPreview(url);
   return url;
 }
 function prefetchPreviews(songList){
   if(!songList || !songList.length) return;
-  let preloader = document.getElementById('previewPreloader');
-  if(!preloader){
-    preloader = document.createElement('audio');
-    preloader.id = 'previewPreloader';
-    preloader.preload = 'auto';
-    preloader.muted = true;
-    preloader.style.cssText = 'position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;left:-9999px;';
-    document.body.appendChild(preloader);
+  const todo = songList.filter(s=> s && s.id && !Object.prototype.hasOwnProperty.call(previewCache, s.id) && !s.previewUrl);
+  if(!todo.length) return;
+  let idx = 0;
+  function next(){
+    if(idx >= todo.length) return;
+    const s = todo[idx++];
+    fetchPreviewUrl(s).catch(()=>{}).then(()=> next());
   }
-  let chain = Promise.resolve();
-  songList.forEach(s=>{
-    if(s && s.id && !Object.prototype.hasOwnProperty.call(previewCache, s.id) && !s.previewUrl){
-      chain = chain.then(()=> fetchPreviewUrl(s)).then(url=>{
-        if(url){
-          preloader.src = url;
-          return preloader.play().catch(()=>{});
-        }
-      }).catch(()=>{});
-    }
-  });
+  const concurrency = Math.min(5, todo.length);
+  for(let i = 0; i < concurrency; i++) next();
 }
 function stopPreview(){
   if(previewAudio && !previewAudio.paused) previewAudio.pause();
