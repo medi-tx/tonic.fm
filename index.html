@@ -4066,7 +4066,7 @@ function songCardHtml(s, clusterCounts){
         </div>
         <div class="tier-row">${renderTierBadge(s.tier)}</div>
         <div class="preview-row">
-          <button type="button" class="preview-btn" data-preview="${escapeAttr(s.id)}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>
+          <button type="button" class="preview-btn" data-preview="${escapeAttr(s.id)}" onclick="handlePreviewTap(event)" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>
           <span class="preview-hint">30-sec preview</span>
         </div>
         ${(s.clusterId && clusterCounts[s.clusterId] > 1) ? `<span class="link-badge" data-cluster="${s.clusterId}">🔗 ${clusterCounts[s.clusterId]} linked</span>` : ''}
@@ -5034,6 +5034,39 @@ const previewCache = {};
 let previewAudio = null;
 let nowPlayingId = null;
 const feedSongCache = {};
+let audioCtx = null;
+let audioUnlocked = false;
+function unlockAudioCtx(){
+  if(audioUnlocked) return;
+  try{
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const buf = audioCtx.createBuffer(1,1,22050);
+    const src = audioCtx.createBufferSource();
+    src.buffer = buf;
+    src.connect(audioCtx.destination);
+    src.start(0);
+    audioUnlocked = true;
+  }catch(e){}
+}
+function handlePreviewTap(e){
+  e.stopPropagation();
+  e.preventDefault();
+  unlockAudioCtx();
+  if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+  const btn = e.target.closest('[data-preview]');
+  if(!btn) return;
+  const id = btn.dataset.preview;
+  if(!previewAudio) previewAudio = document.getElementById('previewAudio');
+  if(nowPlayingId === id && previewAudio && !previewAudio.paused){
+    previewAudio.pause();
+    setPreviewBtnState(id, 'idle');
+    nowPlayingId = null;
+    return;
+  }
+  let song = resolveSong(id);
+  if(song && playPreviewNow(id, song)) return;
+  togglePreview(id);
+}
 function setPreviewBtnState(id, state){
   document.querySelectorAll('[data-preview="' + CSS.escape(String(id)) + '"]').forEach(btn=>{
     btn.classList.remove('loading','playing','none');
@@ -5170,23 +5203,9 @@ function resolveSong(id){
   return song;
 }
 document.addEventListener('click', e=>{
-  const btn = e.target.closest('[data-preview]');
-  if(btn){
-    e.stopPropagation();
-    e.preventDefault();
-    const id = btn.dataset.preview;
-    if(!previewAudio) previewAudio = document.getElementById('previewAudio');
-    if(nowPlayingId === id && previewAudio && !previewAudio.paused){
-      previewAudio.pause();
-      setPreviewBtnState(id, 'idle');
-      nowPlayingId = null;
-      return;
-    }
-    let song = resolveSong(id);
-    if(song && playPreviewNow(id, song)) return;
-    togglePreview(id);
-  }
-});
+  unlockAudioCtx();
+  /* preview buttons use inline onclick="handlePreviewTap(event)" for iOS gesture reliability */
+}, { once: true });
 document.addEventListener('keydown', e=>{
   if(e.key === 'Escape' && nowPlayingId) stopPreview();
 });
@@ -7504,7 +7523,7 @@ function renderFriendGrid(list){
       </div>
       <div class="tier-row">${renderTierBadge(s.tier)}</div>
       <div class="preview-row">
-        <button type="button" class="preview-btn" data-preview="${escapeAttr(s.id)}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>
+        <button type="button" class="preview-btn" data-preview="${escapeAttr(s.id)}" onclick="handlePreviewTap(event)" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>
         <span class="preview-hint">30-sec preview</span>
       </div>
       ${(s.tags&&s.tags.length) ? `<div class="tags">${s.tags.map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>` : ''}
@@ -9226,7 +9245,7 @@ async function renderAlbumSearchResults(query){
           <span class="drow-name">${escapeHtml(a.collectionName||'Untitled')}</span><br>
           <span class="drow-bio">${escapeHtml(a.artistName||'')}${a.releaseDate ? ' · '+a.releaseDate.slice(0,4) : ''}</span>
         </span>
-        ${String(a.collectionId).indexOf('mbg-') !== 0 ? `<span class="preview-btn" data-preview="albs:${escapeAttr(a.collectionId)}" title="Play the first track as a 30-second preview" aria-label="Play a 30-second preview">▶</span>` : ''}
+        ${String(a.collectionId).indexOf('mbg-') !== 0 ? `<span class="preview-btn" data-preview="albs:${escapeAttr(a.collectionId)}" onclick="handlePreviewTap(event)" title="Play the first track as a 30-second preview" aria-label="Play a 30-second preview">▶</span>` : ''}
       </button>
     `).join('');
 }
@@ -9313,7 +9332,7 @@ async function renderSongSearchResults(query){
         <span class="drow-name">${escapeHtml(t.trackName||'Untitled')}</span><br>
         <span class="drow-bio">${escapeHtml(t.artistName||'')}${t.collectionName ? ' · '+escapeHtml(t.collectionName) : ''}</span>
       </span>
-      <span class="preview-btn" data-preview="songsearch:${i}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</span>
+      <span class="preview-btn" data-preview="songsearch:${i}" onclick="handlePreviewTap(event)" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</span>
     </button>
   `).join('');
 }
@@ -9883,7 +9902,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
         <span class="msg-song-artist">${escapeHtml(song.artist || '')}</span>
         <span class="msg-song-album">${escapeHtml(song.album || '')}</span>
       </span>
-      <span class="preview-btn" data-preview="msg:${escapeAttr(msgId)}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</span>
+      <span class="preview-btn" data-preview="msg:${escapeAttr(msgId)}" onclick="handlePreviewTap(event)" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</span>
     </a>`;
   }
   async function loadMsgThread(friendId){
@@ -9977,7 +9996,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
           <span class="msg-song-result-title">${escapeHtml(r.trackName || 'Unknown')}</span>
           <span class="msg-song-result-artist">${artist}</span>
         </span>
-        <span class="preview-btn" data-preview="msgrec:${i}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</span>
+        <span class="preview-btn" data-preview="msgrec:${i}" onclick="handlePreviewTap(event)" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</span>
       </button>`;
     }).join('');
   }
@@ -10457,7 +10476,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
           <div class="sotd-artist">${escapeHtml(sotdSong.artist || '')}</div>
         </div>
         <div class="sotd-preview">
-          <button type="button" class="preview-btn" data-preview="sotd" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>
+          <button type="button" class="preview-btn" data-preview="sotd" onclick="handlePreviewTap(event)" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>
           <span class="preview-hint">30-sec preview</span>
         </div>
         ${link}
@@ -11031,7 +11050,7 @@ function feedCardHtml(entry){
   const tierBadge = s.tier ? renderTierBadge(s.tier) : '';
   const feedPreviewId = 'feed:' + (s.id || Math.random().toString(36).slice(2));
   feedSongCache[feedPreviewId] = { id: feedPreviewId, title: s.title || 'Untitled', artists: s.artists || [], previewUrl: s.previewUrl || '' };
-  const previewBtn = s.source === 'itunes' ? `<button type="button" class="preview-btn" data-preview="${escapeAttr(feedPreviewId)}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>` : '';
+  const previewBtn = s.source === 'itunes' ? `<button type="button" class="preview-btn" data-preview="${escapeAttr(feedPreviewId)}" onclick="handlePreviewTap(event)" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>` : '';
   const why = s.why ? `<div class="feed-card-why">"${escapeHtml(s.why)}"</div>` : '';
   const reminds = (s.remindsOf && s.remindsOf.length)
     ? `<div class="feed-card-reminds">reminds me of <span>${s.remindsOf.map(id=>{
