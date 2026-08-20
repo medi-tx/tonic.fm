@@ -2408,6 +2408,40 @@
   .preview-hint{ font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:1px; text-transform:uppercase; color:rgba(var(--on-paper-rgb),0.68); }
   @keyframes previewPulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.35; } }
 
+  /* MOBILE PREVIEW OVERLAY — bottom-sheet player for touch devices */
+  .mobile-preview-overlay{
+    display:none; position:fixed; bottom:0; left:0; right:0; z-index:10001;
+    background:var(--ink); border-top:1px solid rgba(var(--on-paper-rgb),0.12);
+    padding:16px 20px 24px; transform:translateY(100%); transition:transform 0.3s cubic-bezier(0.22,1,0.36,1);
+    font-family:'Space Grotesk', sans-serif;
+  }
+  .mobile-preview-overlay.open{ display:flex; flex-direction:column; align-items:center; transform:translateY(0); }
+  .mobile-preview-overlay .mp-row{ display:flex; align-items:center; gap:12px; width:100%; max-width:400px; }
+  .mobile-preview-overlay .mp-art{
+    width:52px; height:52px; border-radius:6px; background:rgba(var(--on-paper-rgb),0.06);
+    display:flex; align-items:center; justify-content:center; font-size:22px; color:var(--sage); flex-shrink:0;
+    background-size:cover; background-position:center;
+  }
+  .mobile-preview-overlay .mp-info{ flex:1; min-width:0; }
+  .mobile-preview-overlay .mp-title{ font-size:14px; font-weight:600; color:var(--paper); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .mobile-preview-overlay .mp-artist{ font-size:12px; color:rgba(var(--on-paper-rgb),0.6); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px; }
+  .mobile-preview-overlay .mp-controls{ display:flex; align-items:center; gap:12px; margin-top:10px; width:100%; max-width:400px; }
+  .mobile-preview-overlay .mp-play-btn{
+    width:44px; height:44px; border-radius:50%; border:2px solid var(--rose); background:var(--rose); color:var(--ink);
+    font-size:18px; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0;
+    font-family:inherit; padding:0; transition:background 0.12s;
+  }
+  .mobile-preview-overlay .mp-play-btn:active{ opacity:0.8; }
+  .mobile-preview-overlay .mp-progress{ flex:1; height:4px; background:rgba(var(--on-paper-rgb),0.12); border-radius:2px; overflow:hidden; }
+  .mobile-preview-overlay .mp-progress-fill{ height:100%; width:0%; background:var(--rose); border-radius:2px; transition:width 0.2s linear; }
+  .mobile-preview-overlay .mp-time{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:rgba(var(--on-paper-rgb),0.5); min-width:32px; text-align:right; }
+  .mobile-preview-overlay .mp-close{
+    position:absolute; top:8px; right:12px; background:none; border:none; color:rgba(var(--on-paper-rgb),0.4);
+    font-size:20px; cursor:pointer; padding:4px 8px; font-family:inherit;
+  }
+  .mobile-preview-overlay .mp-close:active{ color:var(--paper); }
+  @media(min-width:801px){ .mobile-preview-overlay{ display:none !important; } }
+
   /* SOTD HISTORY */
   .sotd-history-modal{ max-width:640px; }
   .sotd-history-filters{
@@ -4066,7 +4100,7 @@ function songCardHtml(s, clusterCounts){
         </div>
         <div class="tier-row">${renderTierBadge(s.tier)}</div>
         <div class="preview-row">
-          <button type="button" class="preview-btn" data-preview="${escapeAttr(s.id)}" onclick="handlePreviewTap(event)" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>
+          <button type="button" class="preview-btn" data-preview="${escapeAttr(s.id)}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>
           <span class="preview-hint">30-sec preview</span>
         </div>
         ${(s.clusterId && clusterCounts[s.clusterId] > 1) ? `<span class="link-badge" data-cluster="${s.clusterId}">🔗 ${clusterCounts[s.clusterId]} linked</span>` : ''}
@@ -5036,6 +5070,7 @@ let nowPlayingId = null;
 const feedSongCache = {};
 let audioCtx = null;
 let audioUnlocked = false;
+const IS_MOBILE = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 0 && window.matchMedia('(max-width:800px)').matches);
 function unlockAudioCtx(){
   if(audioUnlocked) return;
   try{
@@ -5048,24 +5083,79 @@ function unlockAudioCtx(){
     audioUnlocked = true;
   }catch(e){}
 }
-function handlePreviewTap(e){
-  e.stopPropagation();
-  e.preventDefault();
-  unlockAudioCtx();
-  if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-  const btn = e.target.closest('[data-preview]');
-  if(!btn) return;
-  const id = btn.dataset.preview;
+function openMobilePreview(id){
   if(!previewAudio) previewAudio = document.getElementById('previewAudio');
-  if(nowPlayingId === id && previewAudio && !previewAudio.paused){
-    previewAudio.pause();
-    setPreviewBtnState(id, 'idle');
-    nowPlayingId = null;
-    return;
-  }
   let song = resolveSong(id);
-  if(song && playPreviewNow(id, song)) return;
-  togglePreview(id);
+  if(!song && !id) return;
+  const overlay = document.getElementById('mobilePreviewOverlay');
+  const art = overlay.querySelector('.mp-art');
+  const title = overlay.querySelector('.mp-title');
+  const artist = overlay.querySelector('.mp-artist');
+  const playBtn = overlay.querySelector('.mp-play-btn');
+  const progress = overlay.querySelector('.mp-progress-fill');
+  const timeEl = overlay.querySelector('.mp-time');
+  const closeBtn = overlay.querySelector('.mp-close');
+  let songTitle = song ? song.title : '';
+  let songArtist = song ? (song.artists||[]).join(', ') : '';
+  let coverUrl = song ? (song.cover || song.coverUrl || '') : '';
+  title.textContent = songTitle || 'Preview';
+  artist.textContent = songArtist || '';
+  if(coverUrl){
+    art.style.backgroundImage = 'url(' + coverUrl + ')';
+    art.textContent = '';
+  } else {
+    art.style.backgroundImage = 'none';
+    art.textContent = '♫';
+  }
+  overlay.dataset.previewId = id;
+  overlay.classList.add('open');
+  progress.style.width = '0%';
+  timeEl.textContent = '0:00';
+  playBtn.textContent = '▶';
+  playBtn.onclick = function(e){
+    e.stopPropagation();
+    e.preventDefault();
+    unlockAudioCtx();
+    if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    if(nowPlayingId === id && previewAudio && !previewAudio.paused){
+      previewAudio.pause();
+      playBtn.textContent = '▶';
+      setPreviewBtnState(id, 'idle');
+      return;
+    }
+    if(song && playPreviewNow(id, song)){
+      playBtn.textContent = '⏸';
+      return;
+    }
+    setPreviewBtnState(id, 'loading');
+    fetchPreviewUrl(song).then(url=>{
+      if(!url){ setPreviewBtnState(id, 'none'); setTimeout(()=>{ if(nowPlayingId !== id) setPreviewBtnState(id, 'idle'); },1600); return; }
+      if(nowPlayingId && nowPlayingId !== id) stopPreview();
+      previewAudio.src = url;
+      previewAudio.onended = ()=>{ playBtn.textContent = '▶'; setPreviewBtnState(id, 'idle'); nowPlayingId = null; };
+      previewAudio.onerror = ()=>{ playBtn.textContent = '▶'; setPreviewBtnState(id, 'none'); nowPlayingId = null; };
+      nowPlayingId = id;
+      previewAudio.play().then(()=>{ playBtn.textContent = '⏸'; setPreviewBtnState(id, 'playing'); }).catch(()=>{ playBtn.textContent = '▶'; setPreviewBtnState(id, 'idle'); nowPlayingId = null; });
+      trackEvent('preview_play');
+    });
+  };
+  previewAudio.onended = ()=>{ playBtn.textContent = '▶'; setPreviewBtnState(id, 'idle'); nowPlayingId = null; };
+  previewAudio.ontimeupdate = function(){
+    if(!previewAudio || !previewAudio.duration) return;
+    const pct = (previewAudio.currentTime / previewAudio.duration) * 100;
+    progress.style.width = pct + '%';
+    const sec = Math.floor(previewAudio.currentTime);
+    timeEl.textContent = Math.floor(sec/60) + ':' + String(sec%60).padStart(2,'0');
+  };
+  closeBtn.onclick = function(e){
+    e.stopPropagation();
+    overlay.classList.remove('open');
+    if(nowPlayingId === id && previewAudio && !previewAudio.paused){
+      previewAudio.pause();
+      setPreviewBtnState(id, 'idle');
+      nowPlayingId = null;
+    }
+  };
 }
 function setPreviewBtnState(id, state){
   document.querySelectorAll('[data-preview="' + CSS.escape(String(id)) + '"]').forEach(btn=>{
@@ -5204,8 +5294,26 @@ function resolveSong(id){
 }
 document.addEventListener('click', e=>{
   unlockAudioCtx();
-  /* preview buttons use inline onclick="handlePreviewTap(event)" for iOS gesture reliability */
-}, { once: true });
+  const btn = e.target.closest('[data-preview]');
+  if(!btn) return;
+  e.stopPropagation();
+  e.preventDefault();
+  const id = btn.dataset.preview;
+  if(IS_MOBILE){
+    openMobilePreview(id);
+    return;
+  }
+  if(!previewAudio) previewAudio = document.getElementById('previewAudio');
+  if(nowPlayingId === id && previewAudio && !previewAudio.paused){
+    previewAudio.pause();
+    setPreviewBtnState(id, 'idle');
+    nowPlayingId = null;
+    return;
+  }
+  let song = resolveSong(id);
+  if(song && playPreviewNow(id, song)) return;
+  togglePreview(id);
+});
 document.addEventListener('keydown', e=>{
   if(e.key === 'Escape' && nowPlayingId) stopPreview();
 });
@@ -7523,7 +7631,7 @@ function renderFriendGrid(list){
       </div>
       <div class="tier-row">${renderTierBadge(s.tier)}</div>
       <div class="preview-row">
-        <button type="button" class="preview-btn" data-preview="${escapeAttr(s.id)}" onclick="handlePreviewTap(event)" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>
+        <button type="button" class="preview-btn" data-preview="${escapeAttr(s.id)}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>
         <span class="preview-hint">30-sec preview</span>
       </div>
       ${(s.tags&&s.tags.length) ? `<div class="tags">${s.tags.map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>` : ''}
@@ -9245,7 +9353,7 @@ async function renderAlbumSearchResults(query){
           <span class="drow-name">${escapeHtml(a.collectionName||'Untitled')}</span><br>
           <span class="drow-bio">${escapeHtml(a.artistName||'')}${a.releaseDate ? ' · '+a.releaseDate.slice(0,4) : ''}</span>
         </span>
-        ${String(a.collectionId).indexOf('mbg-') !== 0 ? `<span class="preview-btn" data-preview="albs:${escapeAttr(a.collectionId)}" onclick="handlePreviewTap(event)" title="Play the first track as a 30-second preview" aria-label="Play a 30-second preview">▶</span>` : ''}
+        ${String(a.collectionId).indexOf('mbg-') !== 0 ? `<span class="preview-btn" data-preview="albs:${escapeAttr(a.collectionId)}" title="Play the first track as a 30-second preview" aria-label="Play a 30-second preview">▶</span>` : ''}
       </button>
     `).join('');
 }
@@ -9332,7 +9440,7 @@ async function renderSongSearchResults(query){
         <span class="drow-name">${escapeHtml(t.trackName||'Untitled')}</span><br>
         <span class="drow-bio">${escapeHtml(t.artistName||'')}${t.collectionName ? ' · '+escapeHtml(t.collectionName) : ''}</span>
       </span>
-      <span class="preview-btn" data-preview="songsearch:${i}" onclick="handlePreviewTap(event)" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</span>
+      <span class="preview-btn" data-preview="songsearch:${i}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</span>
     </button>
   `).join('');
 }
@@ -9902,7 +10010,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
         <span class="msg-song-artist">${escapeHtml(song.artist || '')}</span>
         <span class="msg-song-album">${escapeHtml(song.album || '')}</span>
       </span>
-      <span class="preview-btn" data-preview="msg:${escapeAttr(msgId)}" onclick="handlePreviewTap(event)" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</span>
+      <span class="preview-btn" data-preview="msg:${escapeAttr(msgId)}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</span>
     </a>`;
   }
   async function loadMsgThread(friendId){
@@ -9996,7 +10104,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
           <span class="msg-song-result-title">${escapeHtml(r.trackName || 'Unknown')}</span>
           <span class="msg-song-result-artist">${artist}</span>
         </span>
-        <span class="preview-btn" data-preview="msgrec:${i}" onclick="handlePreviewTap(event)" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</span>
+        <span class="preview-btn" data-preview="msgrec:${i}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</span>
       </button>`;
     }).join('');
   }
@@ -10476,7 +10584,7 @@ document.getElementById('passwordSaveBtn').addEventListener('click', async ()=>{
           <div class="sotd-artist">${escapeHtml(sotdSong.artist || '')}</div>
         </div>
         <div class="sotd-preview">
-          <button type="button" class="preview-btn" data-preview="sotd" onclick="handlePreviewTap(event)" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>
+          <button type="button" class="preview-btn" data-preview="sotd" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>
           <span class="preview-hint">30-sec preview</span>
         </div>
         ${link}
@@ -11050,7 +11158,7 @@ function feedCardHtml(entry){
   const tierBadge = s.tier ? renderTierBadge(s.tier) : '';
   const feedPreviewId = 'feed:' + (s.id || Math.random().toString(36).slice(2));
   feedSongCache[feedPreviewId] = { id: feedPreviewId, title: s.title || 'Untitled', artists: s.artists || [], previewUrl: s.previewUrl || '' };
-  const previewBtn = s.source === 'itunes' ? `<button type="button" class="preview-btn" data-preview="${escapeAttr(feedPreviewId)}" onclick="handlePreviewTap(event)" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>` : '';
+  const previewBtn = s.source === 'itunes' ? `<button type="button" class="preview-btn" data-preview="${escapeAttr(feedPreviewId)}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>` : '';
   const why = s.why ? `<div class="feed-card-why">"${escapeHtml(s.why)}"</div>` : '';
   const reminds = (s.remindsOf && s.remindsOf.length)
     ? `<div class="feed-card-reminds">reminds me of <span>${s.remindsOf.map(id=>{
@@ -11266,6 +11374,21 @@ if(getAnalyticsConsent() === 'rejected'){
 
 </script>
 <audio id="previewAudio" preload="auto" playsinline webkit-playsinline></audio>
+<div id="mobilePreviewOverlay" class="mobile-preview-overlay">
+  <button class="mp-close" aria-label="Close preview">&times;</button>
+  <div class="mp-row">
+    <div class="mp-art">♫</div>
+    <div class="mp-info">
+      <div class="mp-title"></div>
+      <div class="mp-artist"></div>
+    </div>
+  </div>
+  <div class="mp-controls">
+    <button class="mp-play-btn" aria-label="Play preview">▶</button>
+    <div class="mp-progress"><div class="mp-progress-fill"></div></div>
+    <span class="mp-time">0:00</span>
+  </div>
+</div>
 <div id="analyticsConsentBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; background:var(--ink); border-top:1px solid rgba(238,221,149,0.15); padding:16px 24px; z-index:9999; font-family:'Space Grotesk',sans-serif;">
   <div style="max-width:720px; margin:0 auto; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
     <span style="flex:1; min-width:200px; font-size:13px; color:rgba(238,221,149,0.82); line-height:1.5;">
