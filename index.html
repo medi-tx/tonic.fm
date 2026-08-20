@@ -5169,53 +5169,11 @@ function resolveSong(id){
   if(!song) song = songs.find(s=>s.id === id) || (currentFriendSongs||[]).find(s=>s.id === id);
   return song;
 }
-document.addEventListener('touchend', e=>{
-  const btn = e.target.closest('[data-preview]');
-  if(!btn) return;
-  const id = btn.dataset.preview;
-  if(!previewAudio) previewAudio = document.getElementById('previewAudio');
-  let song = resolveSong(id);
-  if(!song) return;
-  btn._touchPlayed = true;
-  if(playPreviewNow(id, song)) return;
-  if(nowPlayingId === id && previewAudio && !previewAudio.paused){
-    previewAudio.pause();
-    setPreviewBtnState(id, 'idle');
-    nowPlayingId = null;
-    return;
-  }
-  if(nowPlayingId && nowPlayingId !== id) stopPreview();
-  const url = previewCache[song.id] || song.previewUrl || null;
-  if(!url){
-    setPreviewBtnState(id, 'loading');
-    fetchPreviewUrl(song).then(fetchedUrl=>{
-      if(!fetchedUrl){ setPreviewBtnState(id, 'none'); setTimeout(()=>{ setPreviewBtnState(id, 'idle'); }, 1600); return; }
-      if(nowPlayingId && nowPlayingId !== id) stopPreview();
-      previewAudio.src = fetchedUrl;
-      previewAudio.onended = ()=>{ setPreviewBtnState(id, 'idle'); nowPlayingId = null; };
-      previewAudio.onerror = ()=>{ setPreviewBtnState(id, 'none'); nowPlayingId = null; };
-      nowPlayingId = id;
-      previewAudio.oncanplay = ()=>{ previewAudio.oncanplay = null; previewAudio.play().then(()=>{ setPreviewBtnState(id, 'playing'); }).catch(()=>{}); };
-      previewAudio.play().then(()=>{ setPreviewBtnState(id, 'playing'); }).catch(()=>{});
-      trackEvent('preview_play');
-    }).catch(()=>{ setPreviewBtnState(id, 'idle'); });
-    return;
-  }
-  previewAudio.src = url;
-  previewAudio.onended = ()=>{ setPreviewBtnState(id, 'idle'); nowPlayingId = null; };
-  previewAudio.onerror = ()=>{ setPreviewBtnState(id, 'none'); nowPlayingId = null; };
-  previewAudio.oncanplay = null;
-  nowPlayingId = id;
-  setPreviewBtnState(id, 'playing');
-  previewAudio.play().catch(()=>{ setPreviewBtnState(id, 'idle'); nowPlayingId = null; });
-  trackEvent('preview_play');
-}, {passive: true});
 document.addEventListener('click', e=>{
   const btn = e.target.closest('[data-preview]');
   if(btn){
     e.stopPropagation();
     e.preventDefault();
-    if(btn._touchPlayed){ btn._touchPlayed = false; return; }
     const id = btn.dataset.preview;
     if(!previewAudio) previewAudio = document.getElementById('previewAudio');
     if(nowPlayingId === id && previewAudio && !previewAudio.paused){
