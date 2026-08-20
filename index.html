@@ -5037,13 +5037,12 @@ let audioUnlocked = false;
 const feedSongCache = {};
 function unlockAudio(){
   if(audioUnlocked) return;
-  audioUnlocked = true;
   const a = document.getElementById('previewAudio');
   if(!a) return;
-  a.play().then(()=>{ a.pause(); a.currentTime = 0; a.removeAttribute('src'); }).catch(()=>{});
+  a.play().then(()=>{ a.pause(); a.currentTime = 0; a.removeAttribute('src'); audioUnlocked = true; }).catch(()=>{});
 }
-document.addEventListener('touchend', unlockAudio, { once: true, passive: true });
-document.addEventListener('click', unlockAudio, { once: true });
+document.addEventListener('touchend', unlockAudio, { passive: true });
+document.addEventListener('click', unlockAudio);
 function setPreviewBtnState(id, state){
   document.querySelectorAll('[data-preview="' + CSS.escape(String(id)) + '"]').forEach(btn=>{
     btn.classList.remove('loading','playing','none');
@@ -5131,6 +5130,7 @@ async function togglePreview(id){
     previewAudio.onerror = ()=>{ setPreviewBtnState(id, 'none'); setTimeout(()=>{ if(nowPlayingId !== id) setPreviewBtnState(id, 'idle'); }, 1600); nowPlayingId = null; };
     nowPlayingId = id;
     try{
+      if(!audioUnlocked) unlockAudio();
       await previewAudio.play();
     }catch(err){
       setPreviewBtnState(id, 'idle');
@@ -5157,6 +5157,7 @@ async function togglePreview(id){
   };
   nowPlayingId = id;
   try{
+    if(!audioUnlocked) unlockAudio();
     await previewAudio.play();
     setPreviewBtnState(id, 'playing');
   }catch(err){
