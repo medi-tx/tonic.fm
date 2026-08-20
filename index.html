@@ -15,9 +15,9 @@
   :root{
     --ink:#12141c;
     --ink-2:#2a2c33;
-    --paper:#eedd95;
+    --paper:#d5873f;
     --paper-2:#e0d08c;
-    --gold:#eedd95;
+    --gold:#d5873f;
     --rose:#2A9D8F;
     --teal:#E63946;
     --lilac:#8E44AD;
@@ -25,10 +25,10 @@
     --paper-elevated: #e0d08c;
     --border: rgba(238,221,149,0.5);
     --line: rgba(18,20,28,0.15);
-    --text-on-ink: #eedd95;
+    --text-on-ink: #d5873f;
     --text-dim: rgba(238,221,149,0.6);
     --on-paper: #12141c;
-    --on-ink: #eedd95;
+    --on-ink: #d5873f;
     --on-paper-rgb:18,20,28;
     --on-ink-rgb:238,221,149;
     --line-on-paper:rgba(18,20,28,0.16);
@@ -3469,7 +3469,7 @@ function saveWishlist(){
 /* =========================================================
    THEME CUSTOMIZATION
    ========================================================= */
-const DEFAULT_THEME = { ink:'#12141c', paper:'#eedd95', gold:'#eedd95', rose:'#2A9D8F', teal:'#E63946', lilac:'#8E44AD', sage:'#264653' };
+const DEFAULT_THEME = { ink:'#12141c', paper:'#d5873f', gold:'#d5873f', rose:'#2A9D8F', teal:'#E63946', lilac:'#8E44AD', sage:'#264653' };
 
 const THEME_PRESETS = [
   { name:'timbre.fm (default)', colors: DEFAULT_THEME },
@@ -4191,7 +4191,7 @@ document.getElementById('timeline').addEventListener('click', e=>{
 });
 
 /* ---- stats page ---- */
-const TIER_CHART_COLORS = { '★':'#eedd95', S:'#E63946', A:'#2A9D8F', B:'#8E44AD', C:'#264653' };
+const TIER_CHART_COLORS = { '★':'#d5873f', S:'#E63946', A:'#2A9D8F', B:'#8E44AD', C:'#264653' };
 function statChartCanvas(id){
   const c = document.getElementById(id);
   const dpr = window.devicePixelRatio || 1;
@@ -4248,7 +4248,7 @@ function drawGenreChart(){
   const { ctx, w, h } = statChartCanvas('statGenreChart');
   ctx.clearRect(0,0,w,h);
   const cx = 92, cy = 95, R = 70;
-  const palette = ['#b4b9f3','#ad0505','#fd9f1c','#12141c','#8b5e3c','#6aa84f','#a05aa0','#eedd95','#4a90b8','#888'];
+  const palette = ['#b4b9f3','#ad0505','#fd9f1c','#12141c','#8b5e3c','#6aa84f','#a05aa0','#d5873f','#4a90b8','#888'];
   let angle = -Math.PI/2;
   slices.forEach((e,i)=>{
     const frac = e[1]/total;
@@ -4259,7 +4259,7 @@ function drawGenreChart(){
     ctx.closePath();
     ctx.fillStyle = palette[i % palette.length];
     ctx.fill();
-    ctx.strokeStyle = '#eedd95';
+    ctx.strokeStyle = '#d5873f';
     ctx.lineWidth = 2;
     ctx.stroke();
     angle = end;
@@ -4643,7 +4643,7 @@ async function drawShareCard(opts){
   ctx.font = '600 28px "Space Grotesk", sans-serif';
   ctx.fillText('CATALOGUEX CARD', 88, 190);
 
-  ctx.fillStyle = '#eedd95';
+  ctx.fillStyle = '#d5873f';
   ctx.font = 'italic 700 84px Georgia, serif';
   ctx.fillText('@' + (opts.username || 'you'), 84, 318);
 
@@ -4676,7 +4676,7 @@ async function drawShareCard(opts){
     } else {
       ctx.fillStyle = '#2a2c33';
       ctx.fill();
-      ctx.fillStyle = '#eedd95';
+      ctx.fillStyle = '#d5873f';
       ctx.font = '700 28px Georgia, serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -4686,14 +4686,14 @@ async function drawShareCard(opts){
     }
     const tx = x + coverS + 18;
     const tw = cellW - coverS - 18;
-    ctx.fillStyle = '#eedd95';
+    ctx.fillStyle = '#d5873f';
     ctx.font = '700 26px "Space Grotesk", sans-serif';
     ctx.fillText(cardTruncate(ctx, s.title || 'Untitled', tw, ctx.font), tx, y + 24);
     ctx.fillStyle = 'rgba(238,221,149,0.6)';
     ctx.font = '500 21px "Space Grotesk", sans-serif';
     ctx.fillText(cardTruncate(ctx, formatArtists(s.artists), tw, ctx.font), tx, y + 52);
     const tier = s.tier || '';
-        const chipCol = { '★':'#eedd95', S:'#E63946', A:'#2A9D8F', B:'#8E44AD', C:'#264653' }[tier] || '#8E44AD';
+        const chipCol = { '★':'#d5873f', S:'#E63946', A:'#2A9D8F', B:'#8E44AD', C:'#264653' }[tier] || '#8E44AD';
     ctx.fillStyle = chipCol;
     cardRoundRect(ctx, tx, y + 64, 46, 30, 8);
     ctx.fill();
@@ -4752,7 +4752,7 @@ function cardBase(ctx, W, H, username){
   ctx.fillStyle = t.paper || 'rgba(238,221,149,0.8)';
   ctx.font = '600 28px "Space Grotesk", sans-serif';
   ctx.fillText('CATALOGUEX CARD', 88, 190);
-  ctx.fillStyle = t.paper || '#eedd95';
+  ctx.fillStyle = t.paper || '#d5873f';
   ctx.font = 'italic 700 84px Georgia, serif';
   ctx.fillText('@' + (username || 'you'), 84, 318);
   ctx.strokeStyle = t.paper ? t.paper + '40' : 'rgba(238,221,149,0.25)';
@@ -4780,7 +4780,7 @@ async function drawSongShareCard(opts){
   } else {
     ctx.fillStyle = t.ink || '#12141c';
     ctx.fill();
-    ctx.fillStyle = t.paper || '#eedd95';
+    ctx.fillStyle = t.paper || '#d5873f';
     ctx.font = '700 180px Georgia, serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -4788,7 +4788,7 @@ async function drawSongShareCard(opts){
     ctx.textAlign = 'left';
     ctx.textBaseline = 'alphabetic';
   }
-  ctx.fillStyle = t.paper || '#eedd95';
+  ctx.fillStyle = t.paper || '#d5873f';
   ctx.font = '700 64px "Space Grotesk", sans-serif';
   ctx.textAlign = 'center';
   ctx.fillText(cardTruncate(ctx, s.title || 'Untitled', W - 176, ctx.font), W/2, coverY + coverS + 96);
@@ -4808,7 +4808,7 @@ async function drawSongShareCard(opts){
     ctx.fillText(cardTruncate(ctx, genresStr, W - 176, ctx.font), W/2, coverY + coverS + 240);
   }
   const tier = s.tier || '';
-  const chipCol = { S: t.teal || '#E63946', A: t.rose || '#2A9D8F', B: t.lilac || '#8E44AD', C: t.sage || '#264653', '★': t.gold || '#eedd95' }[tier] || t.paper || '#eedd95';
+  const chipCol = { S: t.teal || '#E63946', A: t.rose || '#2A9D8F', B: t.lilac || '#8E44AD', C: t.sage || '#264653', '★': t.gold || '#d5873f' }[tier] || t.paper || '#d5873f';
   ctx.fillStyle = chipCol;
   cardRoundRect(ctx, W/2 - 44, coverY + coverS + 262, 88, 48, 12);
   ctx.fill();
@@ -4846,8 +4846,8 @@ async function drawTierShareCard(opts){
   ctx.fillStyle = t.paper ? t.paper + 'B3' : 'rgba(238,221,149,0.7)';
   ctx.font = '500 30px "Space Grotesk", sans-serif';
   ctx.fillText('TIER BOARD', PAD, titleY);
-  const tierColors = { '★': t.gold || '#eedd95', S: t.teal || '#E63946', A: t.rose || '#2A9D8F', B: t.lilac || '#8E44AD', C: t.sage || '#264653' };
-  const tierTextColors = { '★': t.ink || '#12141c', S: t.paper || '#eedd95', A: t.ink || '#12141c', B: t.ink || '#12141c', C: t.ink || '#12141c' };
+  const tierColors = { '★': t.gold || '#d5873f', S: t.teal || '#E63946', A: t.rose || '#2A9D8F', B: t.lilac || '#8E44AD', C: t.sage || '#264653' };
+  const tierTextColors = { '★': t.ink || '#12141c', S: t.paper || '#d5873f', A: t.ink || '#12141c', B: t.ink || '#12141c', C: t.ink || '#12141c' };
   const allSongs = tiers.flatMap(t=>byTier[t]);
   const imgs = await Promise.all(allSongs.map(s=>loadCardImage(s.coverArt)));
   const imgMap = {};
@@ -4867,7 +4867,7 @@ async function drawTierShareCard(opts){
         ctx.fillStyle = tierColors[t] || '#12141c';
         cardRoundRect(ctx, PAD, badgeY, BADGE_W, BADGE_H, badgeRound);
         ctx.fill();
-        ctx.fillStyle = tierTextColors[t] || '#eedd95';
+        ctx.fillStyle = tierTextColors[t] || '#d5873f';
         ctx.font = '700 28px Georgia, serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -4890,7 +4890,7 @@ async function drawTierShareCard(opts){
         } else {
           ctx.fillStyle = t.ink || '#12141c';
           ctx.fill();
-          ctx.fillStyle = '#eedd95';
+          ctx.fillStyle = '#d5873f';
           ctx.font = '700 30px Georgia, serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
