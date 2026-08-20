@@ -4063,10 +4063,10 @@ function songCardHtml(s, clusterCounts){
           ${(s.genres&&s.genres.length) ? `<span class="meta-genres">· ${s.genres.map(g=>escapeHtml(g)).join(', ')}</span>` : (showEx ? `<span class="ex">· e.g. Rock, Funk/Soul</span>` : '')}
         </div>
         <div class="tier-row">${renderTierBadge(s.tier)}</div>
-        ${s.source === 'itunes' ? `<div class="preview-row">
+        <div class="preview-row">
           <button type="button" class="preview-btn" data-preview="${escapeAttr(s.id)}" title="Play a 30-second preview" aria-label="Play 30-second preview">▶</button>
           <span class="preview-hint">30-sec preview</span>
-        </div>` : ''}
+        </div>
         ${(s.clusterId && clusterCounts[s.clusterId] > 1) ? `<span class="link-badge" data-cluster="${s.clusterId}">🔗 ${clusterCounts[s.clusterId]} linked</span>` : ''}
         ${(s.tags&&s.tags.length) ? `<div class="tags">${s.tags.map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>` : (showEx ? `<div class="tags">${['nostalgic','road trip','late night'].map(t=>`<span class="tag ex-tag">e.g. ${t}</span>`).join('')}</div>` : '')}
         ${s.why ? `<p class="why">${escapeHtml(s.why)}</p>` : (showEx ? `<p class="why ex">e.g. the bassline just doesn't let go</p>` : '')}
