@@ -6022,6 +6022,22 @@ document.getElementById('addMusicOverlay').addEventListener('click', e=>{
   if(e.target.id === 'addMusicOverlay') document.getElementById('addMusicOverlay').classList.remove('open');
 });
 
+/* ---- TOAST NOTIFICATIONS ---- */
+function showToast(msg, duration){
+  duration = duration || 5000;
+  let t = document.getElementById('appToast');
+  if(!t){
+    t = document.createElement('div');
+    t.id = 'appToast';
+    t.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);max-width:420px;width:calc(100% - 32px);padding:12px 20px;border-radius:8px;background:var(--ink);border:1px solid rgba(var(--on-paper-rgb),0.15);color:var(--paper);font-family:"Space Grotesk",sans-serif;font-size:13px;line-height:1.5;z-index:10002;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.4);opacity:0;transition:opacity 0.25s ease;pointer-events:none;';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  if(t._timer) clearTimeout(t._timer);
+  t._timer = setTimeout(()=>{ t.style.opacity = '0'; }, duration);
+}
+
 /* ---- PLAYLIST IMPORT (Spotify / Apple Music / Tidal) ---- */
 let playlistImportedTracks = [];
 let playlistImportService = 'spotify';
@@ -6611,21 +6627,12 @@ document.getElementById('spotifyImportConfirmBtn').addEventListener('click', ()=
     const proceed = confirm('This playlist is still loading artwork. Are you sure you want to import now? Some tracks may be missing artwork.');
     if(!proceed) return;
   }
-  const playlistIdMatch = playlistImportLoadedUrl && playlistImportLoadedUrl.match(/playlist\/([a-f0-9-]+)/i);
-  const playlistIdStr = playlistIdMatch ? playlistIdMatch[1] : null;
-  const existingFromUrl = playlistIdStr
-    ? songs.filter(s => s.clusterName && s.clusterName.includes('Import') && s.clusterId && s.clusterId.includes(playlistIdStr.slice(0, 8)))
-    : [];
-  if(existingFromUrl.length > 0){
-    const proceed = confirm(`You already imported ${existingFromUrl.length} song${existingFromUrl.length === 1 ? '' : 's'} from this playlist. Are you sure you want to import it again? This will create duplicates.`);
-    if(!proceed) return;
-  }
   try{
     const serviceLabel = playlistImportService === 'spotify' ? 'Spotify' : playlistImportService === 'apple' ? 'Apple Music' : 'Tidal';
     trackEvent('playlist_import', { service: playlistImportService, count: playlistImportedTracks.length });
     const clusterId = uid();
     const now = Date.now();
-    const newSongs = playlistImportedTracks.map(t=>({
+    const allImported = playlistImportedTracks.map(t=>({
       id: uid(),
       pinned: false,
       createdAt: now,
@@ -6643,7 +6650,9 @@ document.getElementById('spotifyImportConfirmBtn').addEventListener('click', ()=
       remindsOf: [],
       year: t.year || null,
     }));
-    const dupes = findDuplicates(newSongs);
+    const dupes = findDuplicates(allImported);
+    const dupeKeys = new Set(dupes.map(d => songKey(d)));
+    const newSongs = allImported.filter(s => !dupeKeys.has(songKey(s)));
     const doImportSave = ()=>{
       songs = [...newSongs, ...songs];
       save();
@@ -6654,13 +6663,14 @@ document.getElementById('spotifyImportConfirmBtn').addEventListener('click', ()=
       render();
       if(document.getElementById('feedOverlay') && document.getElementById('feedOverlay').classList.contains('open')) loadFeed();
       enrichImportedSongs(clusterId, serviceLabel);
+      if(dupes.length > 0){
+        const importedCount = newSongs.length;
+        const skippedList = dupes.slice(0, 5).map(d => `"${d.title}"`).join(', ');
+        const moreText = dupes.length > 5 ? ` and ${dupes.length - 5} more` : '';
+        showToast(`Imported ${importedCount} new song${importedCount === 1 ? '' : 's'}. Skipped ${dupes.length} already in your catalogue: ${skippedList}${moreText}`);
+      }
     };
-    if(dupes.length > 0){
-      document.getElementById('spotifyImportOverlay').classList.remove('open');
-      showDupModal(dupes, doImportSave);
-    } else {
-      doImportSave();
-    }
+    doImportSave();
   }catch(e){
     console.error('Import error:', e);
     const errEl = document.getElementById('spotifyImportError');
